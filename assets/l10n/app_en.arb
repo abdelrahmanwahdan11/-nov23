@@ -1,0 +1,20 @@
+{
+  "app_title": "LinguaTutor",
+  "btn_continue": "Continue",
+  "btn_get_started": "Get started",
+  "home_title": "Turkish tutors",
+  "skip": "Skip",
+  "login": "Login",
+  "signup": "Create account",
+  "guest": "Continue as guest",
+  "catalog": "Catalog",
+  "bookings": "Bookings",
+  "profile": "Profile",
+  "home": "Home",
+  "search": "Search",
+  "compare": "Compare tutors",
+  "book_trial": "Book trial lesson",
+  "confirm_booking": "Confirm Booking",
+  "pay_for_session": "Pay for session",
+  "success_message": "Congrats! Your lesson is booked."
+}

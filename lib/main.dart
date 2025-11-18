@@ -1,0 +1,574 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'core/controllers/auth_controller.dart';
+import 'core/controllers/booking_controller.dart';
+import 'core/controllers/favorites_controller.dart';
+import 'core/controllers/localization_controller.dart';
+import 'core/controllers/payments_controller.dart';
+import 'core/controllers/theme_controller.dart';
+import 'core/localization/app_localizations.dart';
+import 'core/theme/app_theme.dart';
+import 'core/utils/models.dart';
+import 'features/auth/auth_screens.dart';
+import 'features/booking/book_session_screen.dart';
+import 'features/home/main_shell.dart';
+import 'features/onboarding/goal_selection_screen.dart';
+import 'features/onboarding/onboarding_screen.dart';
+import 'features/payments/payment_screen.dart';
+import 'features/payments/success_screen.dart';
+import 'features/profile/favorites_screen.dart';
+import 'features/profile/profile_screen.dart';
+import 'features/profile/settings_screen.dart';
+import 'features/profile/support_screen.dart';
+import 'features/payments/wallet_screen.dart';
+import 'features/profile/journal_screen.dart';
+import 'features/home/resources_screen.dart';
+import 'features/tutor_details/tutor_details_screen.dart';
+import 'features/home/notifications_screen.dart';
+import 'features/home/learning_path_screen.dart';
+import 'features/home/progress_dashboard_screen.dart';
+import 'features/booking/planner_screen.dart';
+import 'features/home/community_screen.dart';
+import 'features/home/practice_lab_screen.dart';
+import 'features/home/live_events_screen.dart';
+import 'features/home/placement_test_screen.dart';
+import 'features/profile/certificates_screen.dart';
+import 'features/home/coach_tips_screen.dart';
+import 'features/home/insights_screen.dart';
+import 'features/home/streaks_screen.dart';
+import 'features/home/rewards_screen.dart';
+import 'features/home/feedback_screen.dart';
+import 'features/home/leaderboard_screen.dart';
+import 'features/home/immersion_screen.dart';
+import 'features/home/mentor_chat_screen.dart';
+import 'features/home/projects_screen.dart';
+import 'features/home/capstone_review_screen.dart';
+import 'features/home/download_kits_screen.dart';
+import 'features/home/career_center_screen.dart';
+import 'features/home/interview_prep_screen.dart';
+import 'features/home/alumni_network_screen.dart';
+import 'features/home/scholarships_screen.dart';
+import 'features/home/success_stories_screen.dart';
+import 'features/home/mobility_screen.dart';
+import 'features/home/branding_screen.dart';
+
+void main() {
+  runApp(const LinguaTutorApp());
+}
+
+class LinguaTutorApp extends StatefulWidget {
+  const LinguaTutorApp({super.key});
+
+  @override
+  State<LinguaTutorApp> createState() => _LinguaTutorAppState();
+}
+
+class _LinguaTutorAppState extends State<LinguaTutorApp> {
+  final themeController = ThemeController();
+  final localizationController = LocalizationController();
+  final authController = AuthController();
+  final favoritesController = FavoritesController();
+  bool _onboardingDone = false;
+  bool _goalSelected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    themeController.load();
+    authController.load();
+    authController.addListener(_syncAuthProgress);
+  }
+
+  @override
+  void dispose() {
+    themeController.dispose();
+    localizationController.dispose();
+    authController.removeListener(_syncAuthProgress);
+    authController.dispose();
+    favoritesController.dispose();
+    super.dispose();
+  }
+
+  void _syncAuthProgress() {
+    if (authController.isLoggedIn && (!_onboardingDone || !_goalSelected)) {
+      setState(() {
+        _onboardingDone = true;
+        _goalSelected = true;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: Listenable.merge([themeController, localizationController, authController]),
+      builder: (context, _) {
+        return MaterialApp(
+          title: 'LinguaTutor',
+          theme: buildTheme(primary: themeController.primaryColor),
+          darkTheme: buildTheme(primary: themeController.primaryColor, brightness: Brightness.dark),
+          themeMode: themeController.mode,
+          locale: localizationController.locale,
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          home: Navigator(
+            pages: _pages(),
+            onPopPage: (route, result) => route.didPop(result),
+          ),
+        );
+      },
+    );
+  }
+
+  List<Page> _pages() {
+    final List<Page> stack = [];
+    if (!_onboardingDone) {
+      stack.add(MaterialPage(
+          child: OnboardingStoryScreen(
+        onFinished: () => setState(() => _onboardingDone = true),
+      )));
+      return stack;
+    }
+    if (!_goalSelected) {
+      stack.add(MaterialPage(
+          child: GoalSelectionScreen(
+        onContinue: () => setState(() => _goalSelected = true),
+      )));
+      return stack;
+    }
+    if (!authController.isLoggedIn) {
+      stack.add(MaterialPage(
+          child: LoginScreen(
+        controller: authController,
+        onSuccess: () => setState(() {}),
+        onGuest: () {
+          authController.continueAsGuest();
+          setState(() {});
+        },
+      ))));
+      return stack;
+    }
+    stack.add(MaterialPage(
+        child: MainShell(
+      onTutorTap: _openTutor,
+      onLogout: () => authController.logout(),
+      themeController: themeController,
+      localizationController: localizationController,
+      favoritesController: favoritesController,
+      profileBuilder: (setStateCallback) => ProfileHost(
+          themeController: themeController,
+          localeController: localizationController,
+          favoritesController: favoritesController,
+          onOpenSettings: () => _openSettings(context),
+          onOpenFavorites: () => _openFavorites(context),
+          onOpenNotifications: () => _openNotifications(context),
+          onOpenLearningPath: () => _openLearningPath(context),
+          onOpenSupport: () => _openSupport(context),
+          onOpenProgress: () => _openProgress(context),
+          onOpenPlanner: () => _openPlanner(context),
+          onOpenWallet: () => _openWallet(context),
+          onOpenJournal: () => _openJournal(context),
+          onOpenResources: () => _openResources(context),
+          onOpenCommunity: () => _openCommunity(context),
+          onOpenPractice: () => _openPractice(context),
+          onOpenCertificates: () => _openCertificates(context),
+          onOpenLiveEvents: () => _openLiveEvents(context),
+          onOpenPlacementTest: () => _openPlacementTest(context),
+          onOpenCoachTips: () => _openCoachTips(context),
+          onOpenInsights: () => _openInsights(context),
+          onOpenStreaks: () => _openStreaks(context),
+          onOpenRewards: () => _openRewards(context),
+          onOpenFeedback: () => _openFeedback(context),
+          onOpenLeaderboard: () => _openLeaderboard(context),
+          onOpenImmersion: () => _openImmersion(context),
+          onOpenMentorChat: () => _openMentorChat(context),
+          onOpenProjects: () => _openProjects(context),
+          onOpenCapstoneReviews: () => _openCapstoneReviews(context),
+          onOpenDownloadKits: () => _openDownloadKits(context),
+          onOpenCareerCenter: () => _openCareerCenter(context),
+          onOpenInterviewPrep: () => _openInterviewPrep(context),
+          onOpenAlumniNetwork: () => _openAlumniNetwork(context),
+          onOpenSuccessStories: () => _openSuccessStories(context),
+          onOpenScholarships: () => _openScholarships(context),
+          onOpenMobility: () => _openMobility(context),
+          onOpenBranding: () => _openBranding(context),
+          onLogout: () {
+        setState(() {});
+      }),
+    )));
+    return stack;
+  }
+
+  void _openTutor(Tutor tutor) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => TutorDetailsScreen(
+        tutor: tutor,
+        onBook: () => _startBooking(tutor),
+      ),
+    ));
+  }
+
+  void _startBooking(Tutor tutor) {
+    final booking = BookingController();
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => BookSessionScreen(
+        controller: booking,
+        onOpenSettings: () => _openSettings(context),
+        onConfirm: () {
+          final session = booking.buildSession(tutor.id, tutor.pricePerLesson);
+          final payments = PaymentsController();
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (_) => PaymentScreen(
+              controller: payments,
+              session: session,
+              onOpenSettings: () => _openSettings(context),
+              onSuccess: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SuccessScreen())),
+            ),
+          ));
+        },
+      ),
+    ));
+  }
+
+  void _openSettings(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => SettingsScreen(
+        themeController: themeController,
+        localizationController: localizationController,
+        favoritesController: favoritesController,
+      ),
+    ));
+  }
+
+  void _openFavorites(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => FavoritesScreen(
+        favoritesController: favoritesController,
+        onTutorTap: _openTutor,
+      ),
+    ));
+  }
+
+  void _openNotifications(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => const NotificationsScreen(),
+    ));
+  }
+
+  void _openLearningPath(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => const LearningPathScreen(),
+    ));
+  }
+
+  void _openSupport(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => const SupportScreen(),
+    ));
+  }
+
+  void _openProgress(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => const ProgressDashboardScreen(),
+    ));
+  }
+
+  void _openPlanner(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => PlannerScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openWallet(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => WalletScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openJournal(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => JournalScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openResources(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => ResourcesScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openCommunity(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => CommunityScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openPractice(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => PracticeLabScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openLiveEvents(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => LiveEventsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openPlacementTest(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => PlacementTestScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openCertificates(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => CertificatesScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openStreaks(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => StreaksScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openRewards(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => RewardsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openFeedback(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => FeedbackScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openLeaderboard(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => LeaderboardScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openImmersion(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => ImmersionScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openMentorChat(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => MentorChatScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openProjects(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => ProjectsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openCapstoneReviews(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => CapstoneReviewScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openDownloadKits(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => DownloadKitsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openCareerCenter(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => CareerCenterScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openInterviewPrep(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => InterviewPrepScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openAlumniNetwork(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => AlumniNetworkScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openSuccessStories(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => SuccessStoriesScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openScholarships(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => ScholarshipsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openMobility(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => MobilityScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openBranding(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => BrandingScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openCoachTips(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => CoachTipsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openInsights(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => InsightsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+}
+
+class ProfileHost extends StatefulWidget {
+  const ProfileHost(
+      {super.key,
+      required this.themeController,
+      required this.localeController,
+      required this.favoritesController,
+      required this.onOpenSettings,
+      required this.onOpenFavorites,
+      required this.onOpenNotifications,
+      required this.onOpenLearningPath,
+      required this.onOpenSupport,
+      required this.onOpenProgress,
+      required this.onOpenPlanner,
+      required this.onOpenWallet,
+      required this.onOpenJournal,
+      required this.onOpenResources,
+      required this.onOpenCommunity,
+      required this.onOpenPractice,
+      required this.onOpenCertificates,
+      required this.onOpenLiveEvents,
+      required this.onOpenPlacementTest,
+      required this.onOpenCoachTips,
+      required this.onOpenInsights,
+      required this.onOpenStreaks,
+      required this.onOpenRewards,
+      required this.onOpenFeedback,
+      required this.onOpenLeaderboard,
+      required this.onOpenImmersion,
+      required this.onOpenMentorChat,
+      required this.onOpenProjects,
+      required this.onOpenCapstoneReviews,
+      required this.onOpenDownloadKits,
+      required this.onOpenCareerCenter,
+      required this.onOpenInterviewPrep,
+      required this.onOpenAlumniNetwork,
+      required this.onOpenSuccessStories,
+      required this.onOpenScholarships,
+      required this.onOpenMobility,
+      required this.onOpenBranding,
+      required this.onLogout});
+  final ThemeController themeController;
+  final LocalizationController localeController;
+  final FavoritesController favoritesController;
+  final VoidCallback onOpenSettings;
+  final VoidCallback onOpenFavorites;
+  final VoidCallback onOpenNotifications;
+  final VoidCallback onOpenLearningPath;
+  final VoidCallback onOpenSupport;
+  final VoidCallback onOpenProgress;
+  final VoidCallback onOpenPlanner;
+  final VoidCallback onOpenWallet;
+  final VoidCallback onOpenJournal;
+  final VoidCallback onOpenResources;
+  final VoidCallback onOpenCommunity;
+  final VoidCallback onOpenPractice;
+  final VoidCallback onOpenCertificates;
+  final VoidCallback onOpenLiveEvents;
+  final VoidCallback onOpenPlacementTest;
+  final VoidCallback onOpenCoachTips;
+  final VoidCallback onOpenInsights;
+  final VoidCallback onOpenStreaks;
+  final VoidCallback onOpenRewards;
+  final VoidCallback onOpenFeedback;
+  final VoidCallback onOpenLeaderboard;
+  final VoidCallback onOpenImmersion;
+  final VoidCallback onOpenMentorChat;
+  final VoidCallback onOpenProjects;
+  final VoidCallback onOpenCapstoneReviews;
+  final VoidCallback onOpenDownloadKits;
+  final VoidCallback onOpenCareerCenter;
+  final VoidCallback onOpenInterviewPrep;
+  final VoidCallback onOpenAlumniNetwork;
+  final VoidCallback onOpenSuccessStories;
+  final VoidCallback onOpenScholarships;
+  final VoidCallback onOpenMobility;
+  final VoidCallback onOpenBranding;
+  final VoidCallback onLogout;
+
+  @override
+  State<ProfileHost> createState() => _ProfileHostState();
+}
+
+class _ProfileHostState extends State<ProfileHost> {
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: Listenable.merge([widget.themeController, widget.localeController, widget.favoritesController]),
+      builder: (context, _) {
+        return ProfileScreen(
+          theme: widget.themeController,
+          locale: widget.localeController,
+          favoritesController: widget.favoritesController,
+          onOpenSettings: widget.onOpenSettings,
+          onOpenFavorites: widget.onOpenFavorites,
+          onOpenNotifications: widget.onOpenNotifications,
+          onOpenLearningPath: widget.onOpenLearningPath,
+          onOpenSupport: widget.onOpenSupport,
+          onOpenProgress: widget.onOpenProgress,
+          onOpenPlanner: widget.onOpenPlanner,
+          onOpenWallet: widget.onOpenWallet,
+          onOpenJournal: widget.onOpenJournal,
+          onOpenResources: widget.onOpenResources,
+          onOpenCommunity: widget.onOpenCommunity,
+          onOpenPractice: widget.onOpenPractice,
+          onOpenCertificates: widget.onOpenCertificates,
+          onOpenLiveEvents: widget.onOpenLiveEvents,
+          onOpenPlacementTest: widget.onOpenPlacementTest,
+          onOpenCoachTips: widget.onOpenCoachTips,
+          onOpenInsights: widget.onOpenInsights,
+          onOpenStreaks: widget.onOpenStreaks,
+          onOpenRewards: widget.onOpenRewards,
+          onOpenFeedback: widget.onOpenFeedback,
+          onOpenLeaderboard: widget.onOpenLeaderboard,
+          onOpenImmersion: widget.onOpenImmersion,
+          onOpenMentorChat: widget.onOpenMentorChat,
+          onOpenProjects: widget.onOpenProjects,
+          onOpenCapstoneReviews: widget.onOpenCapstoneReviews,
+          onOpenDownloadKits: widget.onOpenDownloadKits,
+          onOpenCareerCenter: widget.onOpenCareerCenter,
+          onOpenInterviewPrep: widget.onOpenInterviewPrep,
+          onOpenAlumniNetwork: widget.onOpenAlumniNetwork,
+          onOpenSuccessStories: widget.onOpenSuccessStories,
+          onOpenScholarships: widget.onOpenScholarships,
+          onOpenMobility: widget.onOpenMobility,
+          onOpenBranding: widget.onOpenBranding,
+          onLogout: widget.onLogout,
+        );
+      },
+    );
+  }
+}
