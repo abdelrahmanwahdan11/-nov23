@@ -524,3 +524,51 @@ class PortfolioItem {
   final String coverImage;
   final String highlight;
 }
+
+class CareerGuide {
+  CareerGuide({
+    required this.id,
+    required this.title,
+    required this.category,
+    required this.duration,
+    required this.summary,
+  });
+
+  final String id;
+  final String title;
+  final String category;
+  final String duration;
+  final String summary;
+}
+
+class InterviewQuestion {
+  InterviewQuestion({
+    required this.id,
+    required this.question,
+    required this.answer,
+    required this.level,
+  });
+
+  final String id;
+  final String question;
+  final String answer;
+  final String level;
+}
+
+class AlumniSpotlight {
+  AlumniSpotlight({
+    required this.id,
+    required this.name,
+    required this.role,
+    required this.company,
+    required this.story,
+    required this.avatarUrl,
+  });
+
+  final String id;
+  final String name;
+  final String role;
+  final String company;
+  final String story;
+  final String avatarUrl;
+}

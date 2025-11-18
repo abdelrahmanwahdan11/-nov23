@@ -37,6 +37,9 @@ import 'mentor_chat_screen.dart';
 import 'projects_screen.dart';
 import 'capstone_review_screen.dart';
 import 'download_kits_screen.dart';
+import 'career_center_screen.dart';
+import 'interview_prep_screen.dart';
+import 'alumni_network_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({
@@ -112,6 +115,9 @@ class _MainShellState extends State<MainShell> {
         onOpenProjects: _openProjects,
         onOpenCapstoneReviews: _openCapstoneReviews,
         onOpenDownloadKits: _openDownloadKits,
+        onOpenCareerCenter: _openCareerCenter,
+        onOpenInterviewPrep: _openInterviewPrep,
+        onOpenAlumniNetwork: _openAlumniNetwork,
       ),
       CatalogScreen(
         controller: catalogController,
@@ -262,5 +268,17 @@ class _MainShellState extends State<MainShell> {
 
   void _openDownloadKits() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => DownloadKitsScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openCareerCenter() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => CareerCenterScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openInterviewPrep() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => InterviewPrepScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openAlumniNetwork() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => AlumniNetworkScreen(onOpenSettings: _openSettings)));
   }
 }

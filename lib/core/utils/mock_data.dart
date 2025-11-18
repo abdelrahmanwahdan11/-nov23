@@ -836,3 +836,75 @@ final portfolioItems = [
     highlight: 'Includes bilingual glossary and timeline snapshot.',
   ),
 ];
+
+final careerGuides = [
+  CareerGuide(
+    id: 'cg1',
+    title: 'Tech interview warmups',
+    category: 'Interview prep',
+    duration: '18 mins',
+    summary: 'Shadow bilingual answers for product and engineering screens.',
+  ),
+  CareerGuide(
+    id: 'cg2',
+    title: 'Pitch your portfolio',
+    category: 'Portfolio',
+    duration: '12 mins',
+    summary: 'Craft a 90-second story tying projects to business impact.',
+  ),
+  CareerGuide(
+    id: 'cg3',
+    title: 'First 90 days plan',
+    category: 'Career step',
+    duration: '15 mins',
+    summary: 'Map weekly language routines for onboarding success.',
+  ),
+];
+
+final interviewQuestions = [
+  InterviewQuestion(
+    id: 'iq1',
+    question: 'Tell me about a time you handled a tricky client.',
+    answer: 'Use STAR with concise Turkish framing and note empathy phrases.',
+    level: 'Intermediate',
+  ),
+  InterviewQuestion(
+    id: 'iq2',
+    question: 'How would you prioritize features for a launch?',
+    answer: 'Show tradeoffs, mention Turkish market examples, and summarize clearly.',
+    level: 'Advanced',
+  ),
+  InterviewQuestion(
+    id: 'iq3',
+    question: 'Walk me through your proudest bilingual project.',
+    answer: 'Highlight outcomes, lessons, and phrases that resonated with users.',
+    level: 'Advanced',
+  ),
+];
+
+final alumniStories = [
+  AlumniSpotlight(
+    id: 'al1',
+    name: 'Sara Y.',
+    role: 'Product Designer',
+    company: 'Ankara Labs',
+    story: 'Used phrase drills to land a cross-border role and now mentors peers.',
+    avatarUrl: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg',
+  ),
+  AlumniSpotlight(
+    id: 'al2',
+    name: 'Murat K.',
+    role: 'Customer Success',
+    company: 'Global SaaS',
+    story: 'Built confidence through immersion sprints and mock escalations.',
+    avatarUrl: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg',
+  ),
+  AlumniSpotlight(
+    id: 'al3',
+    name: 'Amel B.',
+    role: 'Business Analyst',
+    company: 'Eurasia Tech',
+    story: 'Finished capstone review, showcased portfolio, and earned promotion.',
+    avatarUrl: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg',
+  ),
+];

@@ -15,6 +15,9 @@ import 'fluency_plan_screen.dart';
 import 'phrasebook_screen.dart';
 import 'mastery_readiness_screen.dart';
 import 'portfolio_showcase_screen.dart';
+import 'career_center_screen.dart';
+import 'interview_prep_screen.dart';
+import 'alumni_network_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen(
@@ -44,7 +47,10 @@ class HomeScreen extends StatefulWidget {
       required this.onOpenMentorChat,
       required this.onOpenProjects,
       required this.onOpenCapstoneReviews,
-      required this.onOpenDownloadKits});
+      required this.onOpenDownloadKits,
+      required this.onOpenCareerCenter,
+      required this.onOpenInterviewPrep,
+      required this.onOpenAlumniNetwork});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onOpenSettings;
   final VoidCallback onOpenNotifications;
@@ -71,6 +77,9 @@ class HomeScreen extends StatefulWidget {
   final VoidCallback onOpenProjects;
   final VoidCallback onOpenCapstoneReviews;
   final VoidCallback onOpenDownloadKits;
+  final VoidCallback onOpenCareerCenter;
+  final VoidCallback onOpenInterviewPrep;
+  final VoidCallback onOpenAlumniNetwork;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -108,6 +117,24 @@ class _HomeScreenState extends State<HomeScreen> {
   void _openPhrasebook() {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => PhrasebookScreen(onOpenSettings: widget.onOpenSettings),
+    ));
+  }
+
+  void _openCareerCenter() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => CareerCenterScreen(onOpenSettings: widget.onOpenSettings),
+    ));
+  }
+
+  void _openInterviewPrep() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => InterviewPrepScreen(onOpenSettings: widget.onOpenSettings),
+    ));
+  }
+
+  void _openAlumniNetwork() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => AlumniNetworkScreen(onOpenSettings: widget.onOpenSettings),
     ));
   }
 
@@ -215,6 +242,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   _QuickActionChip(icon: Icons.calendar_today, label: 'Planner', onTap: widget.onOpenPlanner),
                   _QuickActionChip(icon: Icons.wallet, label: 'Wallet', onTap: widget.onOpenWallet),
                   _QuickActionChip(icon: Icons.menu_book, label: 'Resources', onTap: widget.onOpenResources),
+                  _QuickActionChip(icon: Icons.work_outline, label: 'Career center', onTap: _openCareerCenter),
+                  _QuickActionChip(icon: Icons.mic_none_outlined, label: 'Interview prep', onTap: _openInterviewPrep),
+                  _QuickActionChip(icon: Icons.groups_2_outlined, label: 'Alumni network', onTap: _openAlumniNetwork),
                   _QuickActionChip(icon: Icons.forum_outlined, label: 'Community', onTap: widget.onOpenCommunity),
                   _QuickActionChip(icon: Icons.emoji_events_outlined, label: 'Leaderboard', onTap: widget.onOpenLeaderboard),
                   _QuickActionChip(icon: Icons.fitness_center_outlined, label: 'Practice lab', onTap: widget.onOpenPractice),
@@ -249,6 +279,61 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   _FluencyPreview(onTap: _openFluencyPlan),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: Colors.grey.withOpacity(0.12)),
+                ),
+                child: Row(
+                  children: [
+                    CircleAvatar(radius: 28, backgroundImage: NetworkImage(alumniStories.first.avatarUrl)),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Alumni spotlight', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(alumniStories.first.story, maxLines: 2, overflow: TextOverflow.ellipsis),
+                        ],
+                      ),
+                    ),
+                    OutlinedButton(onPressed: _openAlumniNetwork, child: const Text('View')),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Career runway', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: _openCareerCenter, child: const Text('Open center')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 160,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: careerGuides.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (context, index) => _CareerPreview(guide: careerGuides[index], onTap: _openCareerCenter),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -1069,6 +1154,58 @@ class _PortfolioPreview extends StatelessWidget {
                 Text(item.status, style: Theme.of(context).textTheme.bodySmall),
                 const Spacer(),
                 Icon(Icons.arrow_forward_ios, size: 14, color: Theme.of(context).colorScheme.primary),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CareerPreview extends StatelessWidget {
+  const _CareerPreview({required this.guide, required this.onTap});
+  final CareerGuide guide;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 180,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey.withOpacity(0.12)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(guide.category, style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 12)),
+            ),
+            const SizedBox(height: 8),
+            Text(guide.title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800)),
+            const SizedBox(height: 6),
+            Text(guide.summary, maxLines: 3, overflow: TextOverflow.ellipsis),
+            const Spacer(),
+            Row(
+              children: [
+                Icon(Icons.schedule, size: 16, color: Theme.of(context).colorScheme.primary),
+                const SizedBox(width: 4),
+                Text(guide.duration, style: Theme.of(context).textTheme.bodySmall),
+                const Spacer(),
+                const Icon(Icons.arrow_forward_ios, size: 14),
               ],
             )
           ],

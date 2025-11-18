@@ -39,6 +39,9 @@ class ProfileScreen extends StatelessWidget {
       required this.onOpenProjects,
       required this.onOpenCapstoneReviews,
       required this.onOpenDownloadKits,
+      required this.onOpenCareerCenter,
+      required this.onOpenInterviewPrep,
+      required this.onOpenAlumniNetwork,
       required this.onOpenFeedback,
       required this.onLogout});
   final ThemeController theme;
@@ -69,6 +72,9 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onOpenProjects;
   final VoidCallback onOpenCapstoneReviews;
   final VoidCallback onOpenDownloadKits;
+  final VoidCallback onOpenCareerCenter;
+  final VoidCallback onOpenInterviewPrep;
+  final VoidCallback onOpenAlumniNetwork;
   final VoidCallback onOpenFeedback;
   final VoidCallback onLogout;
 
@@ -194,6 +200,24 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Audio drills, guides, downloads'),
             leading: const Icon(Icons.library_books_outlined),
             onTap: onOpenResources,
+          ),
+          ListTile(
+            title: const Text('Career center'),
+            subtitle: const Text('Guides, alumni wins, and meetups'),
+            leading: const Icon(Icons.work_outline),
+            onTap: onOpenCareerCenter,
+          ),
+          ListTile(
+            title: const Text('Interview prep'),
+            subtitle: const Text('Shadow questions and record answers'),
+            leading: const Icon(Icons.mic_none_outlined),
+            onTap: onOpenInterviewPrep,
+          ),
+          ListTile(
+            title: const Text('Alumni network'),
+            subtitle: const Text('Learn from grads and RSVP to meetups'),
+            leading: const Icon(Icons.groups_2_outlined),
+            onTap: onOpenAlumniNetwork,
           ),
           ListTile(
             title: const Text('Phrasebook'),

@@ -44,6 +44,9 @@ import 'features/home/mentor_chat_screen.dart';
 import 'features/home/projects_screen.dart';
 import 'features/home/capstone_review_screen.dart';
 import 'features/home/download_kits_screen.dart';
+import 'features/home/career_center_screen.dart';
+import 'features/home/interview_prep_screen.dart';
+import 'features/home/alumni_network_screen.dart';
 
 void main() {
   runApp(const LinguaTutorApp());
@@ -183,6 +186,9 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
           onOpenProjects: () => _openProjects(context),
           onOpenCapstoneReviews: () => _openCapstoneReviews(context),
           onOpenDownloadKits: () => _openDownloadKits(context),
+          onOpenCareerCenter: () => _openCareerCenter(context),
+          onOpenInterviewPrep: () => _openInterviewPrep(context),
+          onOpenAlumniNetwork: () => _openAlumniNetwork(context),
           onLogout: () {
         setState(() {});
       }),
@@ -372,6 +378,24 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
     ));
   }
 
+  void _openCareerCenter(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => CareerCenterScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openInterviewPrep(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => InterviewPrepScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openAlumniNetwork(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => AlumniNetworkScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
   void _openCoachTips(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => CoachTipsScreen(onOpenSettings: () => _openSettings(context)),
@@ -417,6 +441,9 @@ class ProfileHost extends StatefulWidget {
       required this.onOpenProjects,
       required this.onOpenCapstoneReviews,
       required this.onOpenDownloadKits,
+      required this.onOpenCareerCenter,
+      required this.onOpenInterviewPrep,
+      required this.onOpenAlumniNetwork,
       required this.onLogout});
   final ThemeController themeController;
   final LocalizationController localeController;
@@ -447,6 +474,9 @@ class ProfileHost extends StatefulWidget {
   final VoidCallback onOpenProjects;
   final VoidCallback onOpenCapstoneReviews;
   final VoidCallback onOpenDownloadKits;
+  final VoidCallback onOpenCareerCenter;
+  final VoidCallback onOpenInterviewPrep;
+  final VoidCallback onOpenAlumniNetwork;
   final VoidCallback onLogout;
 
   @override
@@ -489,6 +519,9 @@ class _ProfileHostState extends State<ProfileHost> {
           onOpenProjects: widget.onOpenProjects,
           onOpenCapstoneReviews: widget.onOpenCapstoneReviews,
           onOpenDownloadKits: widget.onOpenDownloadKits,
+          onOpenCareerCenter: widget.onOpenCareerCenter,
+          onOpenInterviewPrep: widget.onOpenInterviewPrep,
+          onOpenAlumniNetwork: widget.onOpenAlumniNetwork,
           onLogout: widget.onLogout,
         );
       },
