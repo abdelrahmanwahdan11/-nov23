@@ -1,0 +1,22 @@
+name: lingua_tutor
+description: Front-end only mock of LinguaTutor booking UI.
+version: 0.1.0
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.24.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  google_fonts: ^6.0.0
+  shared_preferences: ^2.2.0
+  iconly: ^1.0.0
+  flutter_animate: ^4.5.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/l10n/

@@ -1,0 +1,20 @@
+{
+  "app_title": "لينغوا تيودر",
+  "btn_continue": "متابعة",
+  "btn_get_started": "ابدأ الآن",
+  "home_title": "مدرّسو اللغة التركية",
+  "skip": "تخطي",
+  "login": "تسجيل الدخول",
+  "signup": "إنشاء حساب",
+  "guest": "المتابعة كضيف",
+  "catalog": "الكتالوج",
+  "bookings": "حجوزاتي",
+  "profile": "حسابي",
+  "home": "الرئيسية",
+  "search": "بحث",
+  "compare": "قارن المدرسين",
+  "book_trial": "احجز درس تجريبي",
+  "confirm_booking": "تأكيد الحجز",
+  "pay_for_session": "ادفع للجلسة",
+  "success_message": "تهانينا! تم حجز الدرس."
+}
