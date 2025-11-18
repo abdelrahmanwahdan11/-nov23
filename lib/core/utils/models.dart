@@ -172,3 +172,49 @@ class ResourceItem {
   final String duration;
   final String description;
 }
+
+class CommunityPost {
+  CommunityPost({
+    required this.id,
+    required this.author,
+    required this.avatarUrl,
+    required this.title,
+    required this.body,
+    required this.timeAgo,
+    required this.likes,
+    required this.comments,
+    required this.tags,
+  });
+
+  final String id;
+  final String author;
+  final String avatarUrl;
+  final String title;
+  final String body;
+  final String timeAgo;
+  final int likes;
+  final int comments;
+  final List<String> tags;
+}
+
+class PracticeDrill {
+  PracticeDrill({
+    required this.id,
+    required this.title,
+    required this.focus,
+    required this.duration,
+    required this.difficulty,
+    required this.energy,
+    required this.description,
+    this.isNew = false,
+  });
+
+  final String id;
+  final String title;
+  final String focus;
+  final String duration;
+  final String difficulty;
+  final String energy;
+  final String description;
+  final bool isNew;
+}

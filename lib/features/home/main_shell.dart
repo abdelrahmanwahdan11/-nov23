@@ -21,6 +21,8 @@ import 'home_screen.dart';
 import 'progress_dashboard_screen.dart';
 import '../booking/session_details_screen.dart';
 import 'resources_screen.dart';
+import 'community_screen.dart';
+import 'practice_lab_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key, required this.onTutorTap, required this.onLogout, required this.profileBuilder, required this.themeController, required this.localizationController, required this.favoritesController});
@@ -72,6 +74,8 @@ class _MainShellState extends State<MainShell> {
         onOpenPlanner: _openPlanner,
         onOpenWallet: _openWallet,
         onOpenResources: _openResources,
+        onOpenCommunity: _openCommunity,
+        onOpenPractice: _openPractice,
       ),
       CatalogScreen(
         controller: catalogController,
@@ -157,5 +161,13 @@ class _MainShellState extends State<MainShell> {
 
   void _openResources() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => ResourcesScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openCommunity() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => CommunityScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openPractice() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => PracticeLabScreen(onOpenSettings: _openSettings)));
   }
 }

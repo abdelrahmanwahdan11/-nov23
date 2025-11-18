@@ -20,6 +20,8 @@ class ProfileScreen extends StatelessWidget {
       required this.onOpenWallet,
       required this.onOpenJournal,
       required this.onOpenResources,
+      required this.onOpenCommunity,
+      required this.onOpenPractice,
       required this.onLogout});
   final ThemeController theme;
   final LocalizationController locale;
@@ -34,6 +36,8 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onOpenWallet;
   final VoidCallback onOpenJournal;
   final VoidCallback onOpenResources;
+  final VoidCallback onOpenCommunity;
+  final VoidCallback onOpenPractice;
   final VoidCallback onLogout;
 
   @override
@@ -115,6 +119,18 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Audio drills, guides, downloads'),
             leading: const Icon(Icons.library_books_outlined),
             onTap: onOpenResources,
+          ),
+          ListTile(
+            title: const Text('Community'),
+            subtitle: const Text('Swap tips and join challenges'),
+            leading: const Icon(Icons.forum_outlined),
+            onTap: onOpenCommunity,
+          ),
+          ListTile(
+            title: const Text('Practice lab'),
+            subtitle: const Text('Quick drills to prep before lessons'),
+            leading: const Icon(Icons.fitness_center_outlined),
+            onTap: onOpenPractice,
           ),
           ListTile(
             title: const Text('Help & support'),

@@ -28,6 +28,8 @@ import 'features/home/notifications_screen.dart';
 import 'features/home/learning_path_screen.dart';
 import 'features/home/progress_dashboard_screen.dart';
 import 'features/booking/planner_screen.dart';
+import 'features/home/community_screen.dart';
+import 'features/home/practice_lab_screen.dart';
 
 void main() {
   runApp(const LinguaTutorApp());
@@ -151,6 +153,8 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
           onOpenWallet: () => _openWallet(context),
           onOpenJournal: () => _openJournal(context),
           onOpenResources: () => _openResources(context),
+          onOpenCommunity: () => _openCommunity(context),
+          onOpenPractice: () => _openPractice(context),
           onLogout: () {
         setState(() {});
       }),
@@ -255,6 +259,18 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
       builder: (_) => ResourcesScreen(onOpenSettings: () => _openSettings(context)),
     ));
   }
+
+  void _openCommunity(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => CommunityScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openPractice(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => PracticeLabScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
 }
 
 class ProfileHost extends StatefulWidget {
@@ -273,6 +289,8 @@ class ProfileHost extends StatefulWidget {
       required this.onOpenWallet,
       required this.onOpenJournal,
       required this.onOpenResources,
+      required this.onOpenCommunity,
+      required this.onOpenPractice,
       required this.onLogout});
   final ThemeController themeController;
   final LocalizationController localeController;
@@ -287,6 +305,8 @@ class ProfileHost extends StatefulWidget {
   final VoidCallback onOpenWallet;
   final VoidCallback onOpenJournal;
   final VoidCallback onOpenResources;
+  final VoidCallback onOpenCommunity;
+  final VoidCallback onOpenPractice;
   final VoidCallback onLogout;
 
   @override
@@ -313,6 +333,8 @@ class _ProfileHostState extends State<ProfileHost> {
           onOpenWallet: widget.onOpenWallet,
           onOpenJournal: widget.onOpenJournal,
           onOpenResources: widget.onOpenResources,
+          onOpenCommunity: widget.onOpenCommunity,
+          onOpenPractice: widget.onOpenPractice,
           onLogout: widget.onLogout,
         );
       },

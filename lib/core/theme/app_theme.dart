@@ -19,11 +19,12 @@ ThemeData buildTheme({Color primary = AppColors.primary, Brightness brightness =
     cardColor: AppColors.card,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: brightness == Brightness.dark ? Colors.grey.shade900 : AppColors.card,
-      selectedItemColor: AppColors.primary,
-      unselectedItemColor: AppColors.textSecondary,
-      selectedIconTheme: const IconThemeData(color: AppColors.primary),
-      unselectedIconTheme: const IconThemeData(color: AppColors.textSecondary),
+      selectedItemColor: primary,
+      unselectedItemColor: brightness == Brightness.dark ? Colors.grey.shade300 : Colors.grey.shade600,
+      selectedIconTheme: IconThemeData(color: primary),
+      unselectedIconTheme: IconThemeData(color: brightness == Brightness.dark ? Colors.grey.shade300 : Colors.grey.shade600),
       type: BottomNavigationBarType.fixed,
+      selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
     ),
     textTheme: baseText.copyWith(
       headlineLarge: baseText.headlineLarge?.copyWith(fontWeight: FontWeight.bold, fontSize: 30),
