@@ -16,6 +16,8 @@ import '../search/search_screen.dart';
 import 'learning_path_screen.dart';
 import 'notifications_screen.dart';
 import 'home_screen.dart';
+import 'progress_dashboard_screen.dart';
+import '../booking/session_details_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key, required this.onTutorTap, required this.onLogout, required this.profileBuilder, required this.themeController, required this.localizationController, required this.favoritesController});
@@ -63,14 +65,16 @@ class _MainShellState extends State<MainShell> {
         onOpenFavorites: _openFavorites,
         onOpenLearningPath: _openLearningPath,
         favoritesController: favoritesController,
+        onOpenProgress: _openProgress,
       ),
       CatalogScreen(
         controller: catalogController,
         onCompare: () {},
         onTutorTap: widget.onTutorTap,
         favoritesController: favoritesController,
+        onOpenSettings: _openSettings,
       ),
-      const BookingsScreen(),
+      BookingsScreen(onOpenSettings: _openSettings, onOpenSession: _openSession),
       widget.profileBuilder(setState),
     ];
 
@@ -120,5 +124,17 @@ class _MainShellState extends State<MainShell> {
 
   void _openLearningPath() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LearningPathScreen()));
+  }
+
+  void _openProgress() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProgressDashboardScreen()));
+  }
+
+  void _openSession(LessonSession session) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => SessionDetailsScreen(
+              session: session,
+              onOpenSettings: _openSettings,
+            )));
   }
 }

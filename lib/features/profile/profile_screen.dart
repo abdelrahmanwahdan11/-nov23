@@ -5,7 +5,7 @@ import '../../core/controllers/theme_controller.dart';
 import '../../core/utils/mock_data.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key, required this.theme, required this.locale, required this.favoritesController, required this.onOpenSettings, required this.onOpenFavorites, required this.onOpenNotifications, required this.onOpenLearningPath, required this.onLogout});
+  const ProfileScreen({super.key, required this.theme, required this.locale, required this.favoritesController, required this.onOpenSettings, required this.onOpenFavorites, required this.onOpenNotifications, required this.onOpenLearningPath, required this.onOpenSupport, required this.onOpenProgress, required this.onLogout});
   final ThemeController theme;
   final LocalizationController locale;
   final FavoritesController favoritesController;
@@ -13,6 +13,8 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onOpenFavorites;
   final VoidCallback onOpenNotifications;
   final VoidCallback onOpenLearningPath;
+  final VoidCallback onOpenSupport;
+  final VoidCallback onOpenProgress;
   final VoidCallback onLogout;
 
   @override
@@ -61,6 +63,18 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Track milestones and streaks'),
             leading: const Icon(Icons.bolt),
             onTap: onOpenLearningPath,
+          ),
+          ListTile(
+            title: const Text('Progress dashboard'),
+            subtitle: const Text('Achievements and speaking minutes'),
+            leading: const Icon(Icons.insights),
+            onTap: onOpenProgress,
+          ),
+          ListTile(
+            title: const Text('Help & support'),
+            subtitle: const Text('FAQs, privacy, and live assistance'),
+            leading: const Icon(Icons.support_agent),
+            onTap: onOpenSupport,
           ),
           const SizedBox(height: 12),
           ElevatedButton(onPressed: onLogout, child: const Text('Sign out')),

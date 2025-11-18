@@ -19,9 +19,11 @@ import 'features/payments/success_screen.dart';
 import 'features/profile/favorites_screen.dart';
 import 'features/profile/profile_screen.dart';
 import 'features/profile/settings_screen.dart';
+import 'features/profile/support_screen.dart';
 import 'features/tutor_details/tutor_details_screen.dart';
 import 'features/home/notifications_screen.dart';
 import 'features/home/learning_path_screen.dart';
+import 'features/home/progress_dashboard_screen.dart';
 
 void main() {
   runApp(const LinguaTutorApp());
@@ -39,21 +41,34 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
   final localizationController = LocalizationController();
   final authController = AuthController();
   final favoritesController = FavoritesController();
+  bool _onboardingDone = false;
+  bool _goalSelected = false;
 
   @override
   void initState() {
     super.initState();
     themeController.load();
     authController.load();
+    authController.addListener(_syncAuthProgress);
   }
 
   @override
   void dispose() {
     themeController.dispose();
     localizationController.dispose();
+    authController.removeListener(_syncAuthProgress);
     authController.dispose();
     favoritesController.dispose();
     super.dispose();
+  }
+
+  void _syncAuthProgress() {
+    if (authController.isLoggedIn && (!_onboardingDone || !_goalSelected)) {
+      setState(() {
+        _onboardingDone = true;
+        _goalSelected = true;
+      });
+    }
   }
 
   @override
@@ -85,41 +100,53 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
 
   List<Page> _pages() {
     final List<Page> stack = [];
-    stack.add(MaterialPage(
-        child: OnboardingStoryScreen(
-      onFinished: () => setState(() {}),
-    )));
-    stack.add(MaterialPage(
-        child: GoalSelectionScreen(
-      onContinue: () => setState(() {}),
-    )));
-    stack.add(MaterialPage(
-        child: LoginScreen(
-      controller: authController,
-      onSuccess: () => setState(() {}),
-      onGuest: () => setState(() {}),
-    ))));
-    if (authController.isLoggedIn || true) {
+    if (!_onboardingDone) {
       stack.add(MaterialPage(
-          child: MainShell(
-        onTutorTap: _openTutor,
-        onLogout: () => authController.logout(),
-        themeController: themeController,
-        localizationController: localizationController,
-        favoritesController: favoritesController,
-        profileBuilder: (setStateCallback) => ProfileHost(
-            themeController: themeController,
-            localeController: localizationController,
-            favoritesController: favoritesController,
-            onOpenSettings: () => _openSettings(context),
-            onOpenFavorites: () => _openFavorites(context),
-            onOpenNotifications: () => _openNotifications(context),
-            onOpenLearningPath: () => _openLearningPath(context),
-            onLogout: () {
-          setState(() {});
-        }),
+          child: OnboardingStoryScreen(
+        onFinished: () => setState(() => _onboardingDone = true),
       )));
+      return stack;
     }
+    if (!_goalSelected) {
+      stack.add(MaterialPage(
+          child: GoalSelectionScreen(
+        onContinue: () => setState(() => _goalSelected = true),
+      )));
+      return stack;
+    }
+    if (!authController.isLoggedIn) {
+      stack.add(MaterialPage(
+          child: LoginScreen(
+        controller: authController,
+        onSuccess: () => setState(() {}),
+        onGuest: () {
+          authController.continueAsGuest();
+          setState(() {});
+        },
+      ))));
+      return stack;
+    }
+    stack.add(MaterialPage(
+        child: MainShell(
+      onTutorTap: _openTutor,
+      onLogout: () => authController.logout(),
+      themeController: themeController,
+      localizationController: localizationController,
+      favoritesController: favoritesController,
+      profileBuilder: (setStateCallback) => ProfileHost(
+          themeController: themeController,
+          localeController: localizationController,
+          favoritesController: favoritesController,
+          onOpenSettings: () => _openSettings(context),
+          onOpenFavorites: () => _openFavorites(context),
+          onOpenNotifications: () => _openNotifications(context),
+          onOpenLearningPath: () => _openLearningPath(context),
+          onOpenSupport: () => _openSupport(context),
+          onOpenProgress: () => _openProgress(context),
+          onLogout: () {
+        setState(() {});
+      }),
+    )));
     return stack;
   }
 
@@ -182,6 +209,18 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
       builder: (_) => const LearningPathScreen(),
     ));
   }
+
+  void _openSupport(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => const SupportScreen(),
+    ));
+  }
+
+  void _openProgress(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => const ProgressDashboardScreen(),
+    ));
+  }
 }
 
 class ProfileHost extends StatefulWidget {
@@ -194,6 +233,8 @@ class ProfileHost extends StatefulWidget {
       required this.onOpenFavorites,
       required this.onOpenNotifications,
       required this.onOpenLearningPath,
+      required this.onOpenSupport,
+      required this.onOpenProgress,
       required this.onLogout});
   final ThemeController themeController;
   final LocalizationController localeController;
@@ -202,6 +243,8 @@ class ProfileHost extends StatefulWidget {
   final VoidCallback onOpenFavorites;
   final VoidCallback onOpenNotifications;
   final VoidCallback onOpenLearningPath;
+  final VoidCallback onOpenSupport;
+  final VoidCallback onOpenProgress;
   final VoidCallback onLogout;
 
   @override
@@ -222,6 +265,8 @@ class _ProfileHostState extends State<ProfileHost> {
           onOpenFavorites: widget.onOpenFavorites,
           onOpenNotifications: widget.onOpenNotifications,
           onOpenLearningPath: widget.onOpenLearningPath,
+          onOpenSupport: widget.onOpenSupport,
+          onOpenProgress: widget.onOpenProgress,
           onLogout: widget.onLogout,
         );
       },

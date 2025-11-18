@@ -12,13 +12,14 @@ import '../../core/widgets/skeleton_loader.dart';
 import '../../core/widgets/tutor_card.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.onTutorTap, required this.onOpenSettings, required this.onOpenNotifications, required this.onOpenFavorites, required this.onOpenLearningPath, required this.favoritesController});
+  const HomeScreen({super.key, required this.onTutorTap, required this.onOpenSettings, required this.onOpenNotifications, required this.onOpenFavorites, required this.onOpenLearningPath, required this.favoritesController, required this.onOpenProgress});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onOpenSettings;
   final VoidCallback onOpenNotifications;
   final VoidCallback onOpenFavorites;
   final VoidCallback onOpenLearningPath;
   final FavoritesController favoritesController;
+  final VoidCallback onOpenProgress;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -128,6 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       _QuickActionChip(icon: Icons.bolt, label: 'Learning path', onTap: widget.onOpenLearningPath),
                       _QuickActionChip(icon: Icons.favorite, label: 'Favorites', onTap: widget.onOpenFavorites),
                       _QuickActionChip(icon: Icons.notifications_active, label: 'Alerts', onTap: widget.onOpenNotifications),
+                      _QuickActionChip(icon: Icons.insights, label: 'Progress', onTap: widget.onOpenProgress),
                     ],
                   ),
                 ],

@@ -3,7 +3,10 @@ import '../../core/utils/mock_data.dart';
 import '../../core/utils/models.dart';
 
 class BookingsScreen extends StatelessWidget {
-  const BookingsScreen({super.key});
+  const BookingsScreen({super.key, required this.onOpenSettings, required this.onOpenSession});
+
+  final VoidCallback onOpenSettings;
+  final void Function(LessonSession session) onOpenSession;
 
   @override
   Widget build(BuildContext context) {
@@ -12,19 +15,20 @@ class BookingsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Bookings'),
+          actions: [IconButton(onPressed: onOpenSettings, icon: const Icon(Icons.settings_outlined))],
           bottom: const TabBar(tabs: [Tab(text: 'Upcoming'), Tab(text: 'Past')]),
         ),
         body: TabBarView(
           children: [
             _buildList(mockSessions),
-            _buildList(const []),
+            _buildList(pastSessions, isPast: true),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildList(List<LessonSession> sessions) {
+  Widget _buildList(List<LessonSession> sessions, {bool isPast = false}) {
     if (sessions.isEmpty) return const Center(child: Text('No sessions'));
     return RefreshIndicator(
       onRefresh: () async {},
@@ -38,8 +42,23 @@ class BookingsScreen extends StatelessWidget {
             child: ListTile(
               leading: const CircleAvatar(backgroundImage: NetworkImage('https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg')),
               title: Text('${session.language} • ${session.durationMinutes} min'),
-              subtitle: Text('${session.time} on ${session.date.toLocal().toString().split(' ').first}'),
-              trailing: ElevatedButton(onPressed: () {}, child: const Text('Join')),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${session.time} on ${session.date.toLocal().toString().split(' ').first}'),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Chip(label: Text(session.isTrial ? 'Trial' : 'Paid')),
+                      const SizedBox(width: 6),
+                      Chip(label: Text(isPast ? 'Completed' : 'Confirmed')),
+                    ],
+                  )
+                ],
+              ),
+              trailing: isPast
+                  ? TextButton(onPressed: () => onOpenSession(session), child: const Text('Details'))
+                  : ElevatedButton(onPressed: () => onOpenSession(session), child: const Text('Join')),
             ),
           );
         },

@@ -25,4 +25,9 @@ class AuthController extends ChangeNotifier {
     isLoggedIn = false;
     notifyListeners();
   }
+
+  void continueAsGuest() {
+    isLoggedIn = true;
+    notifyListeners();
+  }
 }

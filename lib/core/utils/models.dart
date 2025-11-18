@@ -102,3 +102,28 @@ class LearningMilestone {
   final String subtitle;
   final double progress;
 }
+
+class SessionStep {
+  SessionStep({required this.label, required this.description, required this.isDone});
+
+  final String label;
+  final String description;
+  final bool isDone;
+}
+
+class Achievement {
+  Achievement({required this.id, required this.title, required this.subtitle, required this.progress, this.earned = false});
+
+  final String id;
+  final String title;
+  final String subtitle;
+  final double progress;
+  final bool earned;
+}
+
+class FaqItem {
+  FaqItem({required this.question, required this.answer});
+
+  final String question;
+  final String answer;
+}

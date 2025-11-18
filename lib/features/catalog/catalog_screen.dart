@@ -7,11 +7,12 @@ import '../../core/widgets/filter_chip.dart';
 import '../../core/widgets/tutor_card.dart';
 
 class CatalogScreen extends StatefulWidget {
-  const CatalogScreen({super.key, required this.controller, required this.onCompare, required this.onTutorTap, required this.favoritesController});
+  const CatalogScreen({super.key, required this.controller, required this.onCompare, required this.onTutorTap, required this.favoritesController, required this.onOpenSettings});
   final CatalogController controller;
   final VoidCallback onCompare;
   final void Function(Tutor tutor) onTutorTap;
   final FavoritesController favoritesController;
+  final VoidCallback onOpenSettings;
 
   @override
   State<CatalogScreen> createState() => _CatalogScreenState();
@@ -30,6 +31,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
           onChanged: (value) => setState(() {}),
         ),
         actions: [
+          IconButton(onPressed: widget.onOpenSettings, icon: const Icon(Icons.settings_outlined)),
           IconButton(icon: Icon(grid ? Icons.view_list : Icons.grid_view), onPressed: () => setState(() => grid = !grid)),
         ],
       ),

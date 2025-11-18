@@ -55,6 +55,19 @@ final mockSessions = [
   ),
 ];
 
+final pastSessions = [
+  LessonSession(
+    id: 'session_3',
+    tutorId: 'tutor_3',
+    language: 'Arabic',
+    durationMinutes: 45,
+    date: DateTime.now().subtract(const Duration(days: 3)),
+    time: '8:00 PM',
+    price: 24,
+    isTrial: false,
+  )
+];
+
 final mockNotifications = [
   AppNotification(
     id: 'n1',
@@ -97,5 +110,49 @@ final mockMilestones = [
     title: 'Pronunciation sprint',
     subtitle: 'Practice difficult sounds with spaced repetition.',
     progress: 0.8,
+  ),
+];
+
+final sessionSteps = [
+  SessionStep(label: 'Preparation', description: 'Tutor reviews your placement quiz.', isDone: true),
+  SessionStep(label: 'Warm up', description: '5-min chit chat to loosen up speaking.', isDone: true),
+  SessionStep(label: 'Main drill', description: 'Role-play booking a hotel room.', isDone: false),
+  SessionStep(label: 'Feedback', description: 'Receive pronunciation notes and homework.', isDone: false),
+];
+
+final achievements = [
+  Achievement(
+    id: 'a1',
+    title: 'Streak starter',
+    subtitle: 'Attend 2 sessions in one week.',
+    progress: 0.8,
+    earned: true,
+  ),
+  Achievement(
+    id: 'a2',
+    title: 'Confident speaker',
+    subtitle: 'Log 120 speaking minutes.',
+    progress: 0.35,
+  ),
+  Achievement(
+    id: 'a3',
+    title: 'Vocabulary collector',
+    subtitle: 'Save 50 new words to your deck.',
+    progress: 0.55,
+  ),
+];
+
+final faqs = [
+  FaqItem(
+    question: 'How do I reschedule a session?',
+    answer: 'Open the booking details and choose a new slot. We keep your notes synced.',
+  ),
+  FaqItem(
+    question: 'Can I learn offline?',
+    answer: 'You can download homework packs from your tutor profile for offline practice.',
+  ),
+  FaqItem(
+    question: 'Do you support kids lessons?',
+    answer: 'Yes, filter tutors by "Kids friendly" and look for the badge on their cards.',
   ),
 ];
