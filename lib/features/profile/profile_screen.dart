@@ -44,6 +44,8 @@ class ProfileScreen extends StatelessWidget {
       required this.onOpenAlumniNetwork,
       required this.onOpenSuccessStories,
       required this.onOpenScholarships,
+      required this.onOpenMobility,
+      required this.onOpenBranding,
       required this.onOpenFeedback,
       required this.onLogout});
   final ThemeController theme;
@@ -79,6 +81,8 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onOpenAlumniNetwork;
   final VoidCallback onOpenSuccessStories;
   final VoidCallback onOpenScholarships;
+  final VoidCallback onOpenMobility;
+  final VoidCallback onOpenBranding;
   final VoidCallback onOpenFeedback;
   final VoidCallback onLogout;
 
@@ -234,6 +238,18 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Apply credits toward sprints and prep'),
             leading: const Icon(Icons.volunteer_activism_outlined),
             onTap: onOpenScholarships,
+          ),
+          ListTile(
+            title: const Text('Global mobility desk'),
+            subtitle: const Text('Visa and relocation timelines'),
+            leading: const Icon(Icons.flight_takeoff_outlined),
+            onTap: onOpenMobility,
+          ),
+          ListTile(
+            title: const Text('Personal branding kits'),
+            subtitle: const Text('Decks, scripts, and showreels'),
+            leading: const Icon(Icons.campaign_outlined),
+            onTap: onOpenBranding,
           ),
           ListTile(
             title: const Text('Phrasebook'),

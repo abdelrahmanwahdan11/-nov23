@@ -1040,3 +1040,60 @@ final industryNews = [
     tag: 'Learning',
   ),
 ];
+
+final mobilityGuides = [
+  MobilityGuide(
+    id: 'mob1',
+    country: 'Türkiye',
+    timeline: '4-6 weeks',
+    checklist: const ['Gather language certificate', 'Book appointment', 'Compile proof of funds'],
+    advisor: 'Ece • Ankara desk',
+    tag: 'Study',
+    imageUrl: 'https://images.pexels.com/photos/2187424/pexels-photo-2187424.jpeg',
+  ),
+  MobilityGuide(
+    id: 'mob2',
+    country: 'Germany',
+    timeline: '6-8 weeks',
+    checklist: const ['Translate transcripts', 'Schedule visa slot', 'Prep relocation budget'],
+    advisor: 'Jonas • Berlin desk',
+    tag: 'Work',
+    imageUrl: 'https://images.pexels.com/photos/1796730/pexels-photo-1796730.jpeg',
+  ),
+  MobilityGuide(
+    id: 'mob3',
+    country: 'UAE',
+    timeline: '3-5 weeks',
+    checklist: const ['Select sponsor', 'Prepare offer letter', 'Book medical screening'],
+    advisor: 'Sara • Dubai desk',
+    tag: 'Relocate',
+    imageUrl: 'https://images.pexels.com/photos/974924/pexels-photo-974924.jpeg',
+  ),
+];
+
+final brandingAssets = [
+  BrandingAsset(
+    id: 'brand1',
+    title: 'Bilingual portfolio template',
+    kind: 'Deck',
+    description: 'Polished keynote slides with Turkish + English highlights and case studies.',
+    link: 'lingua.tutor/portfolio',
+    badge: 'Premium',
+  ),
+  BrandingAsset(
+    id: 'brand2',
+    title: 'Elevator pitch scripts',
+    kind: 'Script',
+    description: 'Concise intros for networking events with timing cues and tone notes.',
+    link: 'lingua.tutor/pitch',
+    badge: 'New',
+  ),
+  BrandingAsset(
+    id: 'brand3',
+    title: 'Showreel checklist',
+    kind: 'Checklist',
+    description: 'Step-by-step tasks to record and package your language showreel.',
+    link: 'lingua.tutor/showreel',
+    badge: 'Guided',
+  ),
+];

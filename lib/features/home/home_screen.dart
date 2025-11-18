@@ -54,7 +54,9 @@ class HomeScreen extends StatefulWidget {
       required this.onOpenSuccessStories,
       required this.onOpenScholarships,
       required this.onOpenInternships,
-      required this.onOpenIndustryNews});
+      required this.onOpenIndustryNews,
+      required this.onOpenMobility,
+      required this.onOpenBranding});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onOpenSettings;
   final VoidCallback onOpenNotifications;
@@ -88,6 +90,8 @@ class HomeScreen extends StatefulWidget {
   final VoidCallback onOpenScholarships;
   final VoidCallback onOpenInternships;
   final VoidCallback onOpenIndustryNews;
+  final VoidCallback onOpenMobility;
+  final VoidCallback onOpenBranding;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -263,6 +267,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   _QuickActionChip(icon: Icons.groups_2_outlined, label: 'Alumni network', onTap: _openAlumniNetwork),
                   _QuickActionChip(icon: Icons.verified_user_outlined, label: 'Success stories', onTap: _openSuccessStories),
                   _QuickActionChip(icon: Icons.volunteer_activism_outlined, label: 'Scholarships', onTap: _openScholarships),
+                  _QuickActionChip(icon: Icons.flight_takeoff_outlined, label: 'Mobility', onTap: widget.onOpenMobility),
+                  _QuickActionChip(icon: Icons.campaign_outlined, label: 'Branding', onTap: widget.onOpenBranding),
                   _QuickActionChip(icon: Icons.forum_outlined, label: 'Community', onTap: widget.onOpenCommunity),
                   _QuickActionChip(icon: Icons.emoji_events_outlined, label: 'Leaderboard', onTap: widget.onOpenLeaderboard),
                   _QuickActionChip(icon: Icons.fitness_center_outlined, label: 'Practice lab', onTap: widget.onOpenPractice),
@@ -366,6 +372,157 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   )
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Global mobility', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: widget.onOpenMobility, child: const Text('See guides')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 170,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: mobilityGuides.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (context, index) {
+                        final guide = mobilityGuides[index];
+                        return Container(
+                          width: 240,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(color: Colors.grey.withOpacity(0.12)),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  CircleAvatar(backgroundImage: NetworkImage(guide.imageUrl), radius: 20),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                      child: Text(guide.country,
+                                          style: const TextStyle(fontWeight: FontWeight.bold),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis)),
+                                  Chip(label: Text(guide.tag)),
+                                ],
+                              ),
+                              const SizedBox(height: 6),
+                              Text('Timeline: ${guide.timeline}', style: Theme.of(context).textTheme.bodySmall),
+                              const SizedBox(height: 6),
+                              Wrap(
+                                spacing: 6,
+                                runSpacing: 6,
+                                children: guide.checklist
+                                    .take(3)
+                                    .map((item) => Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          child: Text(item, maxLines: 1, overflow: TextOverflow.ellipsis),
+                                        ))
+                                    .toList(),
+                              ),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  const Icon(Icons.support_agent, size: 16),
+                                  const SizedBox(width: 6),
+                                  Expanded(
+                                      child: Text(guide.advisor,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context).textTheme.bodySmall)),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Personal branding', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: widget.onOpenBranding, child: const Text('All kits')),
+                    ],
+                  ),
+                  ...brandingAssets.take(2).map(
+                        (asset) => Container(
+                          margin: const EdgeInsets.only(bottom: 12),
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(color: Colors.grey.withOpacity(0.12)),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                      backgroundColor:
+                                          Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                      child: Icon(Icons.auto_awesome, color: Theme.of(context).colorScheme.primary)),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(asset.title,
+                                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                                        Text(asset.kind, style: Theme.of(context).textTheme.bodySmall),
+                                      ],
+                                    ),
+                                  ),
+                                  Chip(label: Text(asset.badge)),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Text(asset.description, maxLines: 2, overflow: TextOverflow.ellipsis),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  const Icon(Icons.link, size: 16),
+                                  const SizedBox(width: 6),
+                                  Expanded(
+                                      child: Text(asset.link,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(fontWeight: FontWeight.w600))),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      )
                 ],
               ),
             ),

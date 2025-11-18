@@ -44,6 +44,8 @@ import 'scholarships_screen.dart';
 import 'success_stories_screen.dart';
 import 'internships_screen.dart';
 import 'industry_news_screen.dart';
+import 'mobility_screen.dart';
+import 'branding_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({
@@ -126,6 +128,8 @@ class _MainShellState extends State<MainShell> {
         onOpenScholarships: _openScholarships,
         onOpenInternships: _openInternships,
         onOpenIndustryNews: _openIndustryNews,
+        onOpenMobility: _openMobility,
+        onOpenBranding: _openBranding,
       ),
       CatalogScreen(
         controller: catalogController,
@@ -304,5 +308,13 @@ class _MainShellState extends State<MainShell> {
 
   void _openIndustryNews() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => IndustryNewsScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openMobility() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => MobilityScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openBranding() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => BrandingScreen(onOpenSettings: _openSettings)));
   }
 }

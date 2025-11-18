@@ -660,3 +660,41 @@ class NewsArticle {
   final String imageUrl;
   final String tag;
 }
+
+class MobilityGuide {
+  MobilityGuide({
+    required this.id,
+    required this.country,
+    required this.timeline,
+    required this.checklist,
+    required this.advisor,
+    required this.tag,
+    required this.imageUrl,
+  });
+
+  final String id;
+  final String country;
+  final String timeline;
+  final List<String> checklist;
+  final String advisor;
+  final String tag;
+  final String imageUrl;
+}
+
+class BrandingAsset {
+  BrandingAsset({
+    required this.id,
+    required this.title,
+    required this.kind,
+    required this.description,
+    required this.link,
+    required this.badge,
+  });
+
+  final String id;
+  final String title;
+  final String kind;
+  final String description;
+  final String link;
+  final String badge;
+}
