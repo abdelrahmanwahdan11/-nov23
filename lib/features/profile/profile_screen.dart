@@ -25,6 +25,8 @@ class ProfileScreen extends StatelessWidget {
       required this.onOpenCertificates,
       required this.onOpenLiveEvents,
       required this.onOpenPlacementTest,
+      required this.onOpenCoachTips,
+      required this.onOpenInsights,
       required this.onLogout});
   final ThemeController theme;
   final LocalizationController locale;
@@ -44,6 +46,8 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onOpenCertificates;
   final VoidCallback onOpenLiveEvents;
   final VoidCallback onOpenPlacementTest;
+  final VoidCallback onOpenCoachTips;
+  final VoidCallback onOpenInsights;
   final VoidCallback onLogout;
 
   @override
@@ -95,6 +99,18 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Track milestones and streaks'),
             leading: const Icon(Icons.bolt),
             onTap: onOpenLearningPath,
+          ),
+          ListTile(
+            title: const Text('Coach tips'),
+            subtitle: const Text('Personalized nudges before lessons'),
+            leading: const Icon(Icons.lightbulb_outline),
+            onTap: onOpenCoachTips,
+          ),
+          ListTile(
+            title: const Text('Insights'),
+            subtitle: const Text('Weekly momentum and deltas'),
+            leading: const Icon(Icons.query_stats_outlined),
+            onTap: onOpenInsights,
           ),
           ListTile(
             title: const Text('Progress dashboard'),

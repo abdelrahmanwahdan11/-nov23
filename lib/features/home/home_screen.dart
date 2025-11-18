@@ -29,7 +29,9 @@ class HomeScreen extends StatefulWidget {
       required this.onOpenPractice,
       required this.onOpenLiveEvents,
       required this.onOpenPlacementTest,
-      required this.onOpenCertificates});
+      required this.onOpenCertificates,
+      required this.onOpenCoachTips,
+      required this.onOpenInsights});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onOpenSettings;
   final VoidCallback onOpenNotifications;
@@ -45,6 +47,8 @@ class HomeScreen extends StatefulWidget {
   final VoidCallback onOpenLiveEvents;
   final VoidCallback onOpenPlacementTest;
   final VoidCallback onOpenCertificates;
+  final VoidCallback onOpenCoachTips;
+  final VoidCallback onOpenInsights;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -161,6 +165,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   _QuickActionChip(icon: Icons.forum_outlined, label: 'Community', onTap: widget.onOpenCommunity),
                   _QuickActionChip(icon: Icons.fitness_center_outlined, label: 'Practice lab', onTap: widget.onOpenPractice),
                   _QuickActionChip(icon: Icons.rule_folder_outlined, label: 'Placement test', onTap: widget.onOpenPlacementTest),
+                  _QuickActionChip(icon: Icons.lightbulb, label: 'Coach tips', onTap: widget.onOpenCoachTips),
+                  _QuickActionChip(icon: Icons.query_stats_outlined, label: 'Insights', onTap: widget.onOpenInsights),
                   _QuickActionChip(icon: Icons.event_available_outlined, label: 'Live events', onTap: widget.onOpenLiveEvents),
                   _QuickActionChip(icon: Icons.verified_outlined, label: 'Certificates', onTap: widget.onOpenCertificates),
                     ],

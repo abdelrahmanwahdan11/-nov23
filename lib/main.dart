@@ -33,6 +33,8 @@ import 'features/home/practice_lab_screen.dart';
 import 'features/home/live_events_screen.dart';
 import 'features/home/placement_test_screen.dart';
 import 'features/profile/certificates_screen.dart';
+import 'features/home/coach_tips_screen.dart';
+import 'features/home/insights_screen.dart';
 
 void main() {
   runApp(const LinguaTutorApp());
@@ -161,6 +163,8 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
           onOpenCertificates: () => _openCertificates(context),
           onOpenLiveEvents: () => _openLiveEvents(context),
           onOpenPlacementTest: () => _openPlacementTest(context),
+          onOpenCoachTips: () => _openCoachTips(context),
+          onOpenInsights: () => _openInsights(context),
           onLogout: () {
         setState(() {});
       }),
@@ -295,6 +299,18 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
       builder: (_) => CertificatesScreen(onOpenSettings: () => _openSettings(context)),
     ));
   }
+
+  void _openCoachTips(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => CoachTipsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openInsights(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => InsightsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
 }
 
 class ProfileHost extends StatefulWidget {
@@ -318,6 +334,8 @@ class ProfileHost extends StatefulWidget {
       required this.onOpenCertificates,
       required this.onOpenLiveEvents,
       required this.onOpenPlacementTest,
+      required this.onOpenCoachTips,
+      required this.onOpenInsights,
       required this.onLogout});
   final ThemeController themeController;
   final LocalizationController localeController;
@@ -337,6 +355,8 @@ class ProfileHost extends StatefulWidget {
   final VoidCallback onOpenCertificates;
   final VoidCallback onOpenLiveEvents;
   final VoidCallback onOpenPlacementTest;
+  final VoidCallback onOpenCoachTips;
+  final VoidCallback onOpenInsights;
   final VoidCallback onLogout;
 
   @override
@@ -368,6 +388,8 @@ class _ProfileHostState extends State<ProfileHost> {
           onOpenCertificates: widget.onOpenCertificates,
           onOpenLiveEvents: widget.onOpenLiveEvents,
           onOpenPlacementTest: widget.onOpenPlacementTest,
+          onOpenCoachTips: widget.onOpenCoachTips,
+          onOpenInsights: widget.onOpenInsights,
           onLogout: widget.onLogout,
         );
       },

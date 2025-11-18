@@ -3,26 +3,29 @@ import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 
 ThemeData buildTheme({Color primary = AppColors.primary, Brightness brightness = Brightness.light}) {
+  final isDark = brightness == Brightness.dark;
+  final safePrimary = isDark && primary.computeLuminance() < 0.2 ? Colors.grey.shade200 : primary;
   final baseText = GoogleFonts.interTextTheme(
-    brightness == Brightness.dark ? ThemeData.dark().textTheme : ThemeData.light().textTheme,
+    isDark ? ThemeData.dark().textTheme : ThemeData.light().textTheme,
   );
   final colorScheme = ColorScheme.fromSeed(
-    seedColor: primary,
+    seedColor: safePrimary,
     brightness: brightness,
-    background: AppColors.lightBackground,
-    primary: primary,
+    background: isDark ? Colors.black : AppColors.lightBackground,
+    primary: safePrimary,
+    onPrimary: isDark ? Colors.black : Colors.white,
   );
   return ThemeData(
     brightness: brightness,
     colorScheme: colorScheme,
-    scaffoldBackgroundColor: brightness == Brightness.dark ? Colors.black : AppColors.lightBackground,
-    cardColor: AppColors.card,
+    scaffoldBackgroundColor: isDark ? Colors.black : AppColors.lightBackground,
+    cardColor: isDark ? Colors.grey.shade900 : AppColors.card,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: brightness == Brightness.dark ? Colors.grey.shade950 : Colors.white,
-      selectedItemColor: brightness == Brightness.dark ? Colors.white : primary,
-      unselectedItemColor: brightness == Brightness.dark ? Colors.grey.shade400 : Colors.grey.shade700,
-      selectedIconTheme: IconThemeData(color: brightness == Brightness.dark ? Colors.white : primary),
-      unselectedIconTheme: IconThemeData(color: brightness == Brightness.dark ? Colors.grey.shade400 : Colors.grey.shade700),
+      backgroundColor: isDark ? Colors.grey.shade950 : Colors.white,
+      selectedItemColor: isDark ? safePrimary : safePrimary,
+      unselectedItemColor: isDark ? Colors.grey.shade400 : Colors.grey.shade700,
+      selectedIconTheme: IconThemeData(color: safePrimary),
+      unselectedIconTheme: IconThemeData(color: isDark ? Colors.grey.shade400 : Colors.grey.shade700),
       type: BottomNavigationBarType.fixed,
       selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
       elevation: 12,
@@ -30,18 +33,36 @@ ThemeData buildTheme({Color primary = AppColors.primary, Brightness brightness =
     textTheme: baseText.copyWith(
       headlineLarge: baseText.headlineLarge?.copyWith(fontWeight: FontWeight.bold, fontSize: 30),
       headlineMedium: baseText.headlineMedium?.copyWith(fontWeight: FontWeight.bold, fontSize: 24),
-      bodyMedium: baseText.bodyMedium?.copyWith(fontSize: 15),
-      bodySmall: baseText.bodySmall?.copyWith(fontSize: 13, color: AppColors.textSecondary),
+      bodyMedium: baseText.bodyMedium?.copyWith(fontSize: 15, color: isDark ? Colors.white : AppColors.textPrimary),
+      bodySmall:
+          baseText.bodySmall?.copyWith(fontSize: 13, color: isDark ? Colors.grey.shade300 : AppColors.textSecondary),
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: brightness == Brightness.dark ? Colors.black : AppColors.lightBackground,
-      foregroundColor: AppColors.textPrimary,
+      backgroundColor: isDark ? Colors.black : AppColors.lightBackground,
+      foregroundColor: isDark ? Colors.white : AppColors.textPrimary,
       elevation: 0,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
+        textStyle: const TextStyle(fontWeight: FontWeight.w600),
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: isDark ? Colors.white : AppColors.textPrimary,
+        side: BorderSide(color: isDark ? Colors.white24 : Colors.grey.shade400),
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      ),
     ),
     useMaterial3: true,
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: brightness == Brightness.dark ? Colors.grey.shade900 : Colors.white,
+      fillColor: isDark ? Colors.grey.shade900 : Colors.white,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide(color: Colors.grey.shade300),

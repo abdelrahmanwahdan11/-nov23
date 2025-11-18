@@ -416,3 +416,51 @@ final placementSections = [
     completed: false,
   ),
 ];
+
+final coachTips = [
+  CoachTip(
+    id: 'ct1',
+    title: 'Warm up with 5-minute retells',
+    summary: 'Choose a news article and retell it with 3 key vocab swaps before each session.',
+    category: 'Speaking',
+    isNew: true,
+  ),
+  CoachTip(
+    id: 'ct2',
+    title: 'Shadow once, then record',
+    summary: 'Shadow a 60-second clip, then record yourself and compare tone for self-feedback.',
+    category: 'Listening',
+    isNew: false,
+  ),
+  CoachTip(
+    id: 'ct3',
+    title: 'Micro goals for confidence',
+    summary: 'Set a daily micro goal like “ask for a discount politely” and log it in your journal.',
+    category: 'Mindset',
+    isNew: false,
+  ),
+];
+
+final insightMetrics = [
+  InsightMetric(
+    id: 'im1',
+    label: 'Weekly speaking time',
+    value: '86 min',
+    delta: '+18% vs last week',
+    isPositive: true,
+  ),
+  InsightMetric(
+    id: 'im2',
+    label: 'Listening drills',
+    value: '12 completed',
+    delta: '-2 vs target',
+    isPositive: false,
+  ),
+  InsightMetric(
+    id: 'im3',
+    label: 'Vocabulary added',
+    value: '34 words',
+    delta: '+9 this week',
+    isPositive: true,
+  ),
+];

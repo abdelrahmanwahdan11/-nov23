@@ -26,6 +26,8 @@ import 'practice_lab_screen.dart';
 import 'live_events_screen.dart';
 import 'placement_test_screen.dart';
 import '../profile/certificates_screen.dart';
+import 'coach_tips_screen.dart';
+import 'insights_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key, required this.onTutorTap, required this.onLogout, required this.profileBuilder, required this.themeController, required this.localizationController, required this.favoritesController});
@@ -82,6 +84,8 @@ class _MainShellState extends State<MainShell> {
         onOpenLiveEvents: _openLiveEvents,
         onOpenPlacementTest: _openPlacementTest,
         onOpenCertificates: _openCertificates,
+        onOpenCoachTips: _openCoachTips,
+        onOpenInsights: _openInsights,
       ),
       CatalogScreen(
         controller: catalogController,
@@ -188,5 +192,13 @@ class _MainShellState extends State<MainShell> {
   void _openCertificates() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (_) => CertificatesScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openCoachTips() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => CoachTipsScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openInsights() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => InsightsScreen(onOpenSettings: _openSettings)));
   }
 }

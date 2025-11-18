@@ -267,3 +267,35 @@ class PlacementSection {
   final String subtitle;
   final bool completed;
 }
+
+class CoachTip {
+  CoachTip({
+    required this.id,
+    required this.title,
+    required this.summary,
+    required this.category,
+    required this.isNew,
+  });
+
+  final String id;
+  final String title;
+  final String summary;
+  final String category;
+  final bool isNew;
+}
+
+class InsightMetric {
+  InsightMetric({
+    required this.id,
+    required this.label,
+    required this.value,
+    required this.delta,
+    required this.isPositive,
+  });
+
+  final String id;
+  final String label;
+  final String value;
+  final String delta;
+  final bool isPositive;
+}
