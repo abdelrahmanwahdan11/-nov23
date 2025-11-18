@@ -35,6 +35,9 @@ import 'features/home/placement_test_screen.dart';
 import 'features/profile/certificates_screen.dart';
 import 'features/home/coach_tips_screen.dart';
 import 'features/home/insights_screen.dart';
+import 'features/home/streaks_screen.dart';
+import 'features/home/rewards_screen.dart';
+import 'features/home/feedback_screen.dart';
 
 void main() {
   runApp(const LinguaTutorApp());
@@ -165,6 +168,9 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
           onOpenPlacementTest: () => _openPlacementTest(context),
           onOpenCoachTips: () => _openCoachTips(context),
           onOpenInsights: () => _openInsights(context),
+          onOpenStreaks: () => _openStreaks(context),
+          onOpenRewards: () => _openRewards(context),
+          onOpenFeedback: () => _openFeedback(context),
           onLogout: () {
         setState(() {});
       }),
@@ -300,6 +306,24 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
     ));
   }
 
+  void _openStreaks(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => StreaksScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openRewards(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => RewardsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openFeedback(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => FeedbackScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
   void _openCoachTips(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => CoachTipsScreen(onOpenSettings: () => _openSettings(context)),
@@ -336,6 +360,9 @@ class ProfileHost extends StatefulWidget {
       required this.onOpenPlacementTest,
       required this.onOpenCoachTips,
       required this.onOpenInsights,
+      required this.onOpenStreaks,
+      required this.onOpenRewards,
+      required this.onOpenFeedback,
       required this.onLogout});
   final ThemeController themeController;
   final LocalizationController localeController;
@@ -357,6 +384,9 @@ class ProfileHost extends StatefulWidget {
   final VoidCallback onOpenPlacementTest;
   final VoidCallback onOpenCoachTips;
   final VoidCallback onOpenInsights;
+  final VoidCallback onOpenStreaks;
+  final VoidCallback onOpenRewards;
+  final VoidCallback onOpenFeedback;
   final VoidCallback onLogout;
 
   @override
@@ -390,6 +420,9 @@ class _ProfileHostState extends State<ProfileHost> {
           onOpenPlacementTest: widget.onOpenPlacementTest,
           onOpenCoachTips: widget.onOpenCoachTips,
           onOpenInsights: widget.onOpenInsights,
+          onOpenStreaks: widget.onOpenStreaks,
+          onOpenRewards: widget.onOpenRewards,
+          onOpenFeedback: widget.onOpenFeedback,
           onLogout: widget.onLogout,
         );
       },

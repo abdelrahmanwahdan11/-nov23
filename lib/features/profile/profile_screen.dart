@@ -27,6 +27,9 @@ class ProfileScreen extends StatelessWidget {
       required this.onOpenPlacementTest,
       required this.onOpenCoachTips,
       required this.onOpenInsights,
+      required this.onOpenStreaks,
+      required this.onOpenRewards,
+      required this.onOpenFeedback,
       required this.onLogout});
   final ThemeController theme;
   final LocalizationController locale;
@@ -48,6 +51,9 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onOpenPlacementTest;
   final VoidCallback onOpenCoachTips;
   final VoidCallback onOpenInsights;
+  final VoidCallback onOpenStreaks;
+  final VoidCallback onOpenRewards;
+  final VoidCallback onOpenFeedback;
   final VoidCallback onLogout;
 
   @override
@@ -99,6 +105,24 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Track milestones and streaks'),
             leading: const Icon(Icons.bolt),
             onTap: onOpenLearningPath,
+          ),
+          ListTile(
+            title: const Text('Streaks'),
+            subtitle: const Text('Keep your daily chain alive'),
+            leading: const Icon(Icons.local_fire_department_outlined),
+            onTap: onOpenStreaks,
+          ),
+          ListTile(
+            title: const Text('Rewards'),
+            subtitle: const Text('Redeem points and perks'),
+            leading: const Icon(Icons.workspace_premium_outlined),
+            onTap: onOpenRewards,
+          ),
+          ListTile(
+            title: const Text('Weekly feedback'),
+            subtitle: const Text('Share preferences for smarter tips'),
+            leading: const Icon(Icons.rate_review_outlined),
+            onTap: onOpenFeedback,
           ),
           ListTile(
             title: const Text('Coach tips'),

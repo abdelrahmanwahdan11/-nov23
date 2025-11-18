@@ -28,6 +28,9 @@ import 'placement_test_screen.dart';
 import '../profile/certificates_screen.dart';
 import 'coach_tips_screen.dart';
 import 'insights_screen.dart';
+import 'streaks_screen.dart';
+import 'rewards_screen.dart';
+import 'feedback_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key, required this.onTutorTap, required this.onLogout, required this.profileBuilder, required this.themeController, required this.localizationController, required this.favoritesController});
@@ -86,6 +89,9 @@ class _MainShellState extends State<MainShell> {
         onOpenCertificates: _openCertificates,
         onOpenCoachTips: _openCoachTips,
         onOpenInsights: _openInsights,
+        onOpenStreaks: _openStreaks,
+        onOpenRewards: _openRewards,
+        onOpenFeedback: _openFeedback,
       ),
       CatalogScreen(
         controller: catalogController,
@@ -151,6 +157,18 @@ class _MainShellState extends State<MainShell> {
 
   void _openProgress() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProgressDashboardScreen()));
+  }
+
+  void _openStreaks() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => StreaksScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openRewards() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => RewardsScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openFeedback() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => FeedbackScreen(onOpenSettings: _openSettings)));
   }
 
   void _openSession(LessonSession session) {

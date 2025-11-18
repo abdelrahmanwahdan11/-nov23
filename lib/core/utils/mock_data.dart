@@ -464,3 +464,53 @@ final insightMetrics = [
     isPositive: true,
   ),
 ];
+
+final streakDays = List.generate(
+  10,
+  (index) => StreakDay(
+    date: DateTime.now().subtract(Duration(days: 9 - index)),
+    completed: index <= 8,
+    doubleXp: index == 8,
+  ),
+);
+
+final rewardItems = [
+  RewardItem(
+    id: 'rw1',
+    title: '25% off next bundle',
+    points: 240,
+    description: 'Use this voucher on any 5-lesson pack with your preferred tutor.',
+    tag: 'Popular',
+  ),
+  RewardItem(
+    id: 'rw2',
+    title: 'Priority support for a week',
+    points: 120,
+    description: 'Skip the line when you need to adjust bookings or billing details.',
+    tag: 'New',
+  ),
+  RewardItem(
+    id: 'rw3',
+    title: 'Coach review on your recording',
+    points: 180,
+    description: 'Upload a 2-minute clip and get annotated feedback within 24 hours.',
+  ),
+];
+
+final surveyQuestions = [
+  SurveyQuestion(
+    id: 'sq1',
+    prompt: 'What do you want more of next month?',
+    options: ['Speaking drills', 'Listening labs', 'Exam prep', 'Casual conversation'],
+  ),
+  SurveyQuestion(
+    id: 'sq2',
+    prompt: 'When do you usually study?',
+    options: ['Early morning', 'Lunch break', 'Evening', 'Weekends only'],
+  ),
+  SurveyQuestion(
+    id: 'sq3',
+    prompt: 'How do you prefer feedback?',
+    options: ['Voice notes', 'Annotated text', 'Live review', 'Short checklists'],
+  ),
+];

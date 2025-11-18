@@ -31,7 +31,10 @@ class HomeScreen extends StatefulWidget {
       required this.onOpenPlacementTest,
       required this.onOpenCertificates,
       required this.onOpenCoachTips,
-      required this.onOpenInsights});
+      required this.onOpenInsights,
+      required this.onOpenStreaks,
+      required this.onOpenRewards,
+      required this.onOpenFeedback});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onOpenSettings;
   final VoidCallback onOpenNotifications;
@@ -49,6 +52,9 @@ class HomeScreen extends StatefulWidget {
   final VoidCallback onOpenCertificates;
   final VoidCallback onOpenCoachTips;
   final VoidCallback onOpenInsights;
+  final VoidCallback onOpenStreaks;
+  final VoidCallback onOpenRewards;
+  final VoidCallback onOpenFeedback;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -103,15 +109,20 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(24),
-                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 18, offset: const Offset(0, 8))],
-                ),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Theme.of(context).colorScheme.shadow.withOpacity(0.08),
+                        blurRadius: 18,
+                        offset: const Offset(0, 8))
+                  ],
+                  ),
                 child: Row(
                   children: [
                     Expanded(
@@ -159,6 +170,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   _QuickActionChip(icon: Icons.favorite, label: 'Favorites', onTap: widget.onOpenFavorites),
                   _QuickActionChip(icon: Icons.notifications_active, label: 'Alerts', onTap: widget.onOpenNotifications),
                   _QuickActionChip(icon: Icons.insights, label: 'Progress', onTap: widget.onOpenProgress),
+                  _QuickActionChip(icon: Icons.local_fire_department_outlined, label: 'Streaks', onTap: widget.onOpenStreaks),
+                  _QuickActionChip(icon: Icons.workspace_premium_outlined, label: 'Rewards', onTap: widget.onOpenRewards),
                   _QuickActionChip(icon: Icons.calendar_today, label: 'Planner', onTap: widget.onOpenPlanner),
                   _QuickActionChip(icon: Icons.wallet, label: 'Wallet', onTap: widget.onOpenWallet),
                   _QuickActionChip(icon: Icons.menu_book, label: 'Resources', onTap: widget.onOpenResources),
@@ -167,6 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   _QuickActionChip(icon: Icons.rule_folder_outlined, label: 'Placement test', onTap: widget.onOpenPlacementTest),
                   _QuickActionChip(icon: Icons.lightbulb, label: 'Coach tips', onTap: widget.onOpenCoachTips),
                   _QuickActionChip(icon: Icons.query_stats_outlined, label: 'Insights', onTap: widget.onOpenInsights),
+                  _QuickActionChip(icon: Icons.rate_review_outlined, label: 'Feedback', onTap: widget.onOpenFeedback),
                   _QuickActionChip(icon: Icons.event_available_outlined, label: 'Live events', onTap: widget.onOpenLiveEvents),
                   _QuickActionChip(icon: Icons.verified_outlined, label: 'Certificates', onTap: widget.onOpenCertificates),
                     ],
@@ -344,11 +358,12 @@ class _QuickActionChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ActionChip(
-      avatar: Icon(icon, size: 18),
-      label: Text(label),
+      avatar: Icon(icon, size: 18, color: Theme.of(context).colorScheme.onSurface),
+      label: Text(label, style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       onPressed: onTap,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      backgroundColor: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.6),
     );
   }
 }
@@ -423,7 +438,7 @@ class _PlacementPreview extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(18),
           border: Border.all(color: Colors.grey.shade200),
         ),
@@ -439,10 +454,14 @@ class _PlacementPreview extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Placement ready', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text('Placement ready',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 6),
                   Text('Complete ${placementSections.length - done} steps to unlock tutor matches',
-                      style: const TextStyle(color: Colors.black54)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.75))),
                   const SizedBox(height: 8),
                   LinearProgressIndicator(
                     value: done / placementSections.length,
@@ -474,9 +493,14 @@ class _LiveEventChip extends StatelessWidget {
         width: 220,
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 12, offset: const Offset(0, 6))],
+          boxShadow: [
+            BoxShadow(
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.07),
+                blurRadius: 12,
+                offset: const Offset(0, 6))
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -488,7 +512,11 @@ class _LiveEventChip extends StatelessWidget {
             const SizedBox(height: 8),
             Row(
               children: [
-                Expanded(child: Text(event.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold))),
+                Expanded(
+                    child: Text(event.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold))),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(color: Colors.green.shade50, borderRadius: BorderRadius.circular(10)),
@@ -497,8 +525,16 @@ class _LiveEventChip extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 6),
-            Text('Host: ${event.host}', style: const TextStyle(color: Colors.black54)),
-            Text('${event.duration} • ${event.mode}', style: const TextStyle(color: Colors.black54)),
+            Text('Host: ${event.host}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.75))),
+            Text('${event.duration} • ${event.mode}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.75))),
           ],
         ),
       ),
@@ -516,9 +552,14 @@ class _DrillCard extends StatelessWidget {
       width: 220,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(18),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 10, offset: const Offset(0, 6))],
+        boxShadow: [
+          BoxShadow(
+              color: Theme.of(context).colorScheme.shadow.withOpacity(0.06),
+              blurRadius: 10,
+              offset: const Offset(0, 6))
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

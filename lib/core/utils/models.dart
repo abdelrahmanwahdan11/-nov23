@@ -299,3 +299,29 @@ class InsightMetric {
   final String delta;
   final bool isPositive;
 }
+
+class StreakDay {
+  StreakDay({required this.date, required this.completed, this.doubleXp = false});
+
+  final DateTime date;
+  final bool completed;
+  final bool doubleXp;
+}
+
+class RewardItem {
+  RewardItem({required this.id, required this.title, required this.points, required this.description, this.tag});
+
+  final String id;
+  final String title;
+  final int points;
+  final String description;
+  final String? tag;
+}
+
+class SurveyQuestion {
+  SurveyQuestion({required this.id, required this.prompt, required this.options});
+
+  final String id;
+  final String prompt;
+  final List<String> options;
+}
