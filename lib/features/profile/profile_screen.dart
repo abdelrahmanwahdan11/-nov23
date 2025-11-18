@@ -22,6 +22,9 @@ class ProfileScreen extends StatelessWidget {
       required this.onOpenResources,
       required this.onOpenCommunity,
       required this.onOpenPractice,
+      required this.onOpenCertificates,
+      required this.onOpenLiveEvents,
+      required this.onOpenPlacementTest,
       required this.onLogout});
   final ThemeController theme;
   final LocalizationController locale;
@@ -38,6 +41,9 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onOpenResources;
   final VoidCallback onOpenCommunity;
   final VoidCallback onOpenPractice;
+  final VoidCallback onOpenCertificates;
+  final VoidCallback onOpenLiveEvents;
+  final VoidCallback onOpenPlacementTest;
   final VoidCallback onLogout;
 
   @override
@@ -131,6 +137,24 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Quick drills to prep before lessons'),
             leading: const Icon(Icons.fitness_center_outlined),
             onTap: onOpenPractice,
+          ),
+          ListTile(
+            title: const Text('Placement test'),
+            subtitle: const Text('Confirm your level and refresh recommendations'),
+            leading: const Icon(Icons.rule_folder_outlined),
+            onTap: onOpenPlacementTest,
+          ),
+          ListTile(
+            title: const Text('Live events'),
+            subtitle: const Text('Weekly circles and workshops'),
+            leading: const Icon(Icons.event_available_outlined),
+            onTap: onOpenLiveEvents,
+          ),
+          ListTile(
+            title: const Text('Certificates'),
+            subtitle: const Text('Share badges and completion proofs'),
+            leading: const Icon(Icons.verified_outlined),
+            onTap: onOpenCertificates,
           ),
           ListTile(
             title: const Text('Help & support'),

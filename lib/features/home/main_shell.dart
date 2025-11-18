@@ -23,6 +23,9 @@ import '../booking/session_details_screen.dart';
 import 'resources_screen.dart';
 import 'community_screen.dart';
 import 'practice_lab_screen.dart';
+import 'live_events_screen.dart';
+import 'placement_test_screen.dart';
+import '../profile/certificates_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key, required this.onTutorTap, required this.onLogout, required this.profileBuilder, required this.themeController, required this.localizationController, required this.favoritesController});
@@ -76,6 +79,9 @@ class _MainShellState extends State<MainShell> {
         onOpenResources: _openResources,
         onOpenCommunity: _openCommunity,
         onOpenPractice: _openPractice,
+        onOpenLiveEvents: _openLiveEvents,
+        onOpenPlacementTest: _openPlacementTest,
+        onOpenCertificates: _openCertificates,
       ),
       CatalogScreen(
         controller: catalogController,
@@ -169,5 +175,18 @@ class _MainShellState extends State<MainShell> {
 
   void _openPractice() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => PracticeLabScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openLiveEvents() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => LiveEventsScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openPlacementTest() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => PlacementTestScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openCertificates() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => CertificatesScreen(onOpenSettings: _openSettings)));
   }
 }

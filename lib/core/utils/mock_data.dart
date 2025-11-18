@@ -335,3 +335,84 @@ final practiceDrills = [
     description: 'Alternate between minimal pairs and tongue twisters with breaks.',
   ),
 ];
+
+final liveEvents = [
+  LiveEvent(
+    id: 'e1',
+    title: 'Speaking circle: travel stories',
+    host: 'Coach Aylin',
+    dateTime: DateTime.now().add(const Duration(days: 1, hours: 3)),
+    duration: '45 min',
+    mode: 'Live room',
+    coverUrl: 'https://images.pexels.com/photos/5428835/pexels-photo-5428835.jpeg',
+    spotsLeft: 12,
+  ),
+  LiveEvent(
+    id: 'e2',
+    title: 'Pronunciation lab: tricky vowels',
+    host: 'Coach Diego',
+    dateTime: DateTime.now().add(const Duration(days: 2, hours: 5)),
+    duration: '30 min',
+    mode: 'Workshop',
+    coverUrl: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg',
+    spotsLeft: 6,
+  ),
+  LiveEvent(
+    id: 'e3',
+    title: 'Interview clinic',
+    host: 'Coach Mariam',
+    dateTime: DateTime.now().add(const Duration(days: 4)),
+    duration: '50 min',
+    mode: 'Live room',
+    coverUrl: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg',
+    spotsLeft: 18,
+  ),
+];
+
+final certificates = [
+  CertificateItem(
+    id: 'cert1',
+    title: 'Conversational Turkish',
+    issuer: 'LinguaTutor',
+    level: 'Level A2',
+    earnedOn: DateTime.now().subtract(const Duration(days: 14)),
+    badge: 'Speaking badge',
+  ),
+  CertificateItem(
+    id: 'cert2',
+    title: 'Business English',
+    issuer: 'LinguaTutor',
+    level: 'Level B1',
+    earnedOn: DateTime.now().subtract(const Duration(days: 40)),
+    badge: 'Professional badge',
+  ),
+  CertificateItem(
+    id: 'cert3',
+    title: 'Grammar foundation',
+    issuer: 'LinguaTutor',
+    level: 'Level A1',
+    earnedOn: DateTime.now().subtract(const Duration(days: 90)),
+    badge: 'Starter badge',
+  ),
+];
+
+final placementSections = [
+  PlacementSection(
+    id: 'ps1',
+    title: 'Micro interview',
+    subtitle: 'Record 5 prompts so we can rate fluency and speed.',
+    completed: true,
+  ),
+  PlacementSection(
+    id: 'ps2',
+    title: 'Listening check',
+    subtitle: 'Match 10 clips to their intents and flag tricky parts.',
+    completed: false,
+  ),
+  PlacementSection(
+    id: 'ps3',
+    title: 'Placement report',
+    subtitle: 'We summarize your CEFR range and recommend tutors.',
+    completed: false,
+  ),
+];

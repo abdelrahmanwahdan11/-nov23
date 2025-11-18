@@ -218,3 +218,52 @@ class PracticeDrill {
   final String description;
   final bool isNew;
 }
+
+class LiveEvent {
+  LiveEvent({
+    required this.id,
+    required this.title,
+    required this.host,
+    required this.dateTime,
+    required this.duration,
+    required this.mode,
+    required this.coverUrl,
+    required this.spotsLeft,
+  });
+
+  final String id;
+  final String title;
+  final String host;
+  final DateTime dateTime;
+  final String duration;
+  final String mode;
+  final String coverUrl;
+  final int spotsLeft;
+}
+
+class CertificateItem {
+  CertificateItem({
+    required this.id,
+    required this.title,
+    required this.issuer,
+    required this.level,
+    required this.earnedOn,
+    required this.badge,
+  });
+
+  final String id;
+  final String title;
+  final String issuer;
+  final String level;
+  final DateTime earnedOn;
+  final String badge;
+}
+
+class PlacementSection {
+  PlacementSection({required this.id, required this.title, required this.subtitle, required this.completed});
+
+  final String id;
+  final String title;
+  final String subtitle;
+  final bool completed;
+}

@@ -26,7 +26,10 @@ class HomeScreen extends StatefulWidget {
       required this.onOpenWallet,
       required this.onOpenResources,
       required this.onOpenCommunity,
-      required this.onOpenPractice});
+      required this.onOpenPractice,
+      required this.onOpenLiveEvents,
+      required this.onOpenPlacementTest,
+      required this.onOpenCertificates});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onOpenSettings;
   final VoidCallback onOpenNotifications;
@@ -39,6 +42,9 @@ class HomeScreen extends StatefulWidget {
   final VoidCallback onOpenResources;
   final VoidCallback onOpenCommunity;
   final VoidCallback onOpenPractice;
+  final VoidCallback onOpenLiveEvents;
+  final VoidCallback onOpenPlacementTest;
+  final VoidCallback onOpenCertificates;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -154,7 +160,54 @@ class _HomeScreenState extends State<HomeScreen> {
                   _QuickActionChip(icon: Icons.menu_book, label: 'Resources', onTap: widget.onOpenResources),
                   _QuickActionChip(icon: Icons.forum_outlined, label: 'Community', onTap: widget.onOpenCommunity),
                   _QuickActionChip(icon: Icons.fitness_center_outlined, label: 'Practice lab', onTap: widget.onOpenPractice),
+                  _QuickActionChip(icon: Icons.rule_folder_outlined, label: 'Placement test', onTap: widget.onOpenPlacementTest),
+                  _QuickActionChip(icon: Icons.event_available_outlined, label: 'Live events', onTap: widget.onOpenLiveEvents),
+                  _QuickActionChip(icon: Icons.verified_outlined, label: 'Certificates', onTap: widget.onOpenCertificates),
                     ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Placement test', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: widget.onOpenPlacementTest, child: const Text('View')),
+                    ],
+                  ),
+                  _PlacementPreview(onTap: widget.onOpenPlacementTest),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Live events', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: widget.onOpenLiveEvents, child: const Text('See all')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 140,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: liveEvents.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (context, index) => _LiveEventChip(event: liveEvents[index], onTap: widget.onOpenLiveEvents),
+                    ),
                   ),
                 ],
               ),
@@ -345,6 +398,101 @@ class _CommunityPreviewCard extends StatelessWidget {
                 TextButton(onPressed: () {}, child: const Text('Open thread')),
               ],
             )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PlacementPreview extends StatelessWidget {
+  const _PlacementPreview({required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final done = placementSections.where((e) => e.completed).length;
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: Colors.grey.shade200),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(14)),
+              child: const Icon(Icons.rule, color: Colors.white),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Placement ready', style: TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 6),
+                  Text('Complete ${placementSections.length - done} steps to unlock tutor matches',
+                      style: const TextStyle(color: Colors.black54)),
+                  const SizedBox(height: 8),
+                  LinearProgressIndicator(
+                    value: done / placementSections.length,
+                    minHeight: 6,
+                    backgroundColor: Colors.grey.shade200,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 12),
+            const Icon(Icons.chevron_right),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LiveEventChip extends StatelessWidget {
+  const _LiveEventChip({required this.event, required this.onTap});
+  final LiveEvent event;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 220,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 12, offset: const Offset(0, 6))],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(event.coverUrl, height: 90, width: double.infinity, fit: BoxFit.cover),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(child: Text(event.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold))),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(color: Colors.green.shade50, borderRadius: BorderRadius.circular(10)),
+                  child: Text('${event.spotsLeft} left', style: const TextStyle(color: Colors.green, fontSize: 12)),
+                )
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text('Host: ${event.host}', style: const TextStyle(color: Colors.black54)),
+            Text('${event.duration} • ${event.mode}', style: const TextStyle(color: Colors.black54)),
           ],
         ),
       ),

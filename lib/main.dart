@@ -30,6 +30,9 @@ import 'features/home/progress_dashboard_screen.dart';
 import 'features/booking/planner_screen.dart';
 import 'features/home/community_screen.dart';
 import 'features/home/practice_lab_screen.dart';
+import 'features/home/live_events_screen.dart';
+import 'features/home/placement_test_screen.dart';
+import 'features/profile/certificates_screen.dart';
 
 void main() {
   runApp(const LinguaTutorApp());
@@ -155,6 +158,9 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
           onOpenResources: () => _openResources(context),
           onOpenCommunity: () => _openCommunity(context),
           onOpenPractice: () => _openPractice(context),
+          onOpenCertificates: () => _openCertificates(context),
+          onOpenLiveEvents: () => _openLiveEvents(context),
+          onOpenPlacementTest: () => _openPlacementTest(context),
           onLogout: () {
         setState(() {});
       }),
@@ -271,6 +277,24 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
       builder: (_) => PracticeLabScreen(onOpenSettings: () => _openSettings(context)),
     ));
   }
+
+  void _openLiveEvents(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => LiveEventsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openPlacementTest(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => PlacementTestScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openCertificates(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => CertificatesScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
 }
 
 class ProfileHost extends StatefulWidget {
@@ -291,6 +315,9 @@ class ProfileHost extends StatefulWidget {
       required this.onOpenResources,
       required this.onOpenCommunity,
       required this.onOpenPractice,
+      required this.onOpenCertificates,
+      required this.onOpenLiveEvents,
+      required this.onOpenPlacementTest,
       required this.onLogout});
   final ThemeController themeController;
   final LocalizationController localeController;
@@ -307,6 +334,9 @@ class ProfileHost extends StatefulWidget {
   final VoidCallback onOpenResources;
   final VoidCallback onOpenCommunity;
   final VoidCallback onOpenPractice;
+  final VoidCallback onOpenCertificates;
+  final VoidCallback onOpenLiveEvents;
+  final VoidCallback onOpenPlacementTest;
   final VoidCallback onLogout;
 
   @override
@@ -335,6 +365,9 @@ class _ProfileHostState extends State<ProfileHost> {
           onOpenResources: widget.onOpenResources,
           onOpenCommunity: widget.onOpenCommunity,
           onOpenPractice: widget.onOpenPractice,
+          onOpenCertificates: widget.onOpenCertificates,
+          onOpenLiveEvents: widget.onOpenLiveEvents,
+          onOpenPlacementTest: widget.onOpenPlacementTest,
           onLogout: widget.onLogout,
         );
       },
