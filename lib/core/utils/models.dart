@@ -616,3 +616,47 @@ class ScholarshipOpportunity {
   final String summary;
   final String tag;
 }
+
+class InternshipOpportunity {
+  InternshipOpportunity({
+    required this.id,
+    required this.title,
+    required this.company,
+    required this.location,
+    required this.stipend,
+    required this.type,
+    required this.deadline,
+    required this.tags,
+    required this.description,
+  });
+
+  final String id;
+  final String title;
+  final String company;
+  final String location;
+  final String stipend;
+  final String type;
+  final String deadline;
+  final List<String> tags;
+  final String description;
+}
+
+class NewsArticle {
+  NewsArticle({
+    required this.id,
+    required this.title,
+    required this.source,
+    required this.summary,
+    required this.publishedAt,
+    required this.imageUrl,
+    required this.tag,
+  });
+
+  final String id;
+  final String title;
+  final String source;
+  final String summary;
+  final String publishedAt;
+  final String imageUrl;
+  final String tag;
+}

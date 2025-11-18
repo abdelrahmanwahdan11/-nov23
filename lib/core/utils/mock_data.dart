@@ -974,3 +974,69 @@ final scholarshipOpportunities = [
     tag: 'Community',
   ),
 ];
+
+final internshipOpportunities = [
+  InternshipOpportunity(
+    id: 'int1',
+    title: 'Localization Intern',
+    company: 'Northwind Mobility',
+    location: 'Remote • EMEA',
+    stipend: '\$900/mo',
+    type: 'Part-time',
+    deadline: 'Apply by May 5',
+    tags: const ['Content', 'QA', 'Translation'],
+    description: 'Assist with Turkish-English product strings, QA releases, and shadow customer calls.',
+  ),
+  InternshipOpportunity(
+    id: 'int2',
+    title: 'CX Research Fellow',
+    company: 'Eurasia Cloud',
+    location: 'Hybrid • Istanbul',
+    stipend: '\$1.1k/mo',
+    type: 'Full-time',
+    deadline: 'Apply by May 18',
+    tags: const ['Research', 'Interviews', 'Insights'],
+    description: 'Pair with senior researchers to synthesize bilingual interviews and build insight reports.',
+  ),
+  InternshipOpportunity(
+    id: 'int3',
+    title: 'Community Programs',
+    company: 'Global Voices',
+    location: 'Remote • Flexible',
+    stipend: '\$750/mo',
+    type: 'Part-time',
+    deadline: 'Apply by May 25',
+    tags: const ['Events', 'Outreach', 'Content'],
+    description: 'Launch micro-events, craft recap posts, and moderate bilingual forums with mentors.',
+  ),
+];
+
+final industryNews = [
+  NewsArticle(
+    id: 'news1',
+    title: 'Turkish edtech startups raise Series A to scale AI tutors',
+    source: 'EdTech Weekly',
+    summary: 'Local teams are investing in bilingual AI copilots while keeping human-led lessons central.',
+    publishedAt: '2h ago',
+    imageUrl: 'https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg',
+    tag: 'Industry',
+  ),
+  NewsArticle(
+    id: 'news2',
+    title: 'Hiring demand spikes for bilingual CX roles',
+    source: 'Global Support Digest',
+    summary: 'Companies cite faster resolution times when teams practice live call drills.',
+    publishedAt: '6h ago',
+    imageUrl: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg',
+    tag: 'Careers',
+  ),
+  NewsArticle(
+    id: 'news3',
+    title: 'Immersion sprints outperform self-paced modules',
+    source: 'Learning Lab',
+    summary: 'Blended live practice with guided projects improves retention and confidence.',
+    publishedAt: 'Yesterday',
+    imageUrl: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg',
+    tag: 'Learning',
+  ),
+];

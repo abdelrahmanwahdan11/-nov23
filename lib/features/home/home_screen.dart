@@ -52,7 +52,9 @@ class HomeScreen extends StatefulWidget {
       required this.onOpenInterviewPrep,
       required this.onOpenAlumniNetwork,
       required this.onOpenSuccessStories,
-      required this.onOpenScholarships});
+      required this.onOpenScholarships,
+      required this.onOpenInternships,
+      required this.onOpenIndustryNews});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onOpenSettings;
   final VoidCallback onOpenNotifications;
@@ -84,6 +86,8 @@ class HomeScreen extends StatefulWidget {
   final VoidCallback onOpenAlumniNetwork;
   final VoidCallback onOpenSuccessStories;
   final VoidCallback onOpenScholarships;
+  final VoidCallback onOpenInternships;
+  final VoidCallback onOpenIndustryNews;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -267,6 +271,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   _QuickActionChip(icon: Icons.query_stats_outlined, label: 'Insights', onTap: widget.onOpenInsights),
                   _QuickActionChip(icon: Icons.rate_review_outlined, label: 'Feedback', onTap: widget.onOpenFeedback),
                   _QuickActionChip(icon: Icons.event_available_outlined, label: 'Live events', onTap: widget.onOpenLiveEvents),
+                  _QuickActionChip(icon: Icons.business_center_outlined, label: 'Internships', onTap: widget.onOpenInternships),
+                  _QuickActionChip(icon: Icons.newspaper_outlined, label: 'Industry news', onTap: widget.onOpenIndustryNews),
                   _QuickActionChip(icon: Icons.verified_outlined, label: 'Certificates', onTap: widget.onOpenCertificates),
                   _QuickActionChip(icon: Icons.public, label: 'Immersion', onTap: widget.onOpenImmersion),
                   _QuickActionChip(icon: Icons.rocket_launch_outlined, label: 'Fluency plan', onTap: _openFluencyPlan),
@@ -293,6 +299,135 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   _FluencyPreview(onTap: _openFluencyPlan),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Internships & fellowships', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: widget.onOpenInternships, child: const Text('View all')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 170,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: internshipOpportunities.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (context, index) {
+                        final internship = internshipOpportunities[index];
+                        return Container(
+                          width: 240,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(color: Colors.grey.withOpacity(0.12)),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.work_outline, color: Theme.of(context).colorScheme.primary),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                      child: Text(internship.title,
+                                          style: const TextStyle(fontWeight: FontWeight.bold),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis)),
+                                ],
+                              ),
+                              const SizedBox(height: 6),
+                              Text('${internship.company} • ${internship.location}',
+                                  maxLines: 1, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall),
+                              const SizedBox(height: 6),
+                              Text(internship.description, maxLines: 2, overflow: TextOverflow.ellipsis),
+                              const Spacer(),
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 6,
+                                children: [
+                                  _InfoPill(label: internship.stipend, icon: Icons.payments_outlined),
+                                  _InfoPill(label: internship.deadline, icon: Icons.schedule_outlined),
+                                ],
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Industry news', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: widget.onOpenIndustryNews, child: const Text('All updates')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 160,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: industryNews.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (context, index) {
+                        final article = industryNews[index];
+                        return Container(
+                          width: 240,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(color: Colors.grey.withOpacity(0.12)),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.newspaper_outlined, color: Theme.of(context).colorScheme.primary),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                      child: Text(article.title,
+                                          style: const TextStyle(fontWeight: FontWeight.bold),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis)),
+                                ],
+                              ),
+                              const SizedBox(height: 6),
+                              Text(article.summary, maxLines: 2, overflow: TextOverflow.ellipsis),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  Expanded(child: Text('${article.source} • ${article.publishedAt}', style: Theme.of(context).textTheme.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis)),
+                                  Chip(label: Text(article.tag)),
+                                ],
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  )
                 ],
               ),
             ),
