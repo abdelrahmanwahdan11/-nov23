@@ -13,6 +13,8 @@ import '../../core/widgets/skeleton_loader.dart';
 import '../../core/widgets/tutor_card.dart';
 import 'fluency_plan_screen.dart';
 import 'phrasebook_screen.dart';
+import 'mastery_readiness_screen.dart';
+import 'portfolio_showcase_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen(
@@ -88,6 +90,18 @@ class _HomeScreenState extends State<HomeScreen> {
   void _openFluencyPlan() {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => FluencyPlanScreen(onOpenSettings: widget.onOpenSettings),
+    ));
+  }
+
+  void _openMastery() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => MasteryReadinessScreen(onOpenSettings: widget.onOpenSettings),
+    ));
+  }
+
+  void _openPortfolio() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => PortfolioShowcaseScreen(onOpenSettings: widget.onOpenSettings),
     ));
   }
 
@@ -235,6 +249,58 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   _FluencyPreview(onTap: _openFluencyPlan),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Portfolio vault', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: _openPortfolio, child: const Text('Open vault')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 170,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: portfolioItems.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (context, index) => _PortfolioPreview(item: portfolioItems[index], onTap: _openPortfolio),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Final readiness', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: _openMastery, child: const Text('Checklist')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 190,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: masteryChecklists.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (context, index) => _MasteryPreview(item: masteryChecklists[index], onTap: _openMastery),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -912,6 +978,99 @@ class _CapstonePreview extends StatelessWidget {
                 ],
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MasteryPreview extends StatelessWidget {
+  const _MasteryPreview({required this.item, required this.onTap});
+  final MasteryChecklist item;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 200,
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey.withOpacity(0.12)),
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 12, offset: const Offset(0, 8))],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text('Coach ${item.coach}', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 12)),
+                ),
+                const Spacer(),
+                Icon(Icons.flag_outlined, color: Theme.of(context).colorScheme.primary, size: 18),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Text(item.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+            const SizedBox(height: 6),
+            Text(item.summary, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall),
+            const Spacer(),
+            LinearProgressIndicator(value: item.progress, minHeight: 6, borderRadius: BorderRadius.circular(8)),
+            const SizedBox(height: 6),
+            Text('${(item.progress * 100).round()}% ready', style: Theme.of(context).textTheme.bodySmall),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PortfolioPreview extends StatelessWidget {
+  const _PortfolioPreview({required this.item, required this.onTap});
+  final PortfolioItem item;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 210,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey.withOpacity(0.12)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(item.coverImage, height: 90, width: double.infinity, fit: BoxFit.cover),
+            ),
+            const SizedBox(height: 8),
+            Text(item.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800)),
+            const SizedBox(height: 6),
+            Text(item.highlight, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall),
+            const Spacer(),
+            Row(
+              children: [
+                Text(item.status, style: Theme.of(context).textTheme.bodySmall),
+                const Spacer(),
+                Icon(Icons.arrow_forward_ios, size: 14, color: Theme.of(context).colorScheme.primary),
+              ],
+            )
           ],
         ),
       ),

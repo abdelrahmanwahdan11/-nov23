@@ -779,3 +779,60 @@ final downloadableKits = [
     coverImage: 'https://images.pexels.com/photos/590587/pexels-photo-590587.jpeg',
   ),
 ];
+
+final masteryChecklists = [
+  MasteryChecklist(
+    id: 'mc1',
+    title: 'Mock oral defense',
+    summary: 'Practice 10-min defense with tricky follow-ups.',
+    progress: 0.68,
+    actions: const ['Upload slides', 'Record dry run', 'Schedule mentor'],
+    coach: 'Coach Layla',
+  ),
+  MasteryChecklist(
+    id: 'mc2',
+    title: 'Portfolio polish',
+    summary: 'Tighten phrasing, replace filler verbs, and re-run pronunciation.',
+    progress: 0.42,
+    actions: const ['Swap examples', 'Add metrics', 'Rehearse closing'],
+    coach: 'Coach Can',
+  ),
+  MasteryChecklist(
+    id: 'mc3',
+    title: 'Final readiness sweep',
+    summary: 'Spot-check fluency plan, safety net phrases, and timing.',
+    progress: 0.81,
+    actions: const ['Phrase drill', 'Timebox intro', 'Confirm back-up'],
+    coach: 'Coach Mina',
+  ),
+];
+
+final portfolioItems = [
+  PortfolioItem(
+    id: 'pf1',
+    title: 'Product pitch in Turkish',
+    category: 'Video + Script',
+    updatedAt: 'Updated 1d ago',
+    status: 'Needs review',
+    coverImage: 'https://images.pexels.com/photos/3184296/pexels-photo-3184296.jpeg',
+    highlight: 'Added metrics and objection handling section.',
+  ),
+  PortfolioItem(
+    id: 'pf2',
+    title: 'Customer discovery interviews',
+    category: 'Audio + Notes',
+    updatedAt: 'Updated 3d ago',
+    status: 'Ready to send',
+    coverImage: 'https://images.pexels.com/photos/3775535/pexels-photo-3775535.jpeg',
+    highlight: 'Trimmed hesitations and inserted empathy phrases.',
+  ),
+  PortfolioItem(
+    id: 'pf3',
+    title: 'Capstone checklist & QA',
+    category: 'PDF Pack',
+    updatedAt: 'Updated 5d ago',
+    status: 'Mentor pinned',
+    coverImage: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg',
+    highlight: 'Includes bilingual glossary and timeline snapshot.',
+  ),
+];

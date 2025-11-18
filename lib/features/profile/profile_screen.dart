@@ -5,6 +5,8 @@ import '../../core/controllers/theme_controller.dart';
 import '../../core/utils/mock_data.dart';
 import '../home/fluency_plan_screen.dart';
 import '../home/phrasebook_screen.dart';
+import '../home/mastery_readiness_screen.dart';
+import '../home/portfolio_showcase_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen(
@@ -229,6 +231,22 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Track mentor notes and next steps'),
             leading: const Icon(Icons.fact_check_outlined),
             onTap: onOpenCapstoneReviews,
+          ),
+          ListTile(
+            title: const Text('Final readiness'),
+            subtitle: const Text('Checklist for the final oral defense'),
+            leading: const Icon(Icons.flag_circle_outlined),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => MasteryReadinessScreen(onOpenSettings: onOpenSettings)),
+            ),
+          ),
+          ListTile(
+            title: const Text('Portfolio vault'),
+            subtitle: const Text('Keep scripts, recordings, and PDFs together'),
+            leading: const Icon(Icons.folder_special_outlined),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => PortfolioShowcaseScreen(onOpenSettings: onOpenSettings)),
+            ),
           ),
           ListTile(
             title: const Text('Offline kits'),

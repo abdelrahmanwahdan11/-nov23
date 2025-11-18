@@ -486,3 +486,41 @@ class DownloadableKit {
   final String coverImage;
   final bool isPinned;
 }
+
+class MasteryChecklist {
+  MasteryChecklist({
+    required this.id,
+    required this.title,
+    required this.summary,
+    required this.progress,
+    required this.actions,
+    required this.coach,
+  });
+
+  final String id;
+  final String title;
+  final String summary;
+  final double progress;
+  final List<String> actions;
+  final String coach;
+}
+
+class PortfolioItem {
+  PortfolioItem({
+    required this.id,
+    required this.title,
+    required this.category,
+    required this.updatedAt,
+    required this.status,
+    required this.coverImage,
+    required this.highlight,
+  });
+
+  final String id;
+  final String title;
+  final String category;
+  final String updatedAt;
+  final String status;
+  final String coverImage;
+  final String highlight;
+}
