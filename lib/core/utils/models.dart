@@ -325,3 +325,43 @@ class SurveyQuestion {
   final String prompt;
   final List<String> options;
 }
+
+class LeaderboardEntry {
+  LeaderboardEntry({
+    required this.rank,
+    required this.name,
+    required this.avatarUrl,
+    required this.points,
+    required this.lessons,
+    required this.flag,
+  });
+
+  final int rank;
+  final String name;
+  final String avatarUrl;
+  final int points;
+  final int lessons;
+  final String flag;
+}
+
+class ImmersionExperience {
+  ImmersionExperience({
+    required this.id,
+    required this.title,
+    required this.city,
+    required this.imageUrl,
+    required this.level,
+    required this.dateLabel,
+    required this.isGuided,
+    required this.description,
+  });
+
+  final String id;
+  final String title;
+  final String city;
+  final String imageUrl;
+  final String level;
+  final String dateLabel;
+  final bool isGuided;
+  final String description;
+}

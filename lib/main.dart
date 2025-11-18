@@ -38,6 +38,8 @@ import 'features/home/insights_screen.dart';
 import 'features/home/streaks_screen.dart';
 import 'features/home/rewards_screen.dart';
 import 'features/home/feedback_screen.dart';
+import 'features/home/leaderboard_screen.dart';
+import 'features/home/immersion_screen.dart';
 
 void main() {
   runApp(const LinguaTutorApp());
@@ -171,6 +173,8 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
           onOpenStreaks: () => _openStreaks(context),
           onOpenRewards: () => _openRewards(context),
           onOpenFeedback: () => _openFeedback(context),
+          onOpenLeaderboard: () => _openLeaderboard(context),
+          onOpenImmersion: () => _openImmersion(context),
           onLogout: () {
         setState(() {});
       }),
@@ -324,6 +328,18 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
     ));
   }
 
+  void _openLeaderboard(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => LeaderboardScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openImmersion(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => ImmersionScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
   void _openCoachTips(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => CoachTipsScreen(onOpenSettings: () => _openSettings(context)),
@@ -363,6 +379,8 @@ class ProfileHost extends StatefulWidget {
       required this.onOpenStreaks,
       required this.onOpenRewards,
       required this.onOpenFeedback,
+      required this.onOpenLeaderboard,
+      required this.onOpenImmersion,
       required this.onLogout});
   final ThemeController themeController;
   final LocalizationController localeController;
@@ -387,6 +405,8 @@ class ProfileHost extends StatefulWidget {
   final VoidCallback onOpenStreaks;
   final VoidCallback onOpenRewards;
   final VoidCallback onOpenFeedback;
+  final VoidCallback onOpenLeaderboard;
+  final VoidCallback onOpenImmersion;
   final VoidCallback onLogout;
 
   @override
@@ -423,6 +443,8 @@ class _ProfileHostState extends State<ProfileHost> {
           onOpenStreaks: widget.onOpenStreaks,
           onOpenRewards: widget.onOpenRewards,
           onOpenFeedback: widget.onOpenFeedback,
+          onOpenLeaderboard: widget.onOpenLeaderboard,
+          onOpenImmersion: widget.onOpenImmersion,
           onLogout: widget.onLogout,
         );
       },

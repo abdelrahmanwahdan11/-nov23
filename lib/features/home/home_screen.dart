@@ -34,7 +34,9 @@ class HomeScreen extends StatefulWidget {
       required this.onOpenInsights,
       required this.onOpenStreaks,
       required this.onOpenRewards,
-      required this.onOpenFeedback});
+      required this.onOpenFeedback,
+      required this.onOpenLeaderboard,
+      required this.onOpenImmersion});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onOpenSettings;
   final VoidCallback onOpenNotifications;
@@ -55,6 +57,8 @@ class HomeScreen extends StatefulWidget {
   final VoidCallback onOpenStreaks;
   final VoidCallback onOpenRewards;
   final VoidCallback onOpenFeedback;
+  final VoidCallback onOpenLeaderboard;
+  final VoidCallback onOpenImmersion;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -176,6 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   _QuickActionChip(icon: Icons.wallet, label: 'Wallet', onTap: widget.onOpenWallet),
                   _QuickActionChip(icon: Icons.menu_book, label: 'Resources', onTap: widget.onOpenResources),
                   _QuickActionChip(icon: Icons.forum_outlined, label: 'Community', onTap: widget.onOpenCommunity),
+                  _QuickActionChip(icon: Icons.emoji_events_outlined, label: 'Leaderboard', onTap: widget.onOpenLeaderboard),
                   _QuickActionChip(icon: Icons.fitness_center_outlined, label: 'Practice lab', onTap: widget.onOpenPractice),
                   _QuickActionChip(icon: Icons.rule_folder_outlined, label: 'Placement test', onTap: widget.onOpenPlacementTest),
                   _QuickActionChip(icon: Icons.lightbulb, label: 'Coach tips', onTap: widget.onOpenCoachTips),
@@ -183,6 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   _QuickActionChip(icon: Icons.rate_review_outlined, label: 'Feedback', onTap: widget.onOpenFeedback),
                   _QuickActionChip(icon: Icons.event_available_outlined, label: 'Live events', onTap: widget.onOpenLiveEvents),
                   _QuickActionChip(icon: Icons.verified_outlined, label: 'Certificates', onTap: widget.onOpenCertificates),
+                  _QuickActionChip(icon: Icons.public, label: 'Immersion', onTap: widget.onOpenImmersion),
                     ],
                   ),
                 ],
@@ -247,6 +253,50 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   ...communityPosts.take(2).map((post) => _CommunityPreviewCard(post: post)).toList(),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Leaderboard', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: widget.onOpenLeaderboard, child: const Text('See ranks')),
+                    ],
+                  ),
+                  ...leaderboardEntries.take(3).map((entry) => _LeaderboardPreview(entry: entry)).toList(),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Immersion sprints', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: widget.onOpenImmersion, child: const Text('Explore')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 160,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: immersionExperiences.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (context, index) => _ImmersionCard(exp: immersionExperiences[index]),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -421,6 +471,109 @@ class _CommunityPreviewCard extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _LeaderboardPreview extends StatelessWidget {
+  const _LeaderboardPreview({required this.entry});
+  final LeaderboardEntry entry;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = entry.rank == 1
+        ? Theme.of(context).colorScheme.primary
+        : Theme.of(context).colorScheme.secondary.withOpacity(0.4);
+    return Container(
+      margin: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withOpacity(0.3)),
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(backgroundColor: color.withOpacity(0.12), child: Text('#${entry.rank}', style: TextStyle(color: color))),
+          const SizedBox(width: 10),
+          CircleAvatar(backgroundImage: NetworkImage(entry.avatarUrl)),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(entry.name, style: const TextStyle(fontWeight: FontWeight.w700)),
+                Text('${entry.points} pts · ${entry.lessons} lessons',
+                    style: Theme.of(context).textTheme.bodySmall),
+              ],
+            ),
+          ),
+          Text(entry.flag, style: const TextStyle(fontSize: 14))
+        ],
+      ),
+    );
+  }
+}
+
+class _ImmersionCard extends StatelessWidget {
+  const _ImmersionCard({required this.exp});
+  final ImmersionExperience exp;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 260,
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.shadow.withOpacity(0.08),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          )
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
+            child: Image.network(exp.imageUrl, height: 100, width: double.infinity, fit: BoxFit.cover),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(exp.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontWeight: FontWeight.w700)),
+                    ),
+                    InfoTag(label: exp.level),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(exp.description, maxLines: 2, overflow: TextOverflow.ellipsis),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(Icons.place_outlined, size: 16, color: Theme.of(context).colorScheme.primary),
+                    const SizedBox(width: 4),
+                    Text(exp.city, style: Theme.of(context).textTheme.bodySmall),
+                    const Spacer(),
+                    Text(exp.dateLabel, style: Theme.of(context).textTheme.bodySmall),
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

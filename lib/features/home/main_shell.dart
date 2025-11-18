@@ -31,6 +31,8 @@ import 'insights_screen.dart';
 import 'streaks_screen.dart';
 import 'rewards_screen.dart';
 import 'feedback_screen.dart';
+import 'leaderboard_screen.dart';
+import 'immersion_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key, required this.onTutorTap, required this.onLogout, required this.profileBuilder, required this.themeController, required this.localizationController, required this.favoritesController});
@@ -92,6 +94,8 @@ class _MainShellState extends State<MainShell> {
         onOpenStreaks: _openStreaks,
         onOpenRewards: _openRewards,
         onOpenFeedback: _openFeedback,
+        onOpenLeaderboard: _openLeaderboard,
+        onOpenImmersion: _openImmersion,
       ),
       CatalogScreen(
         controller: catalogController,
@@ -218,5 +222,13 @@ class _MainShellState extends State<MainShell> {
 
   void _openInsights() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => InsightsScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openLeaderboard() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => LeaderboardScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openImmersion() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ImmersionScreen(onOpenSettings: _openSettings)));
   }
 }

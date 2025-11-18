@@ -29,6 +29,8 @@ class ProfileScreen extends StatelessWidget {
       required this.onOpenInsights,
       required this.onOpenStreaks,
       required this.onOpenRewards,
+      required this.onOpenLeaderboard,
+      required this.onOpenImmersion,
       required this.onOpenFeedback,
       required this.onLogout});
   final ThemeController theme;
@@ -53,6 +55,8 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onOpenInsights;
   final VoidCallback onOpenStreaks;
   final VoidCallback onOpenRewards;
+  final VoidCallback onOpenLeaderboard;
+  final VoidCallback onOpenImmersion;
   final VoidCallback onOpenFeedback;
   final VoidCallback onLogout;
 
@@ -119,6 +123,12 @@ class ProfileScreen extends StatelessWidget {
             onTap: onOpenRewards,
           ),
           ListTile(
+            title: const Text('Leaderboard'),
+            subtitle: const Text('See how you rank this week'),
+            leading: const Icon(Icons.emoji_events_outlined),
+            onTap: onOpenLeaderboard,
+          ),
+          ListTile(
             title: const Text('Weekly feedback'),
             subtitle: const Text('Share preferences for smarter tips'),
             leading: const Icon(Icons.rate_review_outlined),
@@ -177,6 +187,12 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Quick drills to prep before lessons'),
             leading: const Icon(Icons.fitness_center_outlined),
             onTap: onOpenPractice,
+          ),
+          ListTile(
+            title: const Text('Immersion'),
+            subtitle: const Text('Join guided real-world sprints'),
+            leading: const Icon(Icons.public),
+            onTap: onOpenImmersion,
           ),
           ListTile(
             title: const Text('Placement test'),

@@ -514,3 +514,79 @@ final surveyQuestions = [
     options: ['Voice notes', 'Annotated text', 'Live review', 'Short checklists'],
   ),
 ];
+
+final leaderboardEntries = [
+  LeaderboardEntry(
+    rank: 1,
+    name: 'Sara M.',
+    avatarUrl: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg',
+    points: 1420,
+    lessons: 82,
+    flag: '🇸🇦',
+  ),
+  LeaderboardEntry(
+    rank: 2,
+    name: 'Diego R.',
+    avatarUrl: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg',
+    points: 1285,
+    lessons: 76,
+    flag: '🇪🇸',
+  ),
+  LeaderboardEntry(
+    rank: 3,
+    name: 'Lina Q.',
+    avatarUrl: 'https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg',
+    points: 1190,
+    lessons: 70,
+    flag: '🇪🇬',
+  ),
+  LeaderboardEntry(
+    rank: 4,
+    name: 'Kenji T.',
+    avatarUrl: 'https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg',
+    points: 990,
+    lessons: 60,
+    flag: '🇯🇵',
+  ),
+  LeaderboardEntry(
+    rank: 5,
+    name: 'Alex P.',
+    avatarUrl: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg',
+    points: 910,
+    lessons: 54,
+    flag: '🇺🇸',
+  ),
+];
+
+final immersionExperiences = [
+  ImmersionExperience(
+    id: 'imx1',
+    title: 'Grand Bazaar bargaining sprint',
+    city: 'Istanbul',
+    imageUrl: 'https://images.pexels.com/photos/1796738/pexels-photo-1796738.jpeg',
+    level: 'A2-B2',
+    dateLabel: 'Mar 22 · 5:00 PM',
+    isGuided: true,
+    description: 'Practice negotiation phrases with a mentor shadowing your calls.',
+  ),
+  ImmersionExperience(
+    id: 'imx2',
+    title: 'Café conversation circuit',
+    city: 'Amman',
+    imageUrl: 'https://images.pexels.com/photos/3184183/pexels-photo-3184183.jpeg',
+    level: 'B1-C1',
+    dateLabel: 'Mar 24 · 7:30 PM',
+    isGuided: false,
+    description: 'Rotate through themed café tables and swap roles every 12 minutes.',
+  ),
+  ImmersionExperience(
+    id: 'imx3',
+    title: 'Market errands challenge',
+    city: 'Dubai',
+    imageUrl: 'https://images.pexels.com/photos/3186654/pexels-photo-3186654.jpeg',
+    level: 'Any',
+    dateLabel: 'Mar 27 · 4:00 PM',
+    isGuided: true,
+    description: 'Follow a checklist of errands, record yourself, and receive annotated notes.',
+  ),
+];
