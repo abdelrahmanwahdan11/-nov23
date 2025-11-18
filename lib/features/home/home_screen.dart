@@ -40,7 +40,9 @@ class HomeScreen extends StatefulWidget {
       required this.onOpenLeaderboard,
       required this.onOpenImmersion,
       required this.onOpenMentorChat,
-      required this.onOpenProjects});
+      required this.onOpenProjects,
+      required this.onOpenCapstoneReviews,
+      required this.onOpenDownloadKits});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onOpenSettings;
   final VoidCallback onOpenNotifications;
@@ -65,6 +67,8 @@ class HomeScreen extends StatefulWidget {
   final VoidCallback onOpenImmersion;
   final VoidCallback onOpenMentorChat;
   final VoidCallback onOpenProjects;
+  final VoidCallback onOpenCapstoneReviews;
+  final VoidCallback onOpenDownloadKits;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -209,6 +213,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   _QuickActionChip(icon: Icons.public, label: 'Immersion', onTap: widget.onOpenImmersion),
                   _QuickActionChip(icon: Icons.rocket_launch_outlined, label: 'Fluency plan', onTap: _openFluencyPlan),
                   _QuickActionChip(icon: Icons.record_voice_over_outlined, label: 'Phrasebook', onTap: _openPhrasebook),
+                  _QuickActionChip(icon: Icons.fact_check_outlined, label: 'Capstone review', onTap: widget.onOpenCapstoneReviews),
+                  _QuickActionChip(icon: Icons.offline_pin_outlined, label: 'Offline kits', onTap: widget.onOpenDownloadKits),
                     ],
                   ),
                 ],
@@ -256,6 +262,58 @@ class _HomeScreenState extends State<HomeScreen> {
                         category: phraseCategories[index],
                         onTap: _openPhrasebook,
                       ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Capstone reviews', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: widget.onOpenCapstoneReviews, child: const Text('Open all')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 210,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: capstoneReviews.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (context, index) => _CapstonePreview(review: capstoneReviews[index], onTap: widget.onOpenCapstoneReviews),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Offline kits', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: widget.onOpenDownloadKits, child: const Text('Manage')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 150,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: downloadableKits.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (context, index) => _KitPreview(kit: downloadableKits[index], onTap: widget.onOpenDownloadKits),
                     ),
                   ),
                 ],
@@ -796,6 +854,108 @@ class _PhrasePreviewCard extends StatelessWidget {
                 )),
             const Spacer(),
             Text('Tap to open', style: Theme.of(context).textTheme.bodySmall),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CapstonePreview extends StatelessWidget {
+  const _CapstonePreview({required this.review, required this.onTap});
+  final CapstoneReview review;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 220,
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 12, offset: const Offset(0, 8))],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
+              child: Image.network(review.heroImage, height: 110, width: double.infinity, fit: BoxFit.cover),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(review.status, style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+                      ),
+                      const Spacer(),
+                      const Icon(Icons.fact_check_outlined, size: 18),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(review.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 6),
+                  LinearProgressIndicator(value: review.progress, minHeight: 6, borderRadius: BorderRadius.circular(6)),
+                  const SizedBox(height: 6),
+                  Text('Mentor ${review.mentor} · Next: ${review.nextStep}', maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _KitPreview extends StatelessWidget {
+  const _KitPreview({required this.kit, required this.onTap});
+  final DownloadableKit kit;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 200,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey.withOpacity(0.1)),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(kit.coverImage, height: 80, width: 70, fit: BoxFit.cover),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(kit.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800)),
+                  const SizedBox(height: 6),
+                  Text(kit.description, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodySmall),
+                  const SizedBox(height: 6),
+                  Text('${kit.sizeLabel} · ${kit.updatedAt}', style: Theme.of(context).textTheme.bodySmall),
+                ],
+              ),
+            ),
           ],
         ),
       ),

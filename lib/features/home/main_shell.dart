@@ -35,6 +35,8 @@ import 'leaderboard_screen.dart';
 import 'immersion_screen.dart';
 import 'mentor_chat_screen.dart';
 import 'projects_screen.dart';
+import 'capstone_review_screen.dart';
+import 'download_kits_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({
@@ -108,6 +110,8 @@ class _MainShellState extends State<MainShell> {
         onOpenImmersion: _openImmersion,
         onOpenMentorChat: _openMentorChat,
         onOpenProjects: _openProjects,
+        onOpenCapstoneReviews: _openCapstoneReviews,
+        onOpenDownloadKits: _openDownloadKits,
       ),
       CatalogScreen(
         controller: catalogController,
@@ -250,5 +254,13 @@ class _MainShellState extends State<MainShell> {
 
   void _openProjects() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProjectsScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openCapstoneReviews() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => CapstoneReviewScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openDownloadKits() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => DownloadKitsScreen(onOpenSettings: _openSettings)));
   }
 }

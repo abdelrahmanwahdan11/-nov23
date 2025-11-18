@@ -42,6 +42,8 @@ import 'features/home/leaderboard_screen.dart';
 import 'features/home/immersion_screen.dart';
 import 'features/home/mentor_chat_screen.dart';
 import 'features/home/projects_screen.dart';
+import 'features/home/capstone_review_screen.dart';
+import 'features/home/download_kits_screen.dart';
 
 void main() {
   runApp(const LinguaTutorApp());
@@ -179,6 +181,8 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
           onOpenImmersion: () => _openImmersion(context),
           onOpenMentorChat: () => _openMentorChat(context),
           onOpenProjects: () => _openProjects(context),
+          onOpenCapstoneReviews: () => _openCapstoneReviews(context),
+          onOpenDownloadKits: () => _openDownloadKits(context),
           onLogout: () {
         setState(() {});
       }),
@@ -356,6 +360,18 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
     ));
   }
 
+  void _openCapstoneReviews(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => CapstoneReviewScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openDownloadKits(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => DownloadKitsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
   void _openCoachTips(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => CoachTipsScreen(onOpenSettings: () => _openSettings(context)),
@@ -399,6 +415,8 @@ class ProfileHost extends StatefulWidget {
       required this.onOpenImmersion,
       required this.onOpenMentorChat,
       required this.onOpenProjects,
+      required this.onOpenCapstoneReviews,
+      required this.onOpenDownloadKits,
       required this.onLogout});
   final ThemeController themeController;
   final LocalizationController localeController;
@@ -427,6 +445,8 @@ class ProfileHost extends StatefulWidget {
   final VoidCallback onOpenImmersion;
   final VoidCallback onOpenMentorChat;
   final VoidCallback onOpenProjects;
+  final VoidCallback onOpenCapstoneReviews;
+  final VoidCallback onOpenDownloadKits;
   final VoidCallback onLogout;
 
   @override
@@ -467,6 +487,8 @@ class _ProfileHostState extends State<ProfileHost> {
           onOpenImmersion: widget.onOpenImmersion,
           onOpenMentorChat: widget.onOpenMentorChat,
           onOpenProjects: widget.onOpenProjects,
+          onOpenCapstoneReviews: widget.onOpenCapstoneReviews,
+          onOpenDownloadKits: widget.onOpenDownloadKits,
           onLogout: widget.onLogout,
         );
       },

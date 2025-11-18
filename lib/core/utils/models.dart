@@ -444,3 +444,45 @@ class PhraseCategory {
   final String contextLabel;
   final List<String> phrases;
 }
+
+class CapstoneReview {
+  CapstoneReview({
+    required this.id,
+    required this.title,
+    required this.status,
+    required this.mentor,
+    required this.progress,
+    required this.nextStep,
+    required this.milestones,
+    required this.heroImage,
+  });
+
+  final String id;
+  final String title;
+  final String status;
+  final String mentor;
+  final double progress;
+  final String nextStep;
+  final List<String> milestones;
+  final String heroImage;
+}
+
+class DownloadableKit {
+  DownloadableKit({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.sizeLabel,
+    required this.updatedAt,
+    required this.coverImage,
+    this.isPinned = false,
+  });
+
+  final String id;
+  final String title;
+  final String description;
+  final String sizeLabel;
+  final String updatedAt;
+  final String coverImage;
+  final bool isPinned;
+}

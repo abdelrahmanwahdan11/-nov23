@@ -728,3 +728,54 @@ final phraseCategories = [
     ],
   ),
 ];
+
+final capstoneReviews = [
+  CapstoneReview(
+    id: 'cr1',
+    title: 'Capstone: Istanbul storytelling',
+    status: 'Awaiting mentor notes',
+    mentor: 'Leyla T.',
+    progress: 0.72,
+    nextStep: 'Refine closing message',
+    milestones: const ['Outline complete', 'Recorded first take', 'Peer feedback added'],
+    heroImage: 'https://images.pexels.com/photos/3755010/pexels-photo-3755010.jpeg',
+  ),
+  CapstoneReview(
+    id: 'cr2',
+    title: 'Capstone: Coffee chat demo',
+    status: 'Mentor reviewing',
+    mentor: 'Amir B.',
+    progress: 0.54,
+    nextStep: 'Tighten pronunciation',
+    milestones: const ['Script drafted', 'Role-played twice', 'Uploaded recording'],
+    heroImage: 'https://images.pexels.com/photos/3206079/pexels-photo-3206079.jpeg',
+  ),
+];
+
+final downloadableKits = [
+  DownloadableKit(
+    id: 'dk1',
+    title: 'Offline Turkish crash pack',
+    description: '40 pages of dialogues, drills, and checklists for travel and work.',
+    sizeLabel: '24 MB',
+    updatedAt: 'Updated 2d ago',
+    coverImage: 'https://images.pexels.com/photos/5052875/pexels-photo-5052875.jpeg',
+    isPinned: true,
+  ),
+  DownloadableKit(
+    id: 'dk2',
+    title: 'Speaking boosters',
+    description: 'Audio+PDF bundle with prompts and shadowing exercises.',
+    sizeLabel: '18 MB',
+    updatedAt: 'Updated 5d ago',
+    coverImage: 'https://images.pexels.com/photos/1550337/pexels-photo-1550337.jpeg',
+  ),
+  DownloadableKit(
+    id: 'dk3',
+    title: 'Exam-ready flashcards',
+    description: 'High-frequency phrases with IPA, samples, and mini quizzes.',
+    sizeLabel: '12 MB',
+    updatedAt: 'Updated 1w ago',
+    coverImage: 'https://images.pexels.com/photos/590587/pexels-photo-590587.jpeg',
+  ),
+];

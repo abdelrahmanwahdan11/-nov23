@@ -35,6 +35,8 @@ class ProfileScreen extends StatelessWidget {
       required this.onOpenImmersion,
       required this.onOpenMentorChat,
       required this.onOpenProjects,
+      required this.onOpenCapstoneReviews,
+      required this.onOpenDownloadKits,
       required this.onOpenFeedback,
       required this.onLogout});
   final ThemeController theme;
@@ -63,6 +65,8 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onOpenImmersion;
   final VoidCallback onOpenMentorChat;
   final VoidCallback onOpenProjects;
+  final VoidCallback onOpenCapstoneReviews;
+  final VoidCallback onOpenDownloadKits;
   final VoidCallback onOpenFeedback;
   final VoidCallback onLogout;
 
@@ -219,6 +223,18 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Hands-on scenarios with tasks'),
             leading: const Icon(Icons.assignment_turned_in_outlined),
             onTap: onOpenProjects,
+          ),
+          ListTile(
+            title: const Text('Capstone reviews'),
+            subtitle: const Text('Track mentor notes and next steps'),
+            leading: const Icon(Icons.fact_check_outlined),
+            onTap: onOpenCapstoneReviews,
+          ),
+          ListTile(
+            title: const Text('Offline kits'),
+            subtitle: const Text('Download packs for spotty Wi‑Fi'),
+            leading: const Icon(Icons.offline_pin_outlined),
+            onTap: onOpenDownloadKits,
           ),
           ListTile(
             title: const Text('Immersion'),
