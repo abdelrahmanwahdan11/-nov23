@@ -12,7 +12,17 @@ import '../../core/widgets/skeleton_loader.dart';
 import '../../core/widgets/tutor_card.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.onTutorTap, required this.onOpenSettings, required this.onOpenNotifications, required this.onOpenFavorites, required this.onOpenLearningPath, required this.favoritesController, required this.onOpenProgress});
+  const HomeScreen(
+      {super.key,
+      required this.onTutorTap,
+      required this.onOpenSettings,
+      required this.onOpenNotifications,
+      required this.onOpenFavorites,
+      required this.onOpenLearningPath,
+      required this.favoritesController,
+      required this.onOpenProgress,
+      required this.onOpenPlanner,
+      required this.onOpenWallet});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onOpenSettings;
   final VoidCallback onOpenNotifications;
@@ -20,6 +30,8 @@ class HomeScreen extends StatefulWidget {
   final VoidCallback onOpenLearningPath;
   final FavoritesController favoritesController;
   final VoidCallback onOpenProgress;
+  final VoidCallback onOpenPlanner;
+  final VoidCallback onOpenWallet;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -130,6 +142,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       _QuickActionChip(icon: Icons.favorite, label: 'Favorites', onTap: widget.onOpenFavorites),
                       _QuickActionChip(icon: Icons.notifications_active, label: 'Alerts', onTap: widget.onOpenNotifications),
                       _QuickActionChip(icon: Icons.insights, label: 'Progress', onTap: widget.onOpenProgress),
+                      _QuickActionChip(icon: Icons.calendar_today, label: 'Planner', onTap: widget.onOpenPlanner),
+                      _QuickActionChip(icon: Icons.wallet, label: 'Wallet', onTap: widget.onOpenWallet),
                     ],
                   ),
                 ],

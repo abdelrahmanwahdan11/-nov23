@@ -156,3 +156,75 @@ final faqs = [
     answer: 'Yes, filter tutors by "Kids friendly" and look for the badge on their cards.',
   ),
 ];
+
+final plannerDays = List.generate(7, (index) {
+  final date = DateTime.now().add(Duration(days: index));
+  return PlannerDay(
+    date: date,
+    focus: index == 0 ? 'Pronunciation drills' : 'Conversation warmups',
+    sessions: mockSessions
+        .map((s) => LessonSession(
+              id: '${s.id}_$index',
+              tutorId: s.tutorId,
+              language: s.language,
+              durationMinutes: s.durationMinutes,
+              date: date,
+              time: s.time,
+              price: s.price,
+              isTrial: s.isTrial,
+            ))
+        .toList(),
+  );
+});
+
+final sessionNotes = [
+  SessionNote(
+    title: 'Feedback on vowels',
+    snippet: 'Practice long/short sounds, record 3 clips before Friday.',
+    date: DateTime.now().subtract(const Duration(days: 1)),
+  ),
+  SessionNote(
+    title: 'Homework pack',
+    snippet: 'Tutor shared 12 flashcards and a role-play script.',
+    date: DateTime.now().subtract(const Duration(days: 4)),
+  ),
+];
+
+final invoices = [
+  Invoice(
+    id: 'inv-1201',
+    label: 'Trial lesson with Aylin',
+    amount: 18,
+    date: DateTime.now().subtract(const Duration(days: 2)),
+    status: 'Paid',
+  ),
+  Invoice(
+    id: 'inv-1202',
+    label: '60-min package',
+    amount: 54,
+    date: DateTime.now().subtract(const Duration(days: 10)),
+    status: 'Pending',
+  ),
+  Invoice(
+    id: 'inv-1203',
+    label: 'Vocabulary booster pack',
+    amount: 12,
+    date: DateTime.now().subtract(const Duration(days: 14)),
+    status: 'Refunded',
+  ),
+];
+
+final journalEntries = [
+  JournalEntry(
+    id: 'j1',
+    title: 'Ordering coffee',
+    body: 'Practiced polite forms and filler words, need to slow down the intro.',
+    date: DateTime.now().subtract(const Duration(days: 1)),
+  ),
+  JournalEntry(
+    id: 'j2',
+    title: 'Meeting kickoff',
+    body: 'Prepared a bilingual agenda and nailed the greeting transitions.',
+    date: DateTime.now().subtract(const Duration(days: 3)),
+  ),
+];

@@ -12,6 +12,8 @@ import '../catalog/catalog_screen.dart';
 import '../profile/favorites_screen.dart';
 import '../profile/profile_screen.dart';
 import '../profile/settings_screen.dart';
+import '../booking/planner_screen.dart';
+import '../payments/wallet_screen.dart';
 import '../search/search_screen.dart';
 import 'learning_path_screen.dart';
 import 'notifications_screen.dart';
@@ -66,6 +68,8 @@ class _MainShellState extends State<MainShell> {
         onOpenLearningPath: _openLearningPath,
         favoritesController: favoritesController,
         onOpenProgress: _openProgress,
+        onOpenPlanner: _openPlanner,
+        onOpenWallet: _openWallet,
       ),
       CatalogScreen(
         controller: catalogController,
@@ -74,7 +78,7 @@ class _MainShellState extends State<MainShell> {
         favoritesController: favoritesController,
         onOpenSettings: _openSettings,
       ),
-      BookingsScreen(onOpenSettings: _openSettings, onOpenSession: _openSession),
+      BookingsScreen(onOpenSettings: _openSettings, onOpenSession: _openSession, onOpenPlanner: _openPlanner),
       widget.profileBuilder(setState),
     ];
 
@@ -136,5 +140,13 @@ class _MainShellState extends State<MainShell> {
               session: session,
               onOpenSettings: _openSettings,
             )));
+  }
+
+  void _openPlanner() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => PlannerScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openWallet() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => WalletScreen(onOpenSettings: _openSettings)));
   }
 }

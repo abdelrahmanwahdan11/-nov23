@@ -3,10 +3,11 @@ import '../../core/utils/mock_data.dart';
 import '../../core/utils/models.dart';
 
 class BookingsScreen extends StatelessWidget {
-  const BookingsScreen({super.key, required this.onOpenSettings, required this.onOpenSession});
+  const BookingsScreen({super.key, required this.onOpenSettings, required this.onOpenSession, required this.onOpenPlanner});
 
   final VoidCallback onOpenSettings;
   final void Function(LessonSession session) onOpenSession;
+  final VoidCallback onOpenPlanner;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,10 @@ class BookingsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Bookings'),
-          actions: [IconButton(onPressed: onOpenSettings, icon: const Icon(Icons.settings_outlined))],
+          actions: [
+            IconButton(onPressed: onOpenPlanner, icon: const Icon(Icons.calendar_month_outlined)),
+            IconButton(onPressed: onOpenSettings, icon: const Icon(Icons.settings_outlined)),
+          ],
           bottom: const TabBar(tabs: [Tab(text: 'Upcoming'), Tab(text: 'Past')]),
         ),
         body: TabBarView(

@@ -127,3 +127,38 @@ class FaqItem {
   final String question;
   final String answer;
 }
+
+class PlannerDay {
+  PlannerDay({required this.date, required this.focus, required this.sessions});
+
+  final DateTime date;
+  final String focus;
+  final List<LessonSession> sessions;
+}
+
+class SessionNote {
+  SessionNote({required this.title, required this.snippet, required this.date});
+
+  final String title;
+  final String snippet;
+  final DateTime date;
+}
+
+class Invoice {
+  Invoice({required this.id, required this.label, required this.amount, required this.date, required this.status});
+
+  final String id;
+  final String label;
+  final double amount;
+  final DateTime date;
+  final String status;
+}
+
+class JournalEntry {
+  JournalEntry({required this.id, required this.title, required this.body, required this.date});
+
+  final String id;
+  final String title;
+  final String body;
+  final DateTime date;
+}

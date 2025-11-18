@@ -5,7 +5,21 @@ import '../../core/controllers/theme_controller.dart';
 import '../../core/utils/mock_data.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key, required this.theme, required this.locale, required this.favoritesController, required this.onOpenSettings, required this.onOpenFavorites, required this.onOpenNotifications, required this.onOpenLearningPath, required this.onOpenSupport, required this.onOpenProgress, required this.onLogout});
+  const ProfileScreen(
+      {super.key,
+      required this.theme,
+      required this.locale,
+      required this.favoritesController,
+      required this.onOpenSettings,
+      required this.onOpenFavorites,
+      required this.onOpenNotifications,
+      required this.onOpenLearningPath,
+      required this.onOpenSupport,
+      required this.onOpenProgress,
+      required this.onOpenPlanner,
+      required this.onOpenWallet,
+      required this.onOpenJournal,
+      required this.onLogout});
   final ThemeController theme;
   final LocalizationController locale;
   final FavoritesController favoritesController;
@@ -15,12 +29,18 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onOpenLearningPath;
   final VoidCallback onOpenSupport;
   final VoidCallback onOpenProgress;
+  final VoidCallback onOpenPlanner;
+  final VoidCallback onOpenWallet;
+  final VoidCallback onOpenJournal;
   final VoidCallback onLogout;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
+      appBar: AppBar(
+        title: const Text('Profile'),
+        actions: [IconButton(onPressed: onOpenSettings, icon: const Icon(Icons.settings_outlined))],
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -69,6 +89,24 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Achievements and speaking minutes'),
             leading: const Icon(Icons.insights),
             onTap: onOpenProgress,
+          ),
+          ListTile(
+            title: const Text('Planner'),
+            subtitle: const Text('See weekly agenda and tasks'),
+            leading: const Icon(Icons.calendar_month),
+            onTap: onOpenPlanner,
+          ),
+          ListTile(
+            title: const Text('Wallet & receipts'),
+            subtitle: const Text('Credits, invoices, payment methods'),
+            leading: const Icon(Icons.account_balance_wallet_outlined),
+            onTap: onOpenWallet,
+          ),
+          ListTile(
+            title: const Text('Learning journal'),
+            subtitle: const Text('Keep quick reflections and wins'),
+            leading: const Icon(Icons.menu_book_outlined),
+            onTap: onOpenJournal,
           ),
           ListTile(
             title: const Text('Help & support'),

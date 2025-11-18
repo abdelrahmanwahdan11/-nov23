@@ -4,10 +4,11 @@ import '../../core/utils/models.dart';
 import '../../core/widgets/buttons.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key, required this.controller, required this.session, required this.onSuccess});
+  const PaymentScreen({super.key, required this.controller, required this.session, required this.onSuccess, this.onOpenSettings});
   final PaymentsController controller;
   final LessonSession session;
   final VoidCallback onSuccess;
+  final VoidCallback? onOpenSettings;
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -17,7 +18,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Pay for session')),
+      appBar: AppBar(
+        title: const Text('Pay for session'),
+        actions: [
+          if (widget.onOpenSettings != null)
+            IconButton(onPressed: widget.onOpenSettings, icon: const Icon(Icons.settings_outlined)),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

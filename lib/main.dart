@@ -20,10 +20,13 @@ import 'features/profile/favorites_screen.dart';
 import 'features/profile/profile_screen.dart';
 import 'features/profile/settings_screen.dart';
 import 'features/profile/support_screen.dart';
+import 'features/payments/wallet_screen.dart';
+import 'features/profile/journal_screen.dart';
 import 'features/tutor_details/tutor_details_screen.dart';
 import 'features/home/notifications_screen.dart';
 import 'features/home/learning_path_screen.dart';
 import 'features/home/progress_dashboard_screen.dart';
+import 'features/booking/planner_screen.dart';
 
 void main() {
   runApp(const LinguaTutorApp());
@@ -143,6 +146,9 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
           onOpenLearningPath: () => _openLearningPath(context),
           onOpenSupport: () => _openSupport(context),
           onOpenProgress: () => _openProgress(context),
+          onOpenPlanner: () => _openPlanner(context),
+          onOpenWallet: () => _openWallet(context),
+          onOpenJournal: () => _openJournal(context),
           onLogout: () {
         setState(() {});
       }),
@@ -164,6 +170,7 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => BookSessionScreen(
         controller: booking,
+        onOpenSettings: () => _openSettings(context),
         onConfirm: () {
           final session = booking.buildSession(tutor.id, tutor.pricePerLesson);
           final payments = PaymentsController();
@@ -171,6 +178,7 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
             builder: (_) => PaymentScreen(
               controller: payments,
               session: session,
+              onOpenSettings: () => _openSettings(context),
               onSuccess: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SuccessScreen())),
             ),
           ));
@@ -221,6 +229,24 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
       builder: (_) => const ProgressDashboardScreen(),
     ));
   }
+
+  void _openPlanner(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => PlannerScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openWallet(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => WalletScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openJournal(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => JournalScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
 }
 
 class ProfileHost extends StatefulWidget {
@@ -235,6 +261,9 @@ class ProfileHost extends StatefulWidget {
       required this.onOpenLearningPath,
       required this.onOpenSupport,
       required this.onOpenProgress,
+      required this.onOpenPlanner,
+      required this.onOpenWallet,
+      required this.onOpenJournal,
       required this.onLogout});
   final ThemeController themeController;
   final LocalizationController localeController;
@@ -245,6 +274,9 @@ class ProfileHost extends StatefulWidget {
   final VoidCallback onOpenLearningPath;
   final VoidCallback onOpenSupport;
   final VoidCallback onOpenProgress;
+  final VoidCallback onOpenPlanner;
+  final VoidCallback onOpenWallet;
+  final VoidCallback onOpenJournal;
   final VoidCallback onLogout;
 
   @override
@@ -267,6 +299,9 @@ class _ProfileHostState extends State<ProfileHost> {
           onOpenLearningPath: widget.onOpenLearningPath,
           onOpenSupport: widget.onOpenSupport,
           onOpenProgress: widget.onOpenProgress,
+          onOpenPlanner: widget.onOpenPlanner,
+          onOpenWallet: widget.onOpenWallet,
+          onOpenJournal: widget.onOpenJournal,
           onLogout: widget.onLogout,
         );
       },

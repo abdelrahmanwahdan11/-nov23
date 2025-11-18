@@ -3,9 +3,10 @@ import '../../core/controllers/booking_controller.dart';
 import '../../core/widgets/buttons.dart';
 
 class BookSessionScreen extends StatefulWidget {
-  const BookSessionScreen({super.key, required this.controller, required this.onConfirm});
+  const BookSessionScreen({super.key, required this.controller, required this.onConfirm, this.onOpenSettings});
   final BookingController controller;
   final VoidCallback onConfirm;
+  final VoidCallback? onOpenSettings;
 
   @override
   State<BookSessionScreen> createState() => _BookSessionScreenState();
@@ -16,7 +17,10 @@ class _BookSessionScreenState extends State<BookSessionScreen> {
   Widget build(BuildContext context) {
     final days = List.generate(7, (i) => DateTime.now().add(Duration(days: i)));
     return Scaffold(
-      appBar: AppBar(title: const Text('Book session')),
+      appBar: AppBar(
+        title: const Text('Book session'),
+        actions: [if (widget.onOpenSettings != null) IconButton(onPressed: widget.onOpenSettings, icon: const Icon(Icons.settings_outlined))],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
