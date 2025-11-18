@@ -22,6 +22,7 @@ import 'features/profile/settings_screen.dart';
 import 'features/profile/support_screen.dart';
 import 'features/payments/wallet_screen.dart';
 import 'features/profile/journal_screen.dart';
+import 'features/home/resources_screen.dart';
 import 'features/tutor_details/tutor_details_screen.dart';
 import 'features/home/notifications_screen.dart';
 import 'features/home/learning_path_screen.dart';
@@ -149,6 +150,7 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
           onOpenPlanner: () => _openPlanner(context),
           onOpenWallet: () => _openWallet(context),
           onOpenJournal: () => _openJournal(context),
+          onOpenResources: () => _openResources(context),
           onLogout: () {
         setState(() {});
       }),
@@ -247,6 +249,12 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
       builder: (_) => JournalScreen(onOpenSettings: () => _openSettings(context)),
     ));
   }
+
+  void _openResources(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => ResourcesScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
 }
 
 class ProfileHost extends StatefulWidget {
@@ -264,6 +272,7 @@ class ProfileHost extends StatefulWidget {
       required this.onOpenPlanner,
       required this.onOpenWallet,
       required this.onOpenJournal,
+      required this.onOpenResources,
       required this.onLogout});
   final ThemeController themeController;
   final LocalizationController localeController;
@@ -277,6 +286,7 @@ class ProfileHost extends StatefulWidget {
   final VoidCallback onOpenPlanner;
   final VoidCallback onOpenWallet;
   final VoidCallback onOpenJournal;
+  final VoidCallback onOpenResources;
   final VoidCallback onLogout;
 
   @override
@@ -302,6 +312,7 @@ class _ProfileHostState extends State<ProfileHost> {
           onOpenPlanner: widget.onOpenPlanner,
           onOpenWallet: widget.onOpenWallet,
           onOpenJournal: widget.onOpenJournal,
+          onOpenResources: widget.onOpenResources,
           onLogout: widget.onLogout,
         );
       },

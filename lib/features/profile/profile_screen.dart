@@ -19,6 +19,7 @@ class ProfileScreen extends StatelessWidget {
       required this.onOpenPlanner,
       required this.onOpenWallet,
       required this.onOpenJournal,
+      required this.onOpenResources,
       required this.onLogout});
   final ThemeController theme;
   final LocalizationController locale;
@@ -32,6 +33,7 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onOpenPlanner;
   final VoidCallback onOpenWallet;
   final VoidCallback onOpenJournal;
+  final VoidCallback onOpenResources;
   final VoidCallback onLogout;
 
   @override
@@ -107,6 +109,12 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Keep quick reflections and wins'),
             leading: const Icon(Icons.menu_book_outlined),
             onTap: onOpenJournal,
+          ),
+          ListTile(
+            title: const Text('Resources library'),
+            subtitle: const Text('Audio drills, guides, downloads'),
+            leading: const Icon(Icons.library_books_outlined),
+            onTap: onOpenResources,
           ),
           ListTile(
             title: const Text('Help & support'),

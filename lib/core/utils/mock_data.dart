@@ -228,3 +228,34 @@ final journalEntries = [
     date: DateTime.now().subtract(const Duration(days: 3)),
   ),
 ];
+
+final mockResources = [
+  ResourceItem(
+    id: 'r1',
+    title: 'Speak faster with shadowing',
+    type: 'Audio drill',
+    duration: '12 min',
+    description: 'Follow along a native speaker to copy rhythm and intonation.',
+  ),
+  ResourceItem(
+    id: 'r2',
+    title: 'Survival phrases for travel',
+    type: 'Guide',
+    duration: '7 pages',
+    description: 'Downloadable phrasebook covering airports, cafes, and taxis.',
+  ),
+  ResourceItem(
+    id: 'r3',
+    title: 'Pronunciation warmups',
+    type: 'Video',
+    duration: '9 min',
+    description: 'Short warmup routine before each live tutor session.',
+  ),
+  ResourceItem(
+    id: 'r4',
+    title: 'Business small talk pack',
+    type: 'Checklist',
+    duration: '5 min',
+    description: 'Icebreakers and openers to start meetings smoothly.',
+  ),
+];

@@ -17,6 +17,14 @@ ThemeData buildTheme({Color primary = AppColors.primary, Brightness brightness =
     colorScheme: colorScheme,
     scaffoldBackgroundColor: brightness == Brightness.dark ? Colors.black : AppColors.lightBackground,
     cardColor: AppColors.card,
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: brightness == Brightness.dark ? Colors.grey.shade900 : AppColors.card,
+      selectedItemColor: AppColors.primary,
+      unselectedItemColor: AppColors.textSecondary,
+      selectedIconTheme: const IconThemeData(color: AppColors.primary),
+      unselectedIconTheme: const IconThemeData(color: AppColors.textSecondary),
+      type: BottomNavigationBarType.fixed,
+    ),
     textTheme: baseText.copyWith(
       headlineLarge: baseText.headlineLarge?.copyWith(fontWeight: FontWeight.bold, fontSize: 30),
       headlineMedium: baseText.headlineMedium?.copyWith(fontWeight: FontWeight.bold, fontSize: 24),

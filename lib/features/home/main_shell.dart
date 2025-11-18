@@ -20,6 +20,7 @@ import 'notifications_screen.dart';
 import 'home_screen.dart';
 import 'progress_dashboard_screen.dart';
 import '../booking/session_details_screen.dart';
+import 'resources_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key, required this.onTutorTap, required this.onLogout, required this.profileBuilder, required this.themeController, required this.localizationController, required this.favoritesController});
@@ -70,6 +71,7 @@ class _MainShellState extends State<MainShell> {
         onOpenProgress: _openProgress,
         onOpenPlanner: _openPlanner,
         onOpenWallet: _openWallet,
+        onOpenResources: _openResources,
       ),
       CatalogScreen(
         controller: catalogController,
@@ -87,6 +89,9 @@ class _MainShellState extends State<MainShell> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
         onTap: (i) => setState(() => index = i),
+        backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+        selectedItemColor: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+        unselectedItemColor: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
         items: const [
           BottomNavigationBarItem(icon: Icon(IconlyBold.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(IconlyBold.category), label: 'Catalog'),
@@ -148,5 +153,9 @@ class _MainShellState extends State<MainShell> {
 
   void _openWallet() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => WalletScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openResources() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ResourcesScreen(onOpenSettings: _openSettings)));
   }
 }

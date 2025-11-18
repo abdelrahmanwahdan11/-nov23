@@ -22,7 +22,8 @@ class HomeScreen extends StatefulWidget {
       required this.favoritesController,
       required this.onOpenProgress,
       required this.onOpenPlanner,
-      required this.onOpenWallet});
+      required this.onOpenWallet,
+      required this.onOpenResources});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onOpenSettings;
   final VoidCallback onOpenNotifications;
@@ -32,6 +33,7 @@ class HomeScreen extends StatefulWidget {
   final VoidCallback onOpenProgress;
   final VoidCallback onOpenPlanner;
   final VoidCallback onOpenWallet;
+  final VoidCallback onOpenResources;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -138,12 +140,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     spacing: 10,
                     runSpacing: 10,
                     children: [
-                      _QuickActionChip(icon: Icons.bolt, label: 'Learning path', onTap: widget.onOpenLearningPath),
-                      _QuickActionChip(icon: Icons.favorite, label: 'Favorites', onTap: widget.onOpenFavorites),
-                      _QuickActionChip(icon: Icons.notifications_active, label: 'Alerts', onTap: widget.onOpenNotifications),
-                      _QuickActionChip(icon: Icons.insights, label: 'Progress', onTap: widget.onOpenProgress),
-                      _QuickActionChip(icon: Icons.calendar_today, label: 'Planner', onTap: widget.onOpenPlanner),
-                      _QuickActionChip(icon: Icons.wallet, label: 'Wallet', onTap: widget.onOpenWallet),
+                  _QuickActionChip(icon: Icons.bolt, label: 'Learning path', onTap: widget.onOpenLearningPath),
+                  _QuickActionChip(icon: Icons.favorite, label: 'Favorites', onTap: widget.onOpenFavorites),
+                  _QuickActionChip(icon: Icons.notifications_active, label: 'Alerts', onTap: widget.onOpenNotifications),
+                  _QuickActionChip(icon: Icons.insights, label: 'Progress', onTap: widget.onOpenProgress),
+                  _QuickActionChip(icon: Icons.calendar_today, label: 'Planner', onTap: widget.onOpenPlanner),
+                  _QuickActionChip(icon: Icons.wallet, label: 'Wallet', onTap: widget.onOpenWallet),
+                  _QuickActionChip(icon: Icons.menu_book, label: 'Resources', onTap: widget.onOpenResources),
                     ],
                   ),
                 ],

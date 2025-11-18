@@ -162,3 +162,13 @@ class JournalEntry {
   final String body;
   final DateTime date;
 }
+
+class ResourceItem {
+  ResourceItem({required this.id, required this.title, required this.type, required this.duration, required this.description});
+
+  final String id;
+  final String title;
+  final String type;
+  final String duration;
+  final String description;
+}
