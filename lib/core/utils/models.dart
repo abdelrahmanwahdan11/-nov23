@@ -365,3 +365,50 @@ class ImmersionExperience {
   final bool isGuided;
   final String description;
 }
+
+class MentorMessage {
+  MentorMessage({required this.author, required this.timeLabel, required this.text, this.isMentor = false});
+
+  final String author;
+  final String timeLabel;
+  final String text;
+  final bool isMentor;
+}
+
+class MentorThread {
+  MentorThread({
+    required this.id,
+    required this.title,
+    required this.topic,
+    required this.avatarUrl,
+    required this.unreadCount,
+    required this.messages,
+  });
+
+  final String id;
+  final String title;
+  final String topic;
+  final String avatarUrl;
+  final int unreadCount;
+  final List<MentorMessage> messages;
+}
+
+class GuidedProject {
+  GuidedProject({
+    required this.id,
+    required this.title,
+    required this.level,
+    required this.progress,
+    required this.estimatedMinutes,
+    required this.tasks,
+    required this.heroImage,
+  });
+
+  final String id;
+  final String title;
+  final String level;
+  final double progress;
+  final int estimatedMinutes;
+  final List<String> tasks;
+  final String heroImage;
+}

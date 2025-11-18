@@ -36,7 +36,9 @@ class HomeScreen extends StatefulWidget {
       required this.onOpenRewards,
       required this.onOpenFeedback,
       required this.onOpenLeaderboard,
-      required this.onOpenImmersion});
+      required this.onOpenImmersion,
+      required this.onOpenMentorChat,
+      required this.onOpenProjects});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onOpenSettings;
   final VoidCallback onOpenNotifications;
@@ -59,6 +61,8 @@ class HomeScreen extends StatefulWidget {
   final VoidCallback onOpenFeedback;
   final VoidCallback onOpenLeaderboard;
   final VoidCallback onOpenImmersion;
+  final VoidCallback onOpenMentorChat;
+  final VoidCallback onOpenProjects;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -255,6 +259,41 @@ class _HomeScreenState extends State<HomeScreen> {
                   ...communityPosts.take(2).map((post) => _CommunityPreviewCard(post: post)).toList(),
                 ],
               ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(children: [
+                  const Text('Mentor chat', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  const Spacer(),
+                  TextButton(onPressed: widget.onOpenMentorChat, child: const Text('Open')),
+                ]),
+                const SizedBox(height: 10),
+                _MentorPreview(onOpen: widget.onOpenMentorChat),
+              ]),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(children: [
+                  const Text('Guided projects', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  const Spacer(),
+                  TextButton(onPressed: widget.onOpenProjects, child: const Text('See all')),
+                ]),
+                SizedBox(
+                  height: 170,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: guidedProjects.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 12),
+                    itemBuilder: (context, index) => _ProjectCard(project: guidedProjects[index], onTap: widget.onOpenProjects),
+                  ),
+                ),
+              ]),
             ),
           ),
           SliverToBoxAdapter(
@@ -690,6 +729,98 @@ class _LiveEventChip extends StatelessWidget {
                     ?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.75))),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _MentorPreview extends StatelessWidget {
+  const _MentorPreview({required this.onOpen});
+  final VoidCallback onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    final thread = mentorThreads.first;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: isDark ? Colors.white12 : Colors.grey.shade200),
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [
+          CircleAvatar(backgroundImage: NetworkImage(thread.avatarUrl)),
+          const SizedBox(width: 12),
+          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(thread.title, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text(thread.topic, style: Theme.of(context).textTheme.bodySmall),
+          ])),
+          IconButton(onPressed: onOpen, icon: const Icon(Icons.arrow_forward_ios, size: 16)),
+        ]),
+        const SizedBox(height: 8),
+        Text(
+          thread.messages.last.text,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        const SizedBox(height: 8),
+        Row(children: [
+          const Icon(Icons.lock_clock, size: 16),
+          const SizedBox(width: 6),
+          Text('Last reply ${thread.messages.last.timeLabel}',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey)),
+          const Spacer(),
+          if (thread.unreadCount > 0)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, borderRadius: BorderRadius.circular(12)),
+              child: Text('${thread.unreadCount}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            )
+        ])
+      ]),
+    );
+  }
+}
+
+class _ProjectCard extends StatelessWidget {
+  const _ProjectCard({required this.project, required this.onTap});
+  final GuidedProject project;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 240,
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: isDark ? Colors.white12 : Colors.grey.shade200),
+        ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(project.heroImage, height: 70, width: double.infinity, fit: BoxFit.cover),
+          ),
+          const SizedBox(height: 10),
+          Text(project.title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+          const SizedBox(height: 6),
+          Text('${project.level} • ${project.estimatedMinutes} mins', style: Theme.of(context).textTheme.bodySmall),
+          const SizedBox(height: 8),
+          LinearProgressIndicator(
+            value: project.progress,
+            minHeight: 6,
+            backgroundColor: isDark ? Colors.white12 : Colors.grey.shade200,
+          ),
+          const SizedBox(height: 8),
+          Text(project.tasks.take(2).join(' · '), maxLines: 1, overflow: TextOverflow.ellipsis),
+        ]),
       ),
     );
   }

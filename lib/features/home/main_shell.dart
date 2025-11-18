@@ -33,9 +33,19 @@ import 'rewards_screen.dart';
 import 'feedback_screen.dart';
 import 'leaderboard_screen.dart';
 import 'immersion_screen.dart';
+import 'mentor_chat_screen.dart';
+import 'projects_screen.dart';
 
 class MainShell extends StatefulWidget {
-  const MainShell({super.key, required this.onTutorTap, required this.onLogout, required this.profileBuilder, required this.themeController, required this.localizationController, required this.favoritesController});
+  const MainShell({
+    super.key,
+    required this.onTutorTap,
+    required this.onLogout,
+    required this.profileBuilder,
+    required this.themeController,
+    required this.localizationController,
+    required this.favoritesController,
+  });
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onLogout;
   final Widget Function(void Function(void Function()) setStateCallback) profileBuilder;
@@ -96,6 +106,8 @@ class _MainShellState extends State<MainShell> {
         onOpenFeedback: _openFeedback,
         onOpenLeaderboard: _openLeaderboard,
         onOpenImmersion: _openImmersion,
+        onOpenMentorChat: _openMentorChat,
+        onOpenProjects: _openProjects,
       ),
       CatalogScreen(
         controller: catalogController,
@@ -230,5 +242,13 @@ class _MainShellState extends State<MainShell> {
 
   void _openImmersion() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => ImmersionScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openMentorChat() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => MentorChatScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openProjects() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProjectsScreen(onOpenSettings: _openSettings)));
   }
 }

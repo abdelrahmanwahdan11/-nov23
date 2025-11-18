@@ -590,3 +590,81 @@ final immersionExperiences = [
     description: 'Follow a checklist of errands, record yourself, and receive annotated notes.',
   ),
 ];
+
+final mentorThreads = [
+  MentorThread(
+    id: 'mt1',
+    title: 'Coach Yasmin',
+    topic: 'Pronunciation polish',
+    avatarUrl: 'https://images.pexels.com/photos/3760855/pexels-photo-3760855.jpeg',
+    unreadCount: 2,
+    messages: [
+      MentorMessage(author: 'You', timeLabel: '09:10', text: 'Struggling with soft g vs hard g in Turkish'),
+      MentorMessage(
+        author: 'Yasmin',
+        timeLabel: '09:11',
+        text: 'Great catch! Record a 15-second clip saying “g” and “ğ” in contrast.',
+        isMentor: true,
+      ),
+      MentorMessage(
+        author: 'Yasmin',
+        timeLabel: '09:12',
+        text: 'Also try the “güneş” tongue placement—aim softer and smile.',
+        isMentor: true,
+      ),
+    ],
+  ),
+  MentorThread(
+    id: 'mt2',
+    title: 'Coach Daniel',
+    topic: 'Business pitches',
+    avatarUrl: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg',
+    unreadCount: 0,
+    messages: [
+      MentorMessage(author: 'Daniel', timeLabel: 'Yesterday', text: 'Tighten slide 3: lead with the user quote.', isMentor: true),
+      MentorMessage(author: 'You', timeLabel: 'Yesterday', text: 'Updated with the quote and benefit statement.'),
+    ],
+  ),
+  MentorThread(
+    id: 'mt3',
+    title: 'Coach Rina',
+    topic: 'Interview prep',
+    avatarUrl: 'https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg',
+    unreadCount: 1,
+    messages: [
+      MentorMessage(author: 'Rina', timeLabel: 'Mon', text: 'Let’s rehearse a STAR answer for “biggest challenge”.', isMentor: true),
+      MentorMessage(author: 'You', timeLabel: 'Mon', text: 'Sure! I will type one up tonight.'),
+      MentorMessage(author: 'Rina', timeLabel: 'Tue', text: 'Add a measurable outcome for clarity.', isMentor: true),
+    ],
+  ),
+];
+
+final guidedProjects = [
+  GuidedProject(
+    id: 'gp1',
+    title: 'City market walkthrough',
+    level: 'A2',
+    progress: 0.65,
+    estimatedMinutes: 30,
+    heroImage: 'https://images.pexels.com/photos/1806032/pexels-photo-1806032.jpeg',
+    tasks: ['Learn 6 bargaining verbs', 'Record 3 vendor dialogues', 'Self-review with checklists'],
+  ),
+  GuidedProject(
+    id: 'gp2',
+    title: 'Customer support mock',
+    level: 'B1',
+    progress: 0.3,
+    estimatedMinutes: 45,
+    heroImage: 'https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg',
+    tasks: ['Draft empathy scripts', 'Shadow call snippets', 'Deliver a 2-min resolution pitch'],
+  ),
+  GuidedProject(
+    id: 'gp3',
+    title: 'Founder pitch remix',
+    level: 'B2',
+    progress: 0.85,
+    estimatedMinutes: 35,
+    heroImage: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg',
+    tasks: ['Rewrite hook in target language', 'Record 90-second pitch', 'Collect mentor annotations'],
+  ),
+];

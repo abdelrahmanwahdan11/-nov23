@@ -40,6 +40,8 @@ import 'features/home/rewards_screen.dart';
 import 'features/home/feedback_screen.dart';
 import 'features/home/leaderboard_screen.dart';
 import 'features/home/immersion_screen.dart';
+import 'features/home/mentor_chat_screen.dart';
+import 'features/home/projects_screen.dart';
 
 void main() {
   runApp(const LinguaTutorApp());
@@ -175,6 +177,8 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
           onOpenFeedback: () => _openFeedback(context),
           onOpenLeaderboard: () => _openLeaderboard(context),
           onOpenImmersion: () => _openImmersion(context),
+          onOpenMentorChat: () => _openMentorChat(context),
+          onOpenProjects: () => _openProjects(context),
           onLogout: () {
         setState(() {});
       }),
@@ -340,6 +344,18 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
     ));
   }
 
+  void _openMentorChat(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => MentorChatScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openProjects(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => ProjectsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
   void _openCoachTips(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => CoachTipsScreen(onOpenSettings: () => _openSettings(context)),
@@ -381,6 +397,8 @@ class ProfileHost extends StatefulWidget {
       required this.onOpenFeedback,
       required this.onOpenLeaderboard,
       required this.onOpenImmersion,
+      required this.onOpenMentorChat,
+      required this.onOpenProjects,
       required this.onLogout});
   final ThemeController themeController;
   final LocalizationController localeController;
@@ -407,6 +425,8 @@ class ProfileHost extends StatefulWidget {
   final VoidCallback onOpenFeedback;
   final VoidCallback onOpenLeaderboard;
   final VoidCallback onOpenImmersion;
+  final VoidCallback onOpenMentorChat;
+  final VoidCallback onOpenProjects;
   final VoidCallback onLogout;
 
   @override
@@ -445,6 +465,8 @@ class _ProfileHostState extends State<ProfileHost> {
           onOpenFeedback: widget.onOpenFeedback,
           onOpenLeaderboard: widget.onOpenLeaderboard,
           onOpenImmersion: widget.onOpenImmersion,
+          onOpenMentorChat: widget.onOpenMentorChat,
+          onOpenProjects: widget.onOpenProjects,
           onLogout: widget.onLogout,
         );
       },

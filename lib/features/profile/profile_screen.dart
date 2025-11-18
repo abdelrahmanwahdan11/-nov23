@@ -31,6 +31,8 @@ class ProfileScreen extends StatelessWidget {
       required this.onOpenRewards,
       required this.onOpenLeaderboard,
       required this.onOpenImmersion,
+      required this.onOpenMentorChat,
+      required this.onOpenProjects,
       required this.onOpenFeedback,
       required this.onLogout});
   final ThemeController theme;
@@ -57,6 +59,8 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onOpenRewards;
   final VoidCallback onOpenLeaderboard;
   final VoidCallback onOpenImmersion;
+  final VoidCallback onOpenMentorChat;
+  final VoidCallback onOpenProjects;
   final VoidCallback onOpenFeedback;
   final VoidCallback onLogout;
 
@@ -187,6 +191,18 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Quick drills to prep before lessons'),
             leading: const Icon(Icons.fitness_center_outlined),
             onTap: onOpenPractice,
+          ),
+          ListTile(
+            title: const Text('Mentor chat'),
+            subtitle: const Text('Stay in touch with your coach'),
+            leading: const Icon(Icons.chat_bubble_outline),
+            onTap: onOpenMentorChat,
+          ),
+          ListTile(
+            title: const Text('Guided projects'),
+            subtitle: const Text('Hands-on scenarios with tasks'),
+            leading: const Icon(Icons.assignment_turned_in_outlined),
+            onTap: onOpenProjects,
           ),
           ListTile(
             title: const Text('Immersion'),
