@@ -42,6 +42,8 @@ class ProfileScreen extends StatelessWidget {
       required this.onOpenCareerCenter,
       required this.onOpenInterviewPrep,
       required this.onOpenAlumniNetwork,
+      required this.onOpenSuccessStories,
+      required this.onOpenScholarships,
       required this.onOpenFeedback,
       required this.onLogout});
   final ThemeController theme;
@@ -75,6 +77,8 @@ class ProfileScreen extends StatelessWidget {
   final VoidCallback onOpenCareerCenter;
   final VoidCallback onOpenInterviewPrep;
   final VoidCallback onOpenAlumniNetwork;
+  final VoidCallback onOpenSuccessStories;
+  final VoidCallback onOpenScholarships;
   final VoidCallback onOpenFeedback;
   final VoidCallback onLogout;
 
@@ -218,6 +222,18 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Learn from grads and RSVP to meetups'),
             leading: const Icon(Icons.groups_2_outlined),
             onTap: onOpenAlumniNetwork,
+          ),
+          ListTile(
+            title: const Text('Success stories'),
+            subtitle: const Text('See how advanced learners shipped wins'),
+            leading: const Icon(Icons.verified_user_outlined),
+            onTap: onOpenSuccessStories,
+          ),
+          ListTile(
+            title: const Text('Scholarships & grants'),
+            subtitle: const Text('Apply credits toward sprints and prep'),
+            leading: const Icon(Icons.volunteer_activism_outlined),
+            onTap: onOpenScholarships,
           ),
           ListTile(
             title: const Text('Phrasebook'),

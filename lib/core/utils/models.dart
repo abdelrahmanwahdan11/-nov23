@@ -572,3 +572,47 @@ class AlumniSpotlight {
   final String story;
   final String avatarUrl;
 }
+
+class SuccessStory {
+  SuccessStory({
+    required this.id,
+    required this.name,
+    required this.role,
+    required this.company,
+    required this.quote,
+    required this.avatarUrl,
+    required this.highlight,
+    required this.skills,
+  });
+
+  final String id;
+  final String name;
+  final String role;
+  final String company;
+  final String quote;
+  final String avatarUrl;
+  final String highlight;
+  final List<String> skills;
+}
+
+class ScholarshipOpportunity {
+  ScholarshipOpportunity({
+    required this.id,
+    required this.title,
+    required this.provider,
+    required this.amount,
+    required this.deadline,
+    required this.level,
+    required this.summary,
+    required this.tag,
+  });
+
+  final String id;
+  final String title;
+  final String provider;
+  final String amount;
+  final String deadline;
+  final String level;
+  final String summary;
+  final String tag;
+}

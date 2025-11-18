@@ -50,7 +50,9 @@ class HomeScreen extends StatefulWidget {
       required this.onOpenDownloadKits,
       required this.onOpenCareerCenter,
       required this.onOpenInterviewPrep,
-      required this.onOpenAlumniNetwork});
+      required this.onOpenAlumniNetwork,
+      required this.onOpenSuccessStories,
+      required this.onOpenScholarships});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onOpenSettings;
   final VoidCallback onOpenNotifications;
@@ -80,6 +82,8 @@ class HomeScreen extends StatefulWidget {
   final VoidCallback onOpenCareerCenter;
   final VoidCallback onOpenInterviewPrep;
   final VoidCallback onOpenAlumniNetwork;
+  final VoidCallback onOpenSuccessStories;
+  final VoidCallback onOpenScholarships;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -118,6 +122,14 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => PhrasebookScreen(onOpenSettings: widget.onOpenSettings),
     ));
+  }
+
+  void _openSuccessStories() {
+    widget.onOpenSuccessStories();
+  }
+
+  void _openScholarships() {
+    widget.onOpenScholarships();
   }
 
   void _openCareerCenter() {
@@ -245,6 +257,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   _QuickActionChip(icon: Icons.work_outline, label: 'Career center', onTap: _openCareerCenter),
                   _QuickActionChip(icon: Icons.mic_none_outlined, label: 'Interview prep', onTap: _openInterviewPrep),
                   _QuickActionChip(icon: Icons.groups_2_outlined, label: 'Alumni network', onTap: _openAlumniNetwork),
+                  _QuickActionChip(icon: Icons.verified_user_outlined, label: 'Success stories', onTap: _openSuccessStories),
+                  _QuickActionChip(icon: Icons.volunteer_activism_outlined, label: 'Scholarships', onTap: _openScholarships),
                   _QuickActionChip(icon: Icons.forum_outlined, label: 'Community', onTap: widget.onOpenCommunity),
                   _QuickActionChip(icon: Icons.emoji_events_outlined, label: 'Leaderboard', onTap: widget.onOpenLeaderboard),
                   _QuickActionChip(icon: Icons.fitness_center_outlined, label: 'Practice lab', onTap: widget.onOpenPractice),
@@ -309,6 +323,119 @@ class _HomeScreenState extends State<HomeScreen> {
                     OutlinedButton(onPressed: _openAlumniNetwork, child: const Text('View')),
                   ],
                 ),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Success stories', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: _openSuccessStories, child: const Text('See all')),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: Colors.grey.withOpacity(0.12)),
+                    ),
+                    child: Row(
+                      children: [
+                        CircleAvatar(backgroundImage: NetworkImage(successStories.first.avatarUrl), radius: 28),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(successStories.first.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                              Text(successStories.first.quote, maxLines: 2, overflow: TextOverflow.ellipsis),
+                              const SizedBox(height: 6),
+                              Wrap(
+                                spacing: 6,
+                                children: successStories.first.skills
+                                    .map((s) => Chip(label: Text(s), visualDensity: VisualDensity.compact))
+                                    .toList(),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Scholarships & grants', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: _openScholarships, child: const Text('View all')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 160,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: scholarshipOpportunities.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (context, index) {
+                        final opp = scholarshipOpportunities[index];
+                        return Container(
+                          width: 240,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(color: Colors.grey.withOpacity(0.12)),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.volunteer_activism_outlined,
+                                      color: Theme.of(context).colorScheme.primary),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                      child: Text(opp.title,
+                                          style: const TextStyle(fontWeight: FontWeight.bold),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis)),
+                                ],
+                              ),
+                              const SizedBox(height: 6),
+                              Text(opp.summary, maxLines: 2, overflow: TextOverflow.ellipsis),
+                              const Spacer(),
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                                children: [
+                                  _InfoPill(label: opp.amount, icon: Icons.payments_outlined),
+                                  _InfoPill(label: opp.deadline, icon: Icons.schedule_outlined),
+                                  _InfoPill(label: opp.tag, icon: Icons.bookmark_outline),
+                                ],
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
               ),
             ),
           ),
@@ -1519,6 +1646,27 @@ class _DrillCard extends StatelessWidget {
             child: Text('Start • ${drill.difficulty}'),
           )
         ],
+      ),
+    );
+  }
+}
+
+class _InfoPill extends StatelessWidget {
+  const _InfoPill({required this.label, required this.icon});
+  final String label;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [Icon(icon, size: 16), const SizedBox(width: 6), Text(label)],
       ),
     );
   }

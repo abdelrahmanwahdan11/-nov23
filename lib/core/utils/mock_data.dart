@@ -908,3 +908,69 @@ final alumniStories = [
     avatarUrl: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg',
   ),
 ];
+
+final successStories = [
+  SuccessStory(
+    id: 'ss1',
+    name: 'Leyla U.',
+    role: 'Customer Success',
+    company: 'Northwind Mobility',
+    quote: '“Switching to bilingual support scripts unlocked my confidence in escalations.”',
+    avatarUrl: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg',
+    highlight: 'Closed her first Turkish-only renewal and now mentors peers.',
+    skills: const ['Discovery', 'Empathy', 'De-escalation'],
+  ),
+  SuccessStory(
+    id: 'ss2',
+    name: 'Deniz R.',
+    role: 'Sales Engineer',
+    company: 'Eurasia Cloud',
+    quote: '“Mock pitches plus immersion sprints helped me nail the on-site.”',
+    avatarUrl: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg',
+    highlight: 'Delivered bilingual demo that boosted win-rate by 18%.',
+    skills: const ['Storytelling', 'Technical demo', 'Follow-ups'],
+  ),
+  SuccessStory(
+    id: 'ss3',
+    name: 'Rana A.',
+    role: 'Product Manager',
+    company: 'Ankara Labs',
+    quote: '“Phrasebook drills turned into faster stakeholder sign-offs.”',
+    avatarUrl: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg',
+    highlight: 'Shipped a launch with Turkish stakeholders and kept scope tight.',
+    skills: const ['Alignment', 'Writing', 'Stakeholders'],
+  ),
+];
+
+final scholarshipOpportunities = [
+  ScholarshipOpportunity(
+    id: 'sch1',
+    title: 'Speaking Sprint Grant',
+    provider: 'LinguaTutor Foundation',
+    amount: '\$250 credit',
+    deadline: 'Apply by Mar 30',
+    level: 'Advanced learners',
+    summary: 'Covers four immersion sprints with mentor office hours.',
+    tag: 'Immersion',
+  ),
+  ScholarshipOpportunity(
+    id: 'sch2',
+    title: 'Career Switch Award',
+    provider: 'Bridge Partners',
+    amount: '\$180 credit',
+    deadline: 'Apply by Apr 12',
+    level: 'Intermediate+',
+    summary: 'Pitch your capstone and land a funded mock interview pack.',
+    tag: 'Career',
+  ),
+  ScholarshipOpportunity(
+    id: 'sch3',
+    title: 'Community Builder Fund',
+    provider: 'Global Voices',
+    amount: '\$120 credit',
+    deadline: 'Apply by Apr 28',
+    level: 'All levels',
+    summary: 'Host a local meetup and earn lesson credits for attendees.',
+    tag: 'Community',
+  ),
+];

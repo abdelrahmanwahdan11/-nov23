@@ -40,6 +40,8 @@ import 'download_kits_screen.dart';
 import 'career_center_screen.dart';
 import 'interview_prep_screen.dart';
 import 'alumni_network_screen.dart';
+import 'scholarships_screen.dart';
+import 'success_stories_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({
@@ -118,6 +120,8 @@ class _MainShellState extends State<MainShell> {
         onOpenCareerCenter: _openCareerCenter,
         onOpenInterviewPrep: _openInterviewPrep,
         onOpenAlumniNetwork: _openAlumniNetwork,
+        onOpenSuccessStories: _openSuccessStories,
+        onOpenScholarships: _openScholarships,
       ),
       CatalogScreen(
         controller: catalogController,
@@ -280,5 +284,13 @@ class _MainShellState extends State<MainShell> {
 
   void _openAlumniNetwork() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => AlumniNetworkScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openSuccessStories() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => SuccessStoriesScreen(onOpenSettings: _openSettings)));
+  }
+
+  void _openScholarships() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ScholarshipsScreen(onOpenSettings: _openSettings)));
   }
 }

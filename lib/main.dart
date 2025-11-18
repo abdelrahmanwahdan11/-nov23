@@ -47,6 +47,8 @@ import 'features/home/download_kits_screen.dart';
 import 'features/home/career_center_screen.dart';
 import 'features/home/interview_prep_screen.dart';
 import 'features/home/alumni_network_screen.dart';
+import 'features/home/scholarships_screen.dart';
+import 'features/home/success_stories_screen.dart';
 
 void main() {
   runApp(const LinguaTutorApp());
@@ -189,6 +191,8 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
           onOpenCareerCenter: () => _openCareerCenter(context),
           onOpenInterviewPrep: () => _openInterviewPrep(context),
           onOpenAlumniNetwork: () => _openAlumniNetwork(context),
+          onOpenSuccessStories: () => _openSuccessStories(context),
+          onOpenScholarships: () => _openScholarships(context),
           onLogout: () {
         setState(() {});
       }),
@@ -396,6 +400,18 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
     ));
   }
 
+  void _openSuccessStories(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => SuccessStoriesScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
+  void _openScholarships(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => ScholarshipsScreen(onOpenSettings: () => _openSettings(context)),
+    ));
+  }
+
   void _openCoachTips(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => CoachTipsScreen(onOpenSettings: () => _openSettings(context)),
@@ -444,6 +460,8 @@ class ProfileHost extends StatefulWidget {
       required this.onOpenCareerCenter,
       required this.onOpenInterviewPrep,
       required this.onOpenAlumniNetwork,
+      required this.onOpenSuccessStories,
+      required this.onOpenScholarships,
       required this.onLogout});
   final ThemeController themeController;
   final LocalizationController localeController;
@@ -477,6 +495,8 @@ class ProfileHost extends StatefulWidget {
   final VoidCallback onOpenCareerCenter;
   final VoidCallback onOpenInterviewPrep;
   final VoidCallback onOpenAlumniNetwork;
+  final VoidCallback onOpenSuccessStories;
+  final VoidCallback onOpenScholarships;
   final VoidCallback onLogout;
 
   @override
@@ -522,6 +542,8 @@ class _ProfileHostState extends State<ProfileHost> {
           onOpenCareerCenter: widget.onOpenCareerCenter,
           onOpenInterviewPrep: widget.onOpenInterviewPrep,
           onOpenAlumniNetwork: widget.onOpenAlumniNetwork,
+          onOpenSuccessStories: widget.onOpenSuccessStories,
+          onOpenScholarships: widget.onOpenScholarships,
           onLogout: widget.onLogout,
         );
       },
