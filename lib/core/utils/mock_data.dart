@@ -668,3 +668,63 @@ final guidedProjects = [
     tasks: ['Rewrite hook in target language', 'Record 90-second pitch', 'Collect mentor annotations'],
   ),
 ];
+
+final fluencyStages = [
+  FluencyStage(
+    id: 'fs1',
+    title: 'Capstone warmup',
+    description: 'Stabilize rhythm, vowels, and confidence before final review.',
+    progress: 0.45,
+    status: 'In progress',
+  ),
+  FluencyStage(
+    id: 'fs2',
+    title: 'Mock live interview',
+    description: 'Two 12-min simulations with annotated feedback from mentors.',
+    progress: 0.2,
+    status: 'Scheduled',
+  ),
+  FluencyStage(
+    id: 'fs3',
+    title: 'Final showcase',
+    description: 'Record your 90-second story and share with your tutor.',
+    progress: 0.05,
+    status: 'Next up',
+  ),
+];
+
+final phraseCategories = [
+  PhraseCategory(
+    id: 'pc1',
+    title: 'Travel confidence',
+    language: 'Turkish',
+    contextLabel: 'Airport & hotel',
+    phrases: [
+      'Nerede check-in yapabilirim?',
+      'Bagajım gecikti, yardım eder misiniz?',
+      'Kahvaltı saat kaçta başlıyor?'
+    ],
+  ),
+  PhraseCategory(
+    id: 'pc2',
+    title: 'Team updates',
+    language: 'English',
+    contextLabel: 'Daily standup',
+    phrases: [
+      'I’m blocked by a dependency and need pairing.',
+      'Shipping the fix to staging in 30 minutes.',
+      'Let’s sync after lunch to demo the flow.'
+    ],
+  ),
+  PhraseCategory(
+    id: 'pc3',
+    title: 'Polite asks',
+    language: 'Arabic',
+    contextLabel: 'Café & errands',
+    phrases: [
+      'من فضلك كوب قهوة بدون سكر.',
+      'أين أستطيع استلام الطرد؟',
+      'هل يمكنك تكرار ذلك ببطء؟'
+    ],
+  ),
+];

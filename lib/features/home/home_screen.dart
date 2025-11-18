@@ -11,6 +11,8 @@ import '../../core/widgets/filter_chip.dart';
 import '../../core/widgets/section_title.dart';
 import '../../core/widgets/skeleton_loader.dart';
 import '../../core/widgets/tutor_card.dart';
+import 'fluency_plan_screen.dart';
+import 'phrasebook_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen(
@@ -77,6 +79,18 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     controller = HomeController()..loadInitial();
     scrollController.addListener(_onScroll);
+  }
+
+  void _openFluencyPlan() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => FluencyPlanScreen(onOpenSettings: widget.onOpenSettings),
+    ));
+  }
+
+  void _openPhrasebook() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => PhrasebookScreen(onOpenSettings: widget.onOpenSettings),
+    ));
   }
 
   void _onScroll() {
@@ -193,7 +207,56 @@ class _HomeScreenState extends State<HomeScreen> {
                   _QuickActionChip(icon: Icons.event_available_outlined, label: 'Live events', onTap: widget.onOpenLiveEvents),
                   _QuickActionChip(icon: Icons.verified_outlined, label: 'Certificates', onTap: widget.onOpenCertificates),
                   _QuickActionChip(icon: Icons.public, label: 'Immersion', onTap: widget.onOpenImmersion),
+                  _QuickActionChip(icon: Icons.rocket_launch_outlined, label: 'Fluency plan', onTap: _openFluencyPlan),
+                  _QuickActionChip(icon: Icons.record_voice_over_outlined, label: 'Phrasebook', onTap: _openPhrasebook),
                     ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Capstone prep', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: _openFluencyPlan, child: const Text('View plan')),
+                    ],
+                  ),
+                  _FluencyPreview(onTap: _openFluencyPlan),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text('Phrasebook spotlight', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const Spacer(),
+                      TextButton(onPressed: _openPhrasebook, child: const Text('See all')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 150,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: phraseCategories.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (context, index) => _PhrasePreviewCard(
+                        category: phraseCategories[index],
+                        onTap: _openPhrasebook,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -613,6 +676,128 @@ class _ImmersionCard extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class _FluencyPreview extends StatelessWidget {
+  const _FluencyPreview({required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final stage = fluencyStages.first;
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.shadow.withOpacity(0.06),
+              blurRadius: 12,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Icon(Icons.rocket_launch_outlined, color: Theme.of(context).colorScheme.primary),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(stage.title, style: const TextStyle(fontWeight: FontWeight.w700)),
+                      const SizedBox(height: 4),
+                      Text(stage.description, maxLines: 2, overflow: TextOverflow.ellipsis),
+                    ],
+                  ),
+                ),
+                const Icon(Icons.chevron_right),
+              ],
+            ),
+            const SizedBox(height: 12),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: LinearProgressIndicator(value: stage.progress, minHeight: 8),
+            ),
+            const SizedBox(height: 6),
+            Text(stage.status, style: Theme.of(context).textTheme.bodySmall),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PhrasePreviewCard extends StatelessWidget {
+  const _PhrasePreviewCard({required this.category, required this.onTap});
+  final PhraseCategory category;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 220,
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Theme.of(context).dividerColor.withOpacity(0.2)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.12),
+                  child: Text(category.language.substring(0, 2).toUpperCase(),
+                      style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(category.title, style: const TextStyle(fontWeight: FontWeight.w700)),
+                      Text(category.contextLabel, style: Theme.of(context).textTheme.bodySmall),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            ...category.phrases.take(2).map((phrase) => Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: Row(
+                    children: [
+                      Icon(Icons.check, size: 16, color: Theme.of(context).colorScheme.primary),
+                      const SizedBox(width: 6),
+                      Expanded(child: Text(phrase, maxLines: 1, overflow: TextOverflow.ellipsis)),
+                    ],
+                  ),
+                )),
+            const Spacer(),
+            Text('Tap to open', style: Theme.of(context).textTheme.bodySmall),
+          ],
+        ),
       ),
     );
   }

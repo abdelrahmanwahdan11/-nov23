@@ -412,3 +412,35 @@ class GuidedProject {
   final List<String> tasks;
   final String heroImage;
 }
+
+class FluencyStage {
+  FluencyStage({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.progress,
+    required this.status,
+  });
+
+  final String id;
+  final String title;
+  final String description;
+  final double progress;
+  final String status;
+}
+
+class PhraseCategory {
+  PhraseCategory({
+    required this.id,
+    required this.title,
+    required this.language,
+    required this.contextLabel,
+    required this.phrases,
+  });
+
+  final String id;
+  final String title;
+  final String language;
+  final String contextLabel;
+  final List<String> phrases;
+}

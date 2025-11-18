@@ -3,6 +3,8 @@ import '../../core/controllers/favorites_controller.dart';
 import '../../core/controllers/localization_controller.dart';
 import '../../core/controllers/theme_controller.dart';
 import '../../core/utils/mock_data.dart';
+import '../home/fluency_plan_screen.dart';
+import '../home/phrasebook_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen(
@@ -157,6 +159,13 @@ class ProfileScreen extends StatelessWidget {
             onTap: onOpenProgress,
           ),
           ListTile(
+            title: const Text('Fluency plan'),
+            subtitle: const Text('Capstone stages and readiness'),
+            leading: const Icon(Icons.rocket_launch_outlined),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => FluencyPlanScreen(onOpenSettings: onOpenSettings))),
+          ),
+          ListTile(
             title: const Text('Planner'),
             subtitle: const Text('See weekly agenda and tasks'),
             leading: const Icon(Icons.calendar_month),
@@ -179,6 +188,13 @@ class ProfileScreen extends StatelessWidget {
             subtitle: const Text('Audio drills, guides, downloads'),
             leading: const Icon(Icons.library_books_outlined),
             onTap: onOpenResources,
+          ),
+          ListTile(
+            title: const Text('Phrasebook'),
+            subtitle: const Text('Essential lines by context'),
+            leading: const Icon(Icons.record_voice_over_outlined),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => PhrasebookScreen(onOpenSettings: onOpenSettings))),
           ),
           ListTile(
             title: const Text('Community'),
