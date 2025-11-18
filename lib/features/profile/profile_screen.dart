@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../core/constants/app_colors.dart';
+import '../../core/controllers/favorites_controller.dart';
 import '../../core/controllers/localization_controller.dart';
 import '../../core/controllers/theme_controller.dart';
+import '../../core/utils/mock_data.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key, required this.theme, required this.locale, required this.onLogout});
+  const ProfileScreen({super.key, required this.theme, required this.locale, required this.favoritesController, required this.onOpenSettings, required this.onOpenFavorites, required this.onOpenNotifications, required this.onOpenLearningPath, required this.onLogout});
   final ThemeController theme;
   final LocalizationController locale;
+  final FavoritesController favoritesController;
+  final VoidCallback onOpenSettings;
+  final VoidCallback onOpenFavorites;
+  final VoidCallback onOpenNotifications;
+  final VoidCallback onOpenLearningPath;
   final VoidCallback onLogout;
 
   @override
@@ -32,44 +38,30 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          const Text('App language'),
-          Row(
-            children: [
-              ChoiceChip(label: const Text('English'), selected: locale.locale.languageCode == 'en', onSelected: (_) => locale.setLocale(const Locale('en'))),
-              const SizedBox(width: 8),
-              ChoiceChip(label: const Text('العربية'), selected: locale.locale.languageCode == 'ar', onSelected: (_) => locale.setLocale(const Locale('ar'))),
-            ],
+          ListTile(
+            title: const Text('Settings'),
+            subtitle: const Text('Theme, language, alerts'),
+            leading: const Icon(Icons.settings_outlined),
+            onTap: onOpenSettings,
           ),
-          const SizedBox(height: 20),
-          const Text('Theme'),
-          Row(
-            children: [
-              ChoiceChip(label: const Text('Light'), selected: theme.mode == ThemeMode.light, onSelected: (_) => theme.setPrimaryColor(theme.primaryColor)),
-              const SizedBox(width: 8),
-              ChoiceChip(label: const Text('Dark'), selected: theme.mode == ThemeMode.dark, onSelected: (_) => theme.toggleMode()),
-            ],
+          ListTile(
+            title: const Text('Favorites'),
+            subtitle: Text('${favoritesController.favoritesFrom(mockTutors).length} saved tutors'),
+            leading: const Icon(Icons.favorite_border),
+            onTap: onOpenFavorites,
           ),
-          const SizedBox(height: 20),
-          const Text('Primary color'),
-          Wrap(
-            spacing: 10,
-            children: AppColors.primaryOptions
-                .map((color) => GestureDetector(
-                      onTap: () => theme.setPrimaryColor(color),
-                      child: Container(
-                        width: 34,
-                        height: 34,
-                        decoration: BoxDecoration(
-                          color: color,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.black12),
-                        ),
-                      ),
-                    ))
-                .toList(),
+          ListTile(
+            title: const Text('Notifications'),
+            subtitle: const Text('Reminders and platform updates'),
+            leading: const Icon(Icons.notifications_active_outlined),
+            onTap: onOpenNotifications,
           ),
-          const SizedBox(height: 20),
-          SwitchListTile(value: true, onChanged: (_) {}, title: const Text('Enable notifications')),
+          ListTile(
+            title: const Text('Learning path'),
+            subtitle: const Text('Track milestones and streaks'),
+            leading: const Icon(Icons.bolt),
+            onTap: onOpenLearningPath,
+          ),
           const SizedBox(height: 12),
           ElevatedButton(onPressed: onLogout, child: const Text('Sign out')),
         ],

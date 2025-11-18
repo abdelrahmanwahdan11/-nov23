@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:iconly/iconly.dart';
+import '../../core/controllers/favorites_controller.dart';
 import '../../core/controllers/home_controller.dart';
 import '../../core/localization/app_localizations.dart';
 import '../../core/utils/mock_data.dart';
@@ -11,8 +12,13 @@ import '../../core/widgets/skeleton_loader.dart';
 import '../../core/widgets/tutor_card.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.onTutorTap});
+  const HomeScreen({super.key, required this.onTutorTap, required this.onOpenSettings, required this.onOpenNotifications, required this.onOpenFavorites, required this.onOpenLearningPath, required this.favoritesController});
   final void Function(Tutor tutor) onTutorTap;
+  final VoidCallback onOpenSettings;
+  final VoidCallback onOpenNotifications;
+  final VoidCallback onOpenFavorites;
+  final VoidCallback onOpenLearningPath;
+  final FavoritesController favoritesController;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -52,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
         slivers: [
           SliverAppBar(
             pinned: true,
+            leading: IconButton(icon: const Icon(Icons.settings_outlined), onPressed: widget.onOpenSettings),
             title: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
                 value: 'Turkish',
@@ -59,7 +66,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 onChanged: (_) {},
               ),
             ),
-            actions: const [CircleAvatar(backgroundImage: NetworkImage('https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg'))],
+            actions: [
+              IconButton(onPressed: widget.onOpenNotifications, icon: const Icon(IconlyLight.notification)),
+              IconButton(onPressed: widget.onOpenFavorites, icon: const Icon(IconlyLight.heart)),
+              const CircleAvatar(backgroundImage: NetworkImage('https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg'))
+            ],
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -101,6 +112,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ).animate().fadeIn(duration: 400.ms).slideY(begin: 0.05),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SectionTitle(text: 'Quick actions'),
+                  Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: [
+                      _QuickActionChip(icon: Icons.bolt, label: 'Learning path', onTap: widget.onOpenLearningPath),
+                      _QuickActionChip(icon: Icons.favorite, label: 'Favorites', onTap: widget.onOpenFavorites),
+                      _QuickActionChip(icon: Icons.notifications_active, label: 'Alerts', onTap: widget.onOpenNotifications),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           SliverToBoxAdapter(
@@ -149,12 +180,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     final tutor = data[index];
+                    final isFav = widget.favoritesController.isFavorite(tutor.id);
                     return TutorCard(
                       tutor: tutor,
                       onTap: () => widget.onTutorTap(tutor),
                       trailing: IconButton(
-                        icon: const Icon(IconlyLight.heart),
-                        onPressed: () {},
+                        icon: Icon(isFav ? IconlyBold.heart : IconlyLight.heart),
+                        onPressed: () {
+                          setState(() => widget.favoritesController.toggle(tutor.id));
+                        },
                       ),
                     ).animate().fadeIn(duration: 300.ms).slideY(begin: 0.05);
                   },
@@ -165,6 +199,24 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
+    );
+  }
+}
+
+class _QuickActionChip extends StatelessWidget {
+  const _QuickActionChip({required this.icon, required this.label, required this.onTap});
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return ActionChip(
+      avatar: Icon(icon, size: 18),
+      label: Text(label),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      onPressed: onTap,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     );
   }
 }

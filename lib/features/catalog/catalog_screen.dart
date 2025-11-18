@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import '../../core/controllers/catalog_controller.dart';
+import '../../core/controllers/favorites_controller.dart';
 import '../../core/utils/models.dart';
 import '../../core/widgets/filter_chip.dart';
 import '../../core/widgets/tutor_card.dart';
 
 class CatalogScreen extends StatefulWidget {
-  const CatalogScreen({super.key, required this.controller, required this.onCompare, required this.onTutorTap});
+  const CatalogScreen({super.key, required this.controller, required this.onCompare, required this.onTutorTap, required this.favoritesController});
   final CatalogController controller;
   final VoidCallback onCompare;
   final void Function(Tutor tutor) onTutorTap;
+  final FavoritesController favoritesController;
 
   @override
   State<CatalogScreen> createState() => _CatalogScreenState();
@@ -81,10 +83,24 @@ class _CatalogScreenState extends State<CatalogScreen> {
 
   Widget _buildSelectableCard(Tutor tutor) {
     final selected = widget.controller.selectedForComparison.contains(tutor);
-    return TutorCard(
-      tutor: tutor,
-      onTap: () => widget.onTutorTap(tutor),
-      trailing: Checkbox(value: selected, onChanged: (_) => setState(() => widget.controller.toggleSelection(tutor))),
+    return AnimatedBuilder(
+      animation: widget.favoritesController,
+      builder: (context, _) {
+        final isFav = widget.favoritesController.isFavorite(tutor.id);
+        return TutorCard(
+          tutor: tutor,
+          onTap: () => widget.onTutorTap(tutor),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                  icon: Icon(isFav ? IconlyBold.heart : IconlyLight.heart),
+                  onPressed: () => widget.favoritesController.toggle(tutor.id)),
+              Checkbox(value: selected, onChanged: (_) => setState(() => widget.controller.toggleSelection(tutor))),
+            ],
+          ),
+        );
+      },
     );
   }
 }

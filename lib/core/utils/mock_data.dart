@@ -54,3 +54,48 @@ final mockSessions = [
     isTrial: false,
   ),
 ];
+
+final mockNotifications = [
+  AppNotification(
+    id: 'n1',
+    title: 'New Turkish super tutors',
+    body: 'We added 8 new certified tutors specialized in speaking practice.',
+    timestamp: DateTime.now().subtract(const Duration(hours: 2)),
+    type: 'update',
+  ),
+  AppNotification(
+    id: 'n2',
+    title: 'Booking reminder',
+    body: 'Your trial session is tomorrow at 6:00 PM. Join a few minutes early.',
+    timestamp: DateTime.now().subtract(const Duration(days: 1)),
+    type: 'reminder',
+  ),
+  AppNotification(
+    id: 'n3',
+    title: 'Success stories',
+    body: 'Learners rated conversational drills 4.9/5 this month.',
+    timestamp: DateTime.now().subtract(const Duration(days: 3)),
+    type: 'insight',
+  ),
+];
+
+final mockMilestones = [
+  LearningMilestone(
+    id: 'm1',
+    title: 'Complete your first trial',
+    subtitle: 'Book a 25-min trial to unlock your roadmap.',
+    progress: 0.6,
+  ),
+  LearningMilestone(
+    id: 'm2',
+    title: 'Finish 3 sessions',
+    subtitle: 'Stay consistent this week with three short calls.',
+    progress: 0.4,
+  ),
+  LearningMilestone(
+    id: 'm3',
+    title: 'Pronunciation sprint',
+    subtitle: 'Practice difficult sounds with spaced repetition.',
+    progress: 0.8,
+  ),
+];

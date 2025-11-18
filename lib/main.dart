@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/controllers/auth_controller.dart';
 import 'core/controllers/booking_controller.dart';
+import 'core/controllers/favorites_controller.dart';
 import 'core/controllers/localization_controller.dart';
 import 'core/controllers/payments_controller.dart';
 import 'core/controllers/theme_controller.dart';
@@ -15,8 +16,12 @@ import 'features/onboarding/goal_selection_screen.dart';
 import 'features/onboarding/onboarding_screen.dart';
 import 'features/payments/payment_screen.dart';
 import 'features/payments/success_screen.dart';
+import 'features/profile/favorites_screen.dart';
 import 'features/profile/profile_screen.dart';
+import 'features/profile/settings_screen.dart';
 import 'features/tutor_details/tutor_details_screen.dart';
+import 'features/home/notifications_screen.dart';
+import 'features/home/learning_path_screen.dart';
 
 void main() {
   runApp(const LinguaTutorApp());
@@ -33,6 +38,7 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
   final themeController = ThemeController();
   final localizationController = LocalizationController();
   final authController = AuthController();
+  final favoritesController = FavoritesController();
 
   @override
   void initState() {
@@ -46,6 +52,7 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
     themeController.dispose();
     localizationController.dispose();
     authController.dispose();
+    favoritesController.dispose();
     super.dispose();
   }
 
@@ -97,7 +104,18 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
           child: MainShell(
         onTutorTap: _openTutor,
         onLogout: () => authController.logout(),
-        profileBuilder: (setStateCallback) => ProfileHost(themeController: themeController, localeController: localizationController, onLogout: () {
+        themeController: themeController,
+        localizationController: localizationController,
+        favoritesController: favoritesController,
+        profileBuilder: (setStateCallback) => ProfileHost(
+            themeController: themeController,
+            localeController: localizationController,
+            favoritesController: favoritesController,
+            onOpenSettings: () => _openSettings(context),
+            onOpenFavorites: () => _openFavorites(context),
+            onOpenNotifications: () => _openNotifications(context),
+            onOpenLearningPath: () => _openLearningPath(context),
+            onLogout: () {
           setState(() {});
         }),
       )));
@@ -133,12 +151,57 @@ class _LinguaTutorAppState extends State<LinguaTutorApp> {
       ),
     ));
   }
+
+  void _openSettings(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => SettingsScreen(
+        themeController: themeController,
+        localizationController: localizationController,
+        favoritesController: favoritesController,
+      ),
+    ));
+  }
+
+  void _openFavorites(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => FavoritesScreen(
+        favoritesController: favoritesController,
+        onTutorTap: _openTutor,
+      ),
+    ));
+  }
+
+  void _openNotifications(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => const NotificationsScreen(),
+    ));
+  }
+
+  void _openLearningPath(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => const LearningPathScreen(),
+    ));
+  }
 }
 
 class ProfileHost extends StatefulWidget {
-  const ProfileHost({super.key, required this.themeController, required this.localeController, required this.onLogout});
+  const ProfileHost(
+      {super.key,
+      required this.themeController,
+      required this.localeController,
+      required this.favoritesController,
+      required this.onOpenSettings,
+      required this.onOpenFavorites,
+      required this.onOpenNotifications,
+      required this.onOpenLearningPath,
+      required this.onLogout});
   final ThemeController themeController;
   final LocalizationController localeController;
+  final FavoritesController favoritesController;
+  final VoidCallback onOpenSettings;
+  final VoidCallback onOpenFavorites;
+  final VoidCallback onOpenNotifications;
+  final VoidCallback onOpenLearningPath;
   final VoidCallback onLogout;
 
   @override
@@ -149,11 +212,16 @@ class _ProfileHostState extends State<ProfileHost> {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: Listenable.merge([widget.themeController, widget.localeController]),
+      animation: Listenable.merge([widget.themeController, widget.localeController, widget.favoritesController]),
       builder: (context, _) {
         return ProfileScreen(
           theme: widget.themeController,
           locale: widget.localeController,
+          favoritesController: widget.favoritesController,
+          onOpenSettings: widget.onOpenSettings,
+          onOpenFavorites: widget.onOpenFavorites,
+          onOpenNotifications: widget.onOpenNotifications,
+          onOpenLearningPath: widget.onOpenLearningPath,
           onLogout: widget.onLogout,
         );
       },

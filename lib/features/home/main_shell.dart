@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import '../../core/controllers/catalog_controller.dart';
+import '../../core/controllers/favorites_controller.dart';
 import '../../core/controllers/home_controller.dart';
+import '../../core/controllers/localization_controller.dart';
 import '../../core/controllers/search_controller.dart';
+import '../../core/controllers/theme_controller.dart';
 import '../../core/utils/models.dart';
 import '../booking/bookings_screen.dart';
 import '../catalog/catalog_screen.dart';
+import '../profile/favorites_screen.dart';
 import '../profile/profile_screen.dart';
+import '../profile/settings_screen.dart';
 import '../search/search_screen.dart';
+import 'learning_path_screen.dart';
+import 'notifications_screen.dart';
 import 'home_screen.dart';
 
 class MainShell extends StatefulWidget {
-  const MainShell({super.key, required this.onTutorTap, required this.onLogout, required this.profileBuilder});
+  const MainShell({super.key, required this.onTutorTap, required this.onLogout, required this.profileBuilder, required this.themeController, required this.localizationController, required this.favoritesController});
   final void Function(Tutor tutor) onTutorTap;
   final VoidCallback onLogout;
   final Widget Function(void Function(void Function()) setStateCallback) profileBuilder;
+  final ThemeController themeController;
+  final LocalizationController localizationController;
+  final FavoritesController favoritesController;
 
   @override
   State<MainShell> createState() => _MainShellState();
@@ -25,6 +35,7 @@ class _MainShellState extends State<MainShell> {
   late final CatalogController catalogController;
   late final HomeController homeController;
   late final SearchController searchController;
+  late final FavoritesController favoritesController;
 
   @override
   void initState() {
@@ -32,6 +43,7 @@ class _MainShellState extends State<MainShell> {
     catalogController = CatalogController();
     homeController = HomeController()..loadInitial();
     searchController = SearchController();
+    favoritesController = widget.favoritesController;
   }
 
   @override
@@ -44,11 +56,19 @@ class _MainShellState extends State<MainShell> {
   @override
   Widget build(BuildContext context) {
     final screens = [
-      HomeScreen(onTutorTap: widget.onTutorTap),
+      HomeScreen(
+        onTutorTap: widget.onTutorTap,
+        onOpenSettings: _openSettings,
+        onOpenNotifications: _openNotifications,
+        onOpenFavorites: _openFavorites,
+        onOpenLearningPath: _openLearningPath,
+        favoritesController: favoritesController,
+      ),
       CatalogScreen(
         controller: catalogController,
         onCompare: () {},
         onTutorTap: widget.onTutorTap,
+        favoritesController: favoritesController,
       ),
       const BookingsScreen(),
       widget.profileBuilder(setState),
@@ -75,5 +95,30 @@ class _MainShellState extends State<MainShell> {
             )
           : null,
     );
+  }
+
+  void _openSettings() {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => SettingsScreen(
+              themeController: widget.themeController,
+              localizationController: widget.localizationController,
+              favoritesController: favoritesController,
+            )));
+  }
+
+  void _openNotifications() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const NotificationsScreen()));
+  }
+
+  void _openFavorites() {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => FavoritesScreen(
+              favoritesController: favoritesController,
+              onTutorTap: widget.onTutorTap,
+            )));
+  }
+
+  void _openLearningPath() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LearningPathScreen()));
   }
 }

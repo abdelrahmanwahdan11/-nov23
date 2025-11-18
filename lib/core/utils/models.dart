@@ -72,3 +72,33 @@ class Goal {
   final String title;
   final String description;
 }
+
+class AppNotification {
+  AppNotification({
+    required this.id,
+    required this.title,
+    required this.body,
+    required this.timestamp,
+    required this.type,
+  });
+
+  final String id;
+  final String title;
+  final String body;
+  final DateTime timestamp;
+  final String type;
+}
+
+class LearningMilestone {
+  LearningMilestone({
+    required this.id,
+    required this.title,
+    required this.subtitle,
+    required this.progress,
+  });
+
+  final String id;
+  final String title;
+  final String subtitle;
+  final double progress;
+}
